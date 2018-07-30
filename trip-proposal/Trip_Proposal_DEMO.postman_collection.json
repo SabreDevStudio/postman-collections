@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "d9cbadee-e8d6-47bc-a43a-ea83dc347fb8",
+		"name": "Trip_Proposal_DEMO",
+		"description": "Trip Proposal APIs are a suite of web services (SOAP) that creates travel quotes without withholding inventory from suppliers. Trip Proposal APIs features the ability to:\r\n•\tCreate a Trip Proposal\r\n•\tUpdate a Trip Proposal\r\n•\tRead a Trip Proposal\r\n•\tDelete a Trip Proposal \r\n•\tRefresh a Trip Proposal\r\n•\tBook a Trip Proposal (Sabre content only)\r\nThis Postman collection was created to showcase these APIs and provide developers the ability to test* them freely.\r\n\r\n*Sabre APIs SOAP Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and does not have your CERT credentials, please contact your Sabre account manager.\r\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SessionCreateRQ 1.0.0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8506c88a-3dda-4da3-a746-286287f06f03",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>SWS</PartyId>\n            </To>\n            <ConversationId>Postman-MyConvID</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				},
+				"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/legacy)</b>\n\n- [v1.0.0 Create Session Test Suite](https://github.com/SabreDevStudio/SabreAPIsWorkflows/tree/master/SabreAPIsTestSuites/SessionCreateRQ-v1.0.0)\n- [Request Documentation](http://webservices.sabre.com/drc/servicedoc/SessionCreateRQ_Envelope_Design.xml)\n- [Request Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.xsd)\n- [Request/Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQRS.xsd)\n- [Response Documentation](http://webservices.sabre.com/drc/servicedoc/SessionCreateRS_Envelope_Design.xml)\n- [Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRS.xsd)\n- [SOAP Field Size Overview](http://webservices.sabre.com/drc/servicedoc/SOAP_Field_Size_Overview.pdf)\n- [WSDL](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.wsdl)\n- [Service Description/Notes](http://webservices.sabre.com/drc/servicedoc/SessionCreateRQ.htm)\n\n[//]: # \"End\""
+			},
+			"response": []
+		},
+		{
+			"name": "TP_CreateRQ 1.1.0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "99ae32ce-252d-45b2-97f1-60e728abf6a4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{header}}\r\n\r\n<TP_CreateRQ xmlns=\"http://services.sabre.com/tripproposal/v1_1\" xmlns:or=\"http://services.sabre.com/res/or/v1_13\" version=\"1.1.0\">\r\n\t<TripProposal>\r\n\t\t<Label>Trip for Mr. Power</Label>\r\n\t\t<Passenger>\r\n\t\t\t<or:Type code=\"ADT\">ADT</or:Type>\r\n\t\t\t<or:PersonName>\r\n\t\t\t\t<or:Prefix>MR</or:Prefix>\r\n\t\t\t\t<or:Given>Max</or:Given>\r\n\t\t\t\t<or:Surname>Power</or:Surname>\r\n\t\t\t\t<or:Type>ADT</or:Type>\r\n\t\t\t</or:PersonName>\r\n\t\t\t<or:Telephone>\r\n\t\t\t\t<or:PhoneNumber>12345678</or:PhoneNumber>\r\n\t\t\t</or:Telephone>\r\n\t\t\t<or:Email>email@sabre.com</or:Email>\r\n\t\t</Passenger>\r\n\t\t<Quote>\r\n\t\t\t<Label>Quote 1</Label>\r\n\t\t\t<Comments/>\r\n\t\t\t<Option optionID=\"airOption1\">\r\n\t\t\t\t<Label>Air option</Label>\r\n\t\t\t\t<Comments/>\r\n\t\t\t\t<Product>\r\n\t\t\t\t\t<or:ProductDetails productCategory=\"AIR\">\r\n\t\t\t\t\t\t<or:ProductName type=\"AIR\"/>\r\n\t\t\t\t\t\t<or:Air>\r\n\t\t\t\t\t\t\t<or:DepartureAirport>DFW</or:DepartureAirport>\r\n\t\t\t\t\t\t\t<or:ArrivalAirport>MIA</or:ArrivalAirport>\r\n\t\t\t\t\t\t\t<or:OperatingAirlineCode>AA</or:OperatingAirlineCode>\r\n\t\t\t\t\t\t\t<or:MarketingAirlineCode>AA</or:MarketingAirlineCode>\r\n\t\t\t\t\t\t\t<or:Eticket>false</or:Eticket>\r\n\t\t\t\t\t\t\t<or:DepartureDateTime>2019-05-18T12:45:00</or:DepartureDateTime>\r\n\t\t\t\t\t\t\t<or:ArrivalDateTime>2019-05-18T16:50:00</or:ArrivalDateTime>\r\n\t\t\t\t\t\t\t<or:FlightNumber>1908</or:FlightNumber>\r\n\t\t\t\t\t\t\t<or:ClassOfService>Y</or:ClassOfService>\r\n\t\t\t\t\t\t\t<or:ActionCode>NN</or:ActionCode>\r\n\t\t\t\t\t\t\t<or:NumberInParty>1</or:NumberInParty>\r\n\t\t\t\t\t\t\t<or:inboundConnection>false</or:inboundConnection>\r\n\t\t\t\t\t\t\t<or:outboundConnection>false</or:outboundConnection>\r\n\t\t\t\t\t\t\t<or:BSGIndicator>false</or:BSGIndicator>\r\n\t\t\t\t\t\t\t<or:PassiveSegmentIndicator>false</or:PassiveSegmentIndicator>\r\n\t\t\t\t\t\t\t<or:ScheduleChangeIndicator>false</or:ScheduleChangeIndicator>\r\n\t\t\t\t\t\t</or:Air>\r\n\t\t\t\t\t</or:ProductDetails>\r\n\t\t\t\t</Product>\r\n\t\t\t</Option>\r\n\t\t</Quote>\r\n\t\t<Metadata/>\r\n\t</TripProposal>\r\n</TP_CreateRQ>  \r\n\r\n{{footer}}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TP_ReadRQ 1.1.0",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{header}}\r\n\r\n<TP_ReadRQ xmlns=\"http://services.sabre.com/tripproposal/v1_1\" proposalID=\"{{proposalID}}\" version=\"1.1.0\"/>\r\n\r\n{{footer}}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TP_UpdateRQ 1.1.0",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{header}}\r\n\r\n<TP_UpdateRQ xmlns=\"http://services.sabre.com/tripproposal/v1_1\" xmlns:or=\"http://services.sabre.com/res/or/v1_13\" version=\"1.1.0\">\r\n\t<TripProposal proposalID=\"{{proposalID}}\" proposalVersion=\"{{proposalVersion}}\">\r\n\t\t<Passenger passengerID=\"TP-1\">\r\n\t\t\t<or:Type code=\"ADT\"/>\r\n\t\t\t<or:PersonName>\r\n\t\t\t\t<or:Prefix>MR</or:Prefix>\r\n\t\t\t\t<or:Given>Clark</or:Given>\r\n\t\t\t\t<or:Surname>Kent</or:Surname>\r\n\t\t\t\t<or:Type>ADT</or:Type>\r\n\t\t\t</or:PersonName>\r\n\t\t\t<or:Telephone>\r\n\t\t\t\t<or:PhoneNumber>12345678</or:PhoneNumber>\r\n\t\t\t</or:Telephone>\r\n\t\t\t<or:Email>email@sample.com</or:Email>\r\n\t\t</Passenger>\r\n\t\t<Quote quoteID=\"TP-2\">\r\n\t\t\t<Label>Quote label</Label>\r\n\t\t\t<Comments/>\r\n\t\t\t<Option optionID=\"airOption1\">\r\n\t\t\t\t<Label>Option label</Label>\r\n\t\t\t\t<Comments/>\r\n\t\t\t\t<Product>\r\n\t\t\t\t\t<or:ProductDetails productCategory=\"AIR\">\r\n\t\t\t\t\t\t<or:ProductName type=\"AIR\"/>\r\n\t\t\t\t\t\t<or:Air>\r\n\t\t\t\t\t\t\t<or:DepartureAirport>AUH</or:DepartureAirport>\r\n\t\t\t\t\t\t\t<or:ArrivalAirport>MUC</or:ArrivalAirport>\r\n\t\t\t\t\t\t\t<or:OperatingAirlineCode>EY</or:OperatingAirlineCode>\r\n\t\t\t\t\t\t\t<or:MarketingAirlineCode>EY</or:MarketingAirlineCode>\r\n\t\t\t\t\t\t\t<or:AirlineRefId>RCRQ</or:AirlineRefId>\r\n\t\t\t\t\t\t\t<or:Eticket>false</or:Eticket>\r\n\t\t\t\t\t\t\t<or:DepartureDateTime>2018-03-18T02:15:00</or:DepartureDateTime>\r\n\t\t\t\t\t\t\t<or:ArrivalDateTime>2018-03-18T06:05:00</or:ArrivalDateTime>\r\n\t\t\t\t\t\t\t<or:FlightNumber>5</or:FlightNumber>\r\n\t\t\t\t\t\t\t<or:ClassOfService>Y</or:ClassOfService>\r\n\t\t\t\t\t\t\t<or:ActionCode>NN</or:ActionCode>\r\n\t\t\t\t\t\t\t<or:NumberInParty>1</or:NumberInParty>\r\n\t\t\t\t\t\t\t<or:inboundConnection>false</or:inboundConnection>\r\n\t\t\t\t\t\t\t<or:outboundConnection>false</or:outboundConnection>\r\n\t\t\t\t\t\t\t<or:BSGIndicator>false</or:BSGIndicator>\r\n\t\t\t\t\t\t\t<or:PassiveSegmentIndicator>false</or:PassiveSegmentIndicator>\r\n\t\t\t\t\t\t\t<or:ScheduleChangeIndicator>false</or:ScheduleChangeIndicator>\r\n\t\t\t\t\t\t</or:Air>\r\n\t\t\t\t\t</or:ProductDetails>\r\n\t\t\t\t</Product>\r\n\t\t\t</Option>\r\n\t\t\t<Option optionID=\"carOption1\">\r\n\t\t\t\t<Label>Option label</Label>\r\n\t\t\t\t<Comments/>\r\n\t\t\t\t<Product>\r\n\t\t\t\t\t<or:ProductDetails productType=\"CAR\" vendorCode=\"ZR\" statusCode=\"NN\" startPoint=\"LAX\" startDateTime=\"2018-03-17T13:32:35\" endDateTime=\"2018-03-24T13:32:35\">\r\n\t\t\t\t\t\t<or:ProductName type=\"CAR\"/>\r\n\t\t\t\t\t\t<or:Vehicle>\r\n\t\t\t\t\t\t\t<or:VehicleRentalCore pickUpDateTime=\"05-16T09:00\" returnDateTime=\"05-23T09:00\">\r\n\t\t\t\t\t\t\t\t<or:DropOffLocationDetails locationCode=\"DFW\"/>\r\n\t\t\t\t\t\t\t\t<or:LocationDetails locationCode=\"DFW\"/>\r\n\t\t\t\t\t\t\t</or:VehicleRentalCore>\r\n\t\t\t\t\t\t\t<or:VehicleVendorAvail>\r\n\t\t\t\t\t\t\t\t<or:VehicleResCore>\r\n\t\t\t\t\t\t\t\t\t<or:CollectionDeliveryInfo>\r\n\t\t\t\t\t\t\t\t\t\t<or:CollectionInfo>\r\n\t\t\t\t\t\t\t\t\t\t\t<or:ContactNumber>\r\n\t\t\t\t\t\t\t\t\t\t\t\t<or:PhoneNumber>123456789</or:PhoneNumber>\r\n\t\t\t\t\t\t\t\t\t\t\t</or:ContactNumber>\r\n\t\t\t\t\t\t\t\t\t\t</or:CollectionInfo>\r\n\t\t\t\t\t\t\t\t\t</or:CollectionDeliveryInfo>\r\n\t\t\t\t\t\t\t\t\t<or:PricedEquipment equipmentType=\"ECAR\" quantity=\"1\"/>\r\n\t\t\t\t\t\t\t\t\t<or:RentalRate stmRatePlan=\"W\">\r\n\t\t\t\t\t\t\t\t\t\t<or:InvoiceRemarks/>\r\n\t\t\t\t\t\t\t\t\t\t<or:VehicleTypes>\r\n\t\t\t\t\t\t\t\t\t\t\t<or:VehType>ECAR</or:VehType>\r\n\t\t\t\t\t\t\t\t\t\t</or:VehicleTypes>\r\n\t\t\t\t\t\t\t\t\t</or:RentalRate>\r\n\t\t\t\t\t\t\t\t\t<or:Charge>\r\n\t\t\t\t\t\t\t\t\t\t<or:ChargeDetails>\r\n\t\t\t\t\t\t\t\t\t\t\t<or:ApproximateTotalCharge amount=\"36.83\" mileageAllowance=\"UNL\" numDays=\"2\" numHours=\"0\" rateType=\"E\" totalMandatoryCharges=\"105.02\"/>\r\n\t\t\t\t\t\t\t\t\t\t</or:ChargeDetails>\r\n\t\t\t\t\t\t\t\t\t</or:Charge>\r\n\t\t\t\t\t\t\t\t</or:VehicleResCore>\r\n\t\t\t\t\t\t\t\t<or:Vendor code=\"ZR\"/>\r\n\t\t\t\t\t\t\t</or:VehicleVendorAvail>\r\n\t\t\t\t\t\t</or:Vehicle>\r\n\t\t\t\t\t</or:ProductDetails>\r\n\t\t\t\t</Product>\r\n\t\t\t</Option>\r\n\t\t</Quote>\r\n\t\t<Metadata/>\r\n\t</TripProposal>\r\n</TP_UpdateRQ>\r\n\r\n{{footer}}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TP_RefreshRQ 1.1.0",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{header}}\r\n\r\n<TP_RefreshRQ xmlns=\"http://services.sabre.com/tripproposal/v1_1\" version=\"1.1.0\">\r\n\t<RefreshOptions companyName=\"OTAQA\"/>\r\n\t<TripProposalReference>\r\n\t\t<TripProposalID>{{proposalID}}</TripProposalID>\r\n\t</TripProposalReference>\r\n</TP_RefreshRQ>\r\n    \r\n{{footer}}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TP_BookRQ 1.1.0",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{header}}\r\n\r\n<TP_BookRQ xmlns=\"http://services.sabre.com/tripproposal/v1_1\" version=\"1.1.0\">\r\n\t<BookingOptions>\r\n\t\t<RequestType>Stateless</RequestType>\r\n\t</BookingOptions>\r\n\t<TripProposalReference>\r\n\t\t<TripProposalID>{{proposalID}}</TripProposalID>\r\n\t</TripProposalReference>\r\n</TP_BookRQ>\r\n\r\n{{footer}}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f16fd4c0-7b30-4fb1-9d02-9b8a1c11c917",
+				"type": "text/javascript",
+				"exec": [
+					"const action = request.name.split(' ')[0].replace(/^_/, '');",
+					"const token = postman.getEnvironmentVariable('token');",
+					"const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>ConversationId</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"const header_diag = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>ConversationId</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security><Diagnostics xmlns=\"http://webservices.sabre.com\"/></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';",
+					"postman.setEnvironmentVariable('header', header);",
+					"postman.setEnvironmentVariable('header_diag', header_diag);",
+					"postman.setEnvironmentVariable('footer', footer);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8690929c-0b1d-470c-a7e9-406cff1b30e6",
+				"type": "text/javascript",
+				"exec": [
+					"// Initialize all environmental variables here",
+					"let token, pnr",
+					"",
+					"const res = xml2Json(responseBody);",
+					"const action = request.name.split(' ')[0].replace(/^_/, '');",
+					"",
+					"switch (action) {",
+					"    case 'SessionCreateRQ':",
+					"        token = res['soap-env:Envelope']['soap-env:Header']['wsse:Security']['wsse:BinarySecurityToken']._;",
+					"        postman.setEnvironmentVariable('token', token);",
+					"        break;",
+					"    case 'TokenCreateRQ':",
+					"        token = res['soap-env:Envelope']['soap-env:Header']['wsse:Security']['wsse:BinarySecurityToken']._;",
+					"        postman.setEnvironmentVariable('token', token);",
+					"        break;",
+					"    case 'TP_CreateRQ':",
+					"        proposalID = res['soap-env:Envelope']['soap-env:Body']['ns8:TP_CreateRS'].$.proposalID;",
+					"        postman.setEnvironmentVariable('proposalID', proposalID);",
+					"        break;",
+					"    case 'TP_ReadRQ':",
+					"        proposalVersion = res['soap-env:Envelope']['soap-env:Body']['ns8:TP_ReadRS']['ns8:TripProposal'].$.proposalVersion;",
+					"        postman.setEnvironmentVariable('proposalVersion', proposalVersion);",
+					"        break;",
+					"    case 'TP_RefreshRQ':",
+					"        proposalVersion = res['soap-env:Envelope']['soap-env:Body']['ns8:TP_RefreshRS']['ns8:TripProposal'].$.proposalVersion;",
+					"        postman.setEnvironmentVariable('proposalVersion', proposalVersion);",
+					"        break;",
+					"        ",
+					"    // Add new API here",
+					"}",
+					""
+				]
+			}
+		}
+	]
+}
