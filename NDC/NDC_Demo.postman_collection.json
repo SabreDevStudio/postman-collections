@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "197a1601-56fa-45e7-8315-ba270d036536",
+		"name": "NDC Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "0. REST Authorize ATK",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2420ec3c-b57c-4187-ac32-e25d338b7e9f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "36320392-f7a4-488b-93f5-05ff7c9d1eae",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{secret}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "grant_type=client_credentials"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/auth/token",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"auth",
+						"token"
+					]
+				},
+				"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+			},
+			"response": []
+		},
+		{
+			"name": "1. Bargain Finder Max /v1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84701c1d-38f2-4ed4-9861-5dcad24f8b03",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"OTA_AirLowFareSearchRQ\": {\n\t\t\"Version\": \"1\",\n\t\t\"POS\": {\n\t\t\t\"Source\": [{\n\t\t\t\t\t\"PseudoCityCode\": \"{{pcc}}\",\n\t\t\t\t\t\"RequestorID\": {\n\t\t\t\t\t\t\"Type\": \"1\",\n\t\t\t\t\t\t\"ID\": \"1\",\n\t\t\t\t\t\t\"CompanyName\": {\n\t\t\t\t\t\t\t\"Code\": \"TN\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"OriginDestinationInformation\": [{\n\t\t\t\t\"RPH\": \"1\",\n\t\t\t\t\"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t}\n\t\t\t}, {\n\t\t\t\t\"RPH\": \"2\",\n\t\t\t\t\"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"TravelPreferences\": {\n\t\t\t\"TPA_Extensions\": {\n\t\t\t\t\"NumTrips\": {\n\t\t\t\t\t\"Number\": 10\n\t\t\t\t},\n\t\t\t\t\"DataSources\": {\n\t\t\t\t\t\"NDC\": \"Enable\",\n\t\t\t\t\t\"ATPCO\": \"Disable\",\n\t\t\t\t\t\"LCC\": \"Disable\"\n\t\t\t\t},\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                }\n\n\t\t\t}\n\t\t},\n\t\t\"TravelerInfoSummary\": {\n\t\t\t\"AirTravelerAvail\": [{\n\t\t\t\t\t\"PassengerTypeQuantity\": [{\n\t\t\t\t\t\t\t\"Code\": \"ADT\",\n\t\t\t\t\t\t\t\"Quantity\": 1\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"TPA_Extensions\": {\n\t\t\t\"IntelliSellTransaction\": {\n\t\t\t\t\"RequestType\": {\n\t\t\t\t\t\"Name\": \"200ITINS\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"offers",
+						"shop"
+					]
+				},
+				"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+			},
+			"response": []
+		},
+		{
+			"name": "2. Offers Price /v1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77390db6-8f2a-411d-8aa9-0be02e542e2c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": [\n        {\n            \"offerItemId\": [\n                \"{{shop_offer_item_id}}\"\n            ]\n        }\n    ],\n    \"params\": {\n        \"formOfPayment\": [\n            {\n                \"binNumber\": \"545251\",\n                \"subCode\": \"FDA\",\n                \"cardType\" : \"MC\"\n            }\n        ]\n    }\n}\n"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/offers/price",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"offers",
+						"price"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Orders Create /v1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "adcc8cee-f57f-4757-b2dd-1758ad7ccf7b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"contactInfos\": [\n        {\n            \"emailAddresses\": [\n                {\n                    \"address\": \"test@SABRE.COM\"\n                }\n            ],\n            \"id\": \"CI-1\",\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ]\n        }\n    ],\n    \"createOrders\": [\n        {\n            \"offerId\": \"{{price_offer_id}}\",\n            \"selectedOfferItems\": [\n                {\n                    \"id\": \"{{price_offer_item_id}}\"\n                }\n            ]\n        }\n    ],\n    \"customerNumber\": {\n        \"contactInfoRefId\": \"CI-1\",\n        \"number\": \"123456\"\n    },\n    \"passengers\": [\n        {\n            \"birthdate\": \"1977-03-01\",\n            \"contactInfoRefId\": \"CI-1\",\n            \"givenName\": \"MAX\",\n            \"id\": \"Passenger1\",\n            \"surname\": \"POWER\",\n            \"typeCode\": \"ADT\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/orders/create",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"orders",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Orders Change /v1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"{{sabre_order_id}}\",\r\n\t\"actions\": [{\r\n\t\t\t\"fulfillOrder\": {\r\n\t\t\t\t\"externalOrderId\": \"{{sabre_order_id}}\",\r\n\t\t\t\t\"paymentInfo\": {\r\n\t\t\t\t\t\"amount\": {\r\n\t\t\t\t\t\t\"amount\": \"161.60\",\r\n\t\t\t\t\t\t\"code\": \"USD\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"paymentMethod\": {\r\n\t\t\t\t\t\t\"paymentCard\": {\r\n\t\t\t\t\t\t\t\"cardNumber\": \"345678000000007\",\r\n\t\t\t\t\t\t\t\"contactInfoRefId\": \"CI-1\",\r\n\t\t\t\t\t\t\t\"cvv\": \"4111\",\r\n\t\t\t\t\t\t\t\"expirationDate\": \"0521\",\r\n\t\t\t\t\t\t\t\"vendorCode\": \"AX\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"orderItemRefIds\": [\"1\"]\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/orders/change",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"orders",
+						"change"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Orders Cancel /v1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"id\":\"{{sabre_order_id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/orders/cancel",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"orders",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Orders View /v1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"id\":\"{{sabre_order_id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v1/orders/view",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v1",
+						"orders",
+						"view"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cb233380-21be-4885-bfa3-de72ca60fd6f",
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Get the first string of the URI",
+					"const URI_0 = request.url.split(\"/\")[0];",
+					"",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}",
+					"",
+					"",
+					"if ((URI_0) == ('{{rest_endpoint}}')) {",
+					"",
+					"//***REST Path***//",
+					"//This means that the temp URL is: {{rest_endpoint}}/xx/yy/zz",
+					"",
+					"    // Capture 4th URI element (which identifies the API method)",
+					"    const URI_4 = request.url.split(\"/\")[3];",
+					"",
+					"    switch (URI_4) {",
+					"            ",
+					"        case 'token':",
+					"            // Capture username",
+					"            const username =  pm.variables.get('username');",
+					"            // Capture PCC",
+					"            const pcc =  pm.variables.get('pcc');",
+					"            // Construct raw client id (by appending V1:username:PCC:AA)",
+					"            const clientidRaw = `V1:${username}:${pcc}:AA`;",
+					"            // Base64 encode the previous string",
+					"            const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);",
+					"            const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);",
+					"            // Capture password",
+					"            const passwordRaw =  pm.variables.get('password');",
+					"            // Base64 enconde the password",
+					"            const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);",
+					"            const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);",
+					"            // Combine the two previous strings with a : in the middle",
+					"            const secretRaw = `${clientidBase64}:${passwordBase64}`;",
+					"            // Base64 enconde this last string",
+					"            const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);",
+					"            const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);",
+					"            // Set the secret variable with the latest encoded string",
+					"            pm.environment.set('secret', secretBase64);",
+					"            break;",
+					"            ",
+					"        case 'shop':",
+					"            // Capture today's date",
+					"            var moment = require('moment');",
+					"            // Add 30 days to today's date and use this date in start_date",
+					"            const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+					"            pm.environment.set('start_date', start_date);",
+					"            // Add 37 days to today's date and use this date in end_date",
+					"            const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");",
+					"            pm.environment.set('end_date', end_date);",
+					"            break;",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "408d1486-e061-4c82-936a-a0391cd344ce",
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Get the Unique ID of the URI (token, shop, price, create, view, cancel, change) based on the \"5th\" string in order to identify the actual API",
+					"const URI = request.url.split(\"/\")[5];",
+					"    ",
+					"// Get the JSON response",
+					"const jsonData = JSON.parse(responseBody);",
+					"",
+					"switch (URI) {",
+					"        ",
+					"    case 'token':",
+					"        pm.environment.set('token', jsonData.access_token);",
+					"        break;",
+					"    case 'shop':",
+					"        pm.environment.set('shop_offer_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].offer.offerId);",
+					"        pm.environment.set('shop_offer_item_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].fare.offerItemId);",
+					"        break;",
+					"    case 'price':",
+					"        pm.environment.set('price_offer_id', jsonData.response.offers[0].id);",
+					"        pm.environment.set('price_offer_item_id', jsonData.response.offers[0].offerItems[0].id);",
+					"        break;",
+					"    case 'create':",
+					"        pm.environment.set('sabre_order_id', jsonData.order.id);",
+					"        pm.environment.set('pnr', jsonData.order.pnrLocator);",
+					"        break;",
+					"}"
+				]
+			}
+		}
+	]
+}
