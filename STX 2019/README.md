@@ -25,8 +25,8 @@ You'll also need your  [Sabre APIs CERT-environment credentials](https://develop
 Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
-* Import the [STX 2019 environment file](./STX 2019.postman_environment.json) into Postman using the File -> Import option
-* Import the [STX 2019 collection file](./STX 2019.postman_collection.json) into Postman using the File -> Import option 
+* Import the [STX 2019 environment file](./STX_2019.postman_environment.json) into Postman using the File -> Import option
+* Import the [STX 2019 collection file](./STX_2019.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
 
