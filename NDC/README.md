@@ -59,7 +59,7 @@ For more information on Sabre's approach to NDC and how you can send content up 
 
 ## License
 
-Copyright (c) 2018 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2019 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
