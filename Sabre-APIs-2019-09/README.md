@@ -22,7 +22,7 @@ You'll also need your  [Sabre APIs CERT-environment credentials](https://develop
 Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
-* Import the [Sabre APIs v2019.09 environment file](./Sabre_APIs_v2019.09.postman_environment.json) into Postman using the File -> Import option
+* Import the [Sabre APIs CERT environment file](./Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
 * Import the [Sabre APIs v2019.09 collection file](./Sabre_APIs_v2019.09.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
