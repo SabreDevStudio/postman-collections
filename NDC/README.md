@@ -32,7 +32,7 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [environment file](./NDC_Demo.postman_environment.json) into Postman using the File -> Import option
-* Import the [NDC collection file](./NDC_Demo.postman_collection.json) into Postman using the File -> Import option 
+* Import the [NDC collection file](./NDC%20Demo.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
 
