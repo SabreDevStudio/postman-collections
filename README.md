@@ -13,7 +13,7 @@ See the [Postman](https://www.postman.com/) site to learn more on installing and
 [Stack Overflow](https://stackoverflow.com/questions/tagged/sabre)
 
 ## License
-Copyright (c) 2018 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2020 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
