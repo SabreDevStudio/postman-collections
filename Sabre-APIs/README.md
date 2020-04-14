@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Things you need to install:
 
-* [Postman](https://www.getpostman.com/) app
+* [Postman](https://www.postman.com/) app
 
 You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
 
