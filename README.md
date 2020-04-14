@@ -6,9 +6,9 @@ You'll find Postman files dedicated to particular API product families inside ea
 
 ### Learn More
 
-Please refer to [The Sabre Dev Studio website](https://developer.sabre.com/) to learn more about the Sabre Travel APIs
+Please refer to [The Sabre Dev Studio website](https://developer.sabre.com/) to learn more about the Sabre Travel APIs.
 
-See the [Postman](https://www.getpostman.com/) site to learn more on installing and using it. 
+See the [Postman](https://www.postman.com/) site to learn more on installing and using it. 
 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/sabre)
 
