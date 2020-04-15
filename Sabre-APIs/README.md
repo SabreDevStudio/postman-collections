@@ -1,9 +1,9 @@
 
-# Sabre APIs Postman Collection (v2019.09)
+# Sabre APIs Postman Collection
 
-This Postman collection was created to showcase Sabre APIs and provide developers the ability to test* them freely.
+This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
 
-*Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
+> Note: Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
 
 ## Getting Started
 
@@ -23,7 +23,16 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [Sabre APIs CERT environment file](./Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
-* Import the [Sabre APIs v2019.09 collection file](./Sabre_APIs_v2019.09.postman_collection.json) into Postman using the File -> Import option 
+* Import the desired collection file into Postman using the File -> Import option 
+  * See table below on current and past versions, we strongly recommend downloading the latest version as we continuously add new APIs and examples:
+
+| Collection version | Comments |
+| - | - | 
+| [2020.04]() | Version incorporates version upgrades and samples for the Booking Management API | 
+| [2019.09]() | Version incorporates additional workflows, version upgrades and additional API samples |
+| [2019.06]() | Version published during Sabre's 2019 STX event which includes samples for the general Sabre API portfolio including CSL & NDC APIs | 
+
+
 
 ### Use Your Credentials
 
@@ -39,7 +48,7 @@ Update the dummy values with your official credentials. To do that follow these 
   * Click on the name of your imported environment file to see a list of all key/value pairs.
   * Enter your credentials, and press the "Update" button.    
 
-![environment varaibles](./postman_environ_vars.jpg)
+![environment variables](./postman_environ_vars.jpg)
 
 ## Running the Tests
 
@@ -52,7 +61,7 @@ For more information on Sabre APIs please access our Developer Portal [Sabre Dev
 
 ## License
 
-Copyright (c) 2019 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2020 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
