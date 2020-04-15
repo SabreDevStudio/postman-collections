@@ -35,7 +35,7 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
-* Import the [Booking Management Collection](./Booking_Management_API_v2020_04.postman_collection.json) into Postman using the File -> Import option 
+* Import the [Booking Management Collection](./Booking_Management_API_v2020.04.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
 
