@@ -28,9 +28,9 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
-| [2020.04]() | Version incorporates version upgrades and samples for the Booking Management API | 
-| [2019.09]() | Version incorporates additional workflows, version upgrades and additional API samples |
-| [2019.06]() | Version published during Sabre's 2019 STX event which includes samples for the general Sabre API portfolio including CSL & NDC APIs | 
+| [2020.04](./Sabre_APIs_v2020.04.postman_collection.json) | Version incorporates version upgrades and samples for the Booking Management API | 
+| [2019.09](./Sabre_APIs_v2019.09.postman_collection.json) | Version incorporates additional workflows, version upgrades and additional API samples |
+| [2019.06](./STX_2019.postman_collection.json) | Version published during Sabre's 2019 STX event which includes samples for the general Sabre API portfolio including CSL & NDC APIs | 
 
 
 
