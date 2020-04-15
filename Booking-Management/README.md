@@ -8,9 +8,9 @@ The services available in this API are listed below (direct link to the document
 
 | Service | Description | Endpoint | Type |  
 |---------|-------------|----------|------|
-|[Get Booking](https://developer.sabre.com)| Normalized view of the Sabre Booking | /trip/orders/getBooking |RPC/JSON|
-|[Get Booking](https://developer.sabre.com)| Normalized view of the Sabre Booking | /trip/orders/getBooking/graphql |GraphQL|
-|[Cancel Booking](https://developer.sabre.com)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
+|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized view of the Sabre Booking | /trip/orders/getBooking |RPC/JSON|
+|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized view of the Sabre Booking | /trip/orders/getBooking/graphql |GraphQL|
+|[Cancel Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
 
 
 This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
@@ -35,7 +35,7 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
-* Import the [Booking Management Collection](./Booking_Management_API_v2020_04.postman_collection.json) into Postman using the File -> Import option 
+* Import the [Booking Management Collection](./Booking_Management_API_v2020.04.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
 
@@ -58,7 +58,7 @@ Update the dummy values with your official credentials. To do that follow these 
 1. Authenticate. In the Booking Management API collection you'll find a folder named `Authentication` and an item called `REST Authorize`. Select it. Click the **Send** button. Look for a 200 Success result. If it failed review your environment credentials.
 2. Both the GetBooking and CancelBooking services require a confirmation id (PNR locator) in order to properly function, make sure you have one available in order to test. Examples are available in the individual folders: `Get Booking` and `Cancel Booking`. Simply open one of these folders, select an example to test, click the **Send** button, and look for a 200 Success result. 
 
-For more information regarding our Booking Management API offering please [read through its documentation.](https://developer.sabre.com/) 
+For more information regarding our Booking Management API offering please [read through its documentation.](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) 
 
 ## License
 
