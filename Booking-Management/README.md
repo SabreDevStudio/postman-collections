@@ -13,9 +13,9 @@ The services available in this API are listed below (direct link to the document
 |[Cancel Booking](https://developer.sabre.com)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
 
 
-This Postman collection was created to showcase these APIs and provide developers the ability to test* them freely.
+This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
 
-*Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
+> Note: Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
 
 ## Getting Started
 
@@ -27,15 +27,15 @@ Things you need to install:
 
 * [Postman](https://www.postman.com/) app
 
-You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
+You'll also need your [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
 
 ### Installing
 
 Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
-* Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs-2019-09/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
-* Import the [NDC collection file](./Booking_Management_API_v2020_04.postman_collection.json) into Postman using the File -> Import option 
+* Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
+* Import the [Booking Management Collection](./Booking_Management_API_v2020_04.postman_collection.json) into Postman using the File -> Import option 
 
 ### Use Your Credentials
 
@@ -51,14 +51,14 @@ Update the dummy values with your official credentials. To do that follow these 
   * Click on the name of your imported environment file to see a list of all key/value pairs.
   * Enter your credentials, and press the "Update" button.    
 
-![environment varaibles](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs-2019-09/postman_environ_vars.jpg)
+![environment varaibles](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/postman_environ_vars.jpg)
 
 ## Running the Tests
 
-1. Authenticate. In the NDC collection you'll find an item called `0.REST Authorize ATK`. Select it. Click the **Send** button. Look for a 200 Success result. If it failed review your environment credentials.
-2. Shop for air offers. In the NDC collection you'll find an item called `1.Bargain Finder Max /v1`. Select it. Click the **Send** button, and look for a 200 Success result. 
+1. Authenticate. In the Booking Management API collection you'll find a folder named `Authentication` and an item called `REST Authorize`. Select it. Click the **Send** button. Look for a 200 Success result. If it failed review your environment credentials.
+2. Both the GetBooking and CancelBooking services require a confirmation id (PNR locator) in order to properly function, make sure you have one available in order to test. Examples are available in the individual folders: `Get Booking` and `Cancel Booking`. Simply open one of these folders, select an example to test, click the **Send** button, and look for a 200 Success result. 
 
-For more information on Sabre's approach to NDC and how you can send content up in requests [read through its documentation.](https://developer.sabre.com/docs/travel-agency/NDC) 
+For more information regarding our Booking Management API offering please [read through its documentation.](https://developer.sabre.com/) 
 
 ## License
 
