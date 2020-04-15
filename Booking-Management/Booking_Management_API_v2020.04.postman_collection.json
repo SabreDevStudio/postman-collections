@@ -1,0 +1,671 @@
+{
+	"info": {
+		"_postman_id": "6593c92b-3888-42fc-a1a9-db8c0bfbeb98",
+		"name": "Booking Management API v2020.04",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "REST Authorize",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2420ec3c-b57c-4187-ac32-e25d338b7e9f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "36320392-f7a4-488b-93f5-05ff7c9d1eae",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{secret}}"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "grant_type=client_credentials"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v2/auth/token",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v2",
+								"auth",
+								"token"
+							]
+						},
+						"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Booking",
+			"item": [
+				{
+					"name": "GetBooking /v1 General",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cda1a487-d7ad-4fce-a5f2-969eedbf0376",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmationId\": \"DPWNQV\"\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"getBooking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBooking /v1 General + surname",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cda1a487-d7ad-4fce-a5f2-969eedbf0376",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmationId\": \"BHHFIC\",\r\n  \"surname\": \"Test\"\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"getBooking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBooking /v1 Return Only Flights",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cda1a487-d7ad-4fce-a5f2-969eedbf0376",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmationId\": \"KLVHQD\",\r\n  \"returnOnly\":\r\n  [ \"FLIGHTS\"]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"getBooking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBooking /v1 GraphQL",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cda1a487-d7ad-4fce-a5f2-969eedbf0376",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\r\n    getBooking(confirmationId: \"KLVHQD\", surname: \"Test\") {\r\n        travelers\r\n        {\r\n            givenName\r\n            surname\r\n        }\r\n        flights\r\n        {\r\n            flightNumber\r\n            fromAirportCode\r\n            toAirportCode\r\n            departureDate\r\n            arrivalDate\r\n        }\r\n        startDate\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking/graphql",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"getBooking",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cancel Booking",
+			"item": [
+				{
+					"name": "Cancel Booking /v1 Cancel All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"confirmationId\": \"ESEGQJ\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"errorHandlingPolicy\": \"ALLOW_PARTIAL_CANCEL\"\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel by Item Id - Flights",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"confirmationId\": \"BQZPDS\",\n    \"retrieveBooking\": false,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"flights\": [\n        {\n            \"itemId\": 15\n        },\n        {\n            \"itemId\": 16\n        },\n        {\n            \"itemId\": 17\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel by Item Id - Hotels",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"confirmationId\": \"MWOCYN\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"hotels\": [\n        {\n            \"itemId\": 15\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel by Item Id - Flights, Hotels, Cars",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmationId\": \"DLPLZC\",\r\n    \"cars\": [\r\n        {\r\n            \"itemId\": 77\r\n        }\r\n    ],\r\n    \"flights\": [\r\n        {\r\n            \"itemId\": 2\r\n        },\r\n        {\r\n            \"itemId\": 3\r\n        },\r\n        {\r\n            \"itemId\": 4\r\n        },\r\n        {\r\n            \"itemId\": 88\r\n        }\r\n    ],\r\n    \"hotels\": [\r\n        {\r\n            \"itemId\": 25\r\n        },\r\n        {\r\n            \"itemId\": 220\r\n        }\r\n    ]\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel by Sequence Id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmationId\": \"DLPLZC\",\r\n    \"segments\": [\r\n        {\r\n            \"sequence\": 1\r\n        },\r\n        {\r\n            \"sequence\": 3\r\n        }\r\n    ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "47d3d377-10a1-4a44-b564-8171e63a518e",
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"",
+					"// Get the first string of the URI",
+					"const URI = request.url.split(\"/\")[0];",
+					"",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}",
+					"",
+					"",
+					"// Capture today's date",
+					"var moment = require('moment');",
+					"// Add 30 days to today's date and use this date in start_date",
+					"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('start_date', start_date);",
+					"// Add 37 days to today's date and use this date in end_date",
+					"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('end_date', end_date);",
+					"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)",
+					"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('short_end_date', short_end_date);",
+					"",
+					"",
+					"if ((URI) == ('{{soap_endpoint}}')) {",
+					"",
+					"//***SOAP Path***//",
+					"//This means that the temp URL is: {{soap_endpoint}}",
+					"",
+					"    // Get service action name from request name and ignore leading underscore if present",
+					"    const action = request.name.split(' ')[0].replace(/^_/, '');",
+					"    ",
+					"    // Add the token value into the token variable",
+					"    const token = pm.variables.get('token');",
+					"    ",
+					"    // Add the ApplicationId value into the AppId variable",
+					"    const AppId = pm.variables.get('AppId');",
+					"    ",
+					"    // All SOAP API calls require a header section, we have created this variable to remove it from the \"working\" message and ensure the user can focus on the payload section ",
+					"    ",
+					"    const header_appid = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action><CustomerAppId xmlns:ns10=\"http://webservices.sabre.com/\">${AppId}</CustomerAppId></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"    ",
+					"    const header_diag = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security><Diagnostics xmlns=\"http://webservices.sabre.com\"/></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"    ",
+					"    const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"    ",
+					"",
+					"    ",
+					"    // Same as previous item, this footer variable is used to close the entire SOAP envelope",
+					"    const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';",
+					"    ",
+					"    // Add header & footer variables into the specific variables",
+					"    pm.variables.set('header_appid', header_appid);",
+					"    pm.variables.set('header', header);",
+					"    pm.variables.set('header_diag', header_diag);",
+					"    pm.variables.set('footer', footer);",
+					"    ",
+					"",
+					"} else if ((URI) == ('{{rest_endpoint}}')) {",
+					"",
+					"//***REST Path***//",
+					"//This means that the temp URL is: {{rest_endpoint}}/xx/yy/zz",
+					"",
+					"    // Capture URI element which identifies the API method",
+					"    const URI_ID = request.url.split(\"/\")[3];",
+					"",
+					"",
+					"",
+					"    switch (URI_ID) {",
+					"            ",
+					"        case 'token':",
+					"            // Capture username",
+					"            const username =  pm.variables.get('username');",
+					"            // Capture PCC",
+					"            const pcc =  pm.variables.get('pcc');",
+					"            // Construct raw client id (by appending V1:username:PCC:AA)",
+					"            const clientidRaw = `V1:${username}:${pcc}:AA`;",
+					"            // Base64 encode the previous string",
+					"            const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);",
+					"            const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);",
+					"            // Capture password",
+					"            const passwordRaw =  pm.variables.get('password');",
+					"            // Base64 enconde the password",
+					"            const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);",
+					"            const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);",
+					"            // Combine the two previous strings with a : in the middle",
+					"            const secretRaw = `${clientidBase64}:${passwordBase64}`;",
+					"            // Base64 enconde this last string",
+					"            const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);",
+					"            const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);",
+					"            // Set the secret variable with the latest encoded string",
+					"            pm.environment.set('secret', secretBase64);",
+					"            pm.environment.set('token',\"\"); ",
+					"            break;",
+					"            ",
+					"        case 'shop':",
+					"",
+					"            break;",
+					"    }",
+					"}",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9f2b9d3f-8e24-4f7d-985c-94b05d0eaf6f",
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Only execute the following code for SOAP APIs (based on the endpoint being used)",
+					"if ((request.url) == (pm.environment.get(\"soap_endpoint\"))) {",
+					"    ",
+					"    //***SOAP Path***//",
+					"",
+					"    const xml2js = require('xml2js');",
+					"",
+					"    // Get service action name from request name and ignore leading underscore if present",
+					"    const action = request.name.split(' ')[0].replace(/^_/, '');",
+					"",
+					"    // Parse response and remove namespaces (prefixes)",
+					"    // Solves problem when specific APIs return different namespaces randombly ie. ns8, ns9: TP APIs",
+					"    const parseString = xml2js.parseString;",
+					"    const parseOptions = { tagNameProcessors: [xml2js.processors.stripPrefix] };",
+					"    ",
+					"    switch (action) {",
+					"        case 'SessionCreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set('token', token);",
+					"            });",
+					"            break;",
+					"        case 'TokenCreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set(\"token\", token);",
+					"            });",
+					"            break;",
+					"        case 'CreatePassengerNameRecordRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const pnr = result.Envelope.Body[0].CreatePassengerNameRecordRS[0].ItineraryRef[0].$.ID;",
+					"                pm.environment.set('pnr', pnr);",
+					"            });",
+					"            break;",
+					"        case 'AirTicketRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const summary = result.Envelope.Body[0].AirTicketRS[0].Summary;",
+					"                summary.forEach((tktDoc, i) => {",
+					"                    const tktNum = 'tkt' + (i === 0 ? '' : i + 1);",
+					"                    const tktDateTime = tktDoc.LocalIssueDateTime[0];",
+					"                    const tktDate = tktDateTime.substring(tktDateTime, tktDateTime.indexOf('T'));",
+					"                    pm.environment.set(tktNum, tktDoc.DocumentNumber[0]);",
+					"                    pm.environment.set(tktNum + '_date', tktDate);",
+					"                });",
+					"            });",
+					"            break;",
+					"        case 'TP_CreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const proposalID = result.Envelope.Body[0].TP_CreateRS[0].$.proposalID;",
+					"                pm.environment.set('proposal_id', proposalID);",
+					"            });",
+					"            break;",
+					"        case 'TP_ReadRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const proposalVersion = result.Envelope.Body[0].TP_ReadRS[0].TripProposal[0].$.proposalVersion;",
+					"                pm.environment.set('proposal_version', proposalVersion);",
+					"            });",
+					"            break;",
+					"        case 'TP_RefreshRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const proposalVersion = result.Envelope.Body[0].TP_RefreshRS[0].TripProposal[0].$.proposalVersion;",
+					"                pm.environment.set('proposal_version', proposalVersion);",
+					"            });",
+					"            break;",
+					"        case 'GetHotelAvailRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const hotelCode = result.Envelope.Body[0].GetHotelAvailRS[0].HotelAvailInfos[0].HotelAvailInfo[0].HotelInfo[0].$.HotelCode;",
+					"                pm.environment.set('hotel_code', hotelCode);",
+					"            });",
+					"            break;",
+					"        case 'GetHotelDetailsRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const rateKey = result.Envelope.Body[0].GetHotelDetailsRS[0].HotelDetailsInfo[0].HotelRateInfo[0].RateInfos[0].RateInfo[0].$.RateKey;",
+					"                pm.environment.set('rate_key', rateKey);",
+					"            });",
+					"            break;",
+					"        case 'HotelPriceCheckRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const bookingKey = result.Envelope.Body[0].HotelPriceCheckRS[0].PriceCheckInfo[0].$.BookingKey;",
+					"                pm.environment.set('booking_key', bookingKey);",
+					"            });",
+					"            break;",
+					"        // Add new API here",
+					"    }",
+					"",
+					"",
+					"} else {",
+					"    ",
+					"    //***REST Path***//",
+					"",
+					"    // Get the Unique ID of the URI (token, shop, price, create, view, cancel, change) based on the \"5th\" string in order to identify the actual API",
+					"    const URI_ID = request.url.split(\"/\")[5];",
+					"    ",
+					"    // Get the JSON response",
+					"    const jsonData = JSON.parse(responseBody);",
+					"",
+					"    switch (URI_ID) {",
+					"        ",
+					"        case 'token':",
+					"            pm.environment.set('token', jsonData.access_token);",
+					"            break;",
+					"        case 'shop':",
+					"            pm.environment.set('shop_offer_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].offer.offerId);",
+					"            pm.environment.set('shop_offer_item_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].fare.offerItemId);",
+					"            break;",
+					"        case 'price':",
+					"            pm.environment.set('price_offer_id', jsonData.response.offers[0].id);",
+					"            pm.environment.set('price_offer_item_id', jsonData.response.offers[0].offerItems[0].id);",
+					"            break;",
+					"        case 'create':",
+					"            pm.environment.set('sabre_order_id', jsonData.order.id);",
+					"            pm.environment.set('pnr', jsonData.order.pnrLocator);",
+					"            break;",
+					"        case 'hotelavail':",
+					"            pm.environment.set('hotel_code', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelInfo.HotelCode);",
+					"            pm.environment.set('rate_key', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelRateInfo.RateInfos.RateInfo[0].RateKey);",
+					"            break;",
+					"        case 'hoteldetails':",
+					"            pm.environment.set('rate_key', jsonData.GetHotelDetailsRS.HotelDetailsInfo.HotelRateInfo.RateInfos.RateInfo[0].RateKey);",
+					"            break;",
+					"        case 'pricecheck':",
+					"            pm.environment.set('booking_key', jsonData.HotelPriceCheckRS.PriceCheckInfo.BookingKey);",
+					"            break;",
+					"        case 'records?mode=create':",
+					"            pm.environment.set('pnr', jsonData.CreatePassengerNameRecordRS.ItineraryRef.ID);",
+					"            break;",
+					"            ",
+					"    } ",
+					"}",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
