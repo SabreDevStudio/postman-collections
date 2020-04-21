@@ -40,11 +40,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
 							},
 							{
 								"key": "Authorization",
-								"value": "Basic {{secret}}"
+								"value": "Basic {{secret}}",
+								"type": "text"
 							},
 							{
 								"key": "Conversation-ID",
@@ -96,12 +98,18 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"confirmationId\": \"DPWNQV\"\r\n}"
+							"raw": "{\r\n  \"confirmationId\": \"KVKKPB\"\r\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
@@ -114,7 +122,8 @@
 								"orders",
 								"getBooking"
 							]
-						}
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -137,12 +146,18 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"confirmationId\": \"BHHFIC\",\r\n  \"surname\": \"Test\"\r\n}"
+							"raw": "{\r\n  \"confirmationId\": \"RPMHRI\",\r\n  \"surname\": \"Power\"\r\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
@@ -155,7 +170,8 @@
 								"orders",
 								"getBooking"
 							]
-						}
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -178,7 +194,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -196,7 +218,8 @@
 								"orders",
 								"getBooking"
 							]
-						}
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -219,13 +242,19 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "{\r\n    getBooking(confirmationId: \"KLVHQD\", surname: \"Test\") {\r\n        travelers\r\n        {\r\n            givenName\r\n            surname\r\n        }\r\n        flights\r\n        {\r\n            flightNumber\r\n            fromAirportCode\r\n            toAirportCode\r\n            departureDate\r\n            arrivalDate\r\n        }\r\n        startDate\r\n    }\r\n}",
+								"query": "{\r\n    getBooking(confirmationId: \"RPMHRI\", surname: \"Power\") {\r\n        travelers\r\n        {\r\n            givenName\r\n            surname\r\n        }\r\n        flights\r\n        {\r\n            flightNumber\r\n            fromAirportCode\r\n            toAirportCode\r\n            departureDate\r\n            arrivalDate\r\n        }\r\n        \r\n    }\r\n}",
 								"variables": ""
 							}
 						},
@@ -241,7 +270,8 @@
 								"getBooking",
 								"graphql"
 							]
-						}
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				}
@@ -258,12 +288,18 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"confirmationId\": \"ESEGQJ\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"errorHandlingPolicy\": \"ALLOW_PARTIAL_CANCEL\"\n}"
+							"raw": "{\n    \"confirmationId\": \"FDAJBQ\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"errorHandlingPolicy\": \"ALLOW_PARTIAL_CANCEL\"\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
@@ -277,7 +313,55 @@
 								"cancelBooking"
 							]
 						},
-						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel All + Change PCC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1255831-bab8-4f2e-8b79-f57be11c4a1f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"targetPcc\": \"IPCC\",\n    \"confirmationId\": \"FDAJBQ\",\n    \"cancelAll\": true\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -288,12 +372,18 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"confirmationId\": \"BQZPDS\",\n    \"retrieveBooking\": false,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"flights\": [\n        {\n            \"itemId\": 15\n        },\n        {\n            \"itemId\": 16\n        },\n        {\n            \"itemId\": 17\n        }\n    ]\n}"
+							"raw": "{\n    \"confirmationId\": \"RPMHRI\",\n    \"retrieveBooking\": false,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"flights\": [\n        {\n            \"itemId\": 25\n        },\n        {\n            \"itemId\": 26\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
@@ -307,7 +397,7 @@
 								"cancelBooking"
 							]
 						},
-						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -318,12 +408,18 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"confirmationId\": \"MWOCYN\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"hotels\": [\n        {\n            \"itemId\": 15\n        }\n    ]\n}"
+							"raw": "{\n    \"confirmationId\": \"MWOCYN\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": false,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"hotels\": [\n        {\n            \"itemId\": 42\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
@@ -337,7 +433,7 @@
 								"cancelBooking"
 							]
 						},
-						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
@@ -348,7 +444,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -367,23 +469,29 @@
 								"cancelBooking"
 							]
 						},
-						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				},
 				{
-					"name": "Cancel Booking /v1 Cancel by Sequence Id",
+					"name": "Cancel Booking /v1 Cancel by Segment Sequence",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"confirmationId\": \"DLPLZC\",\r\n    \"segments\": [\r\n        {\r\n            \"sequence\": 1\r\n        },\r\n        {\r\n            \"sequence\": 3\r\n        }\r\n    ]\r\n}\r\n"
+							"raw": "{\r\n    \"confirmationId\": \"UMODWZ\",\r\n    \"segments\": [\r\n        {\r\n            \"sequence\": 1\r\n        },\r\n        {\r\n            \"sequence\": 3\r\n        }\r\n    ]\r\n}\r\n"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
@@ -397,7 +505,43 @@
 								"cancelBooking"
 							]
 						},
-						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-enhancedcancelbooking-service/)</b>\n\n\n[//]: # \"End\""
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking /v1 Cancel by Segment Id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Conversation-ID",
+								"value": "2020.04.DevStudio_Booking_Management",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmationId\": \"UMODWZ\",\r\n    \"segments\": [\r\n        {\r\n            \"id\": 38\r\n        },\r\n        {\r\n            \"id\": 26\r\n        }\r\n    ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"cancelBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
 					},
 					"response": []
 				}
