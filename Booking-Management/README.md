@@ -1,16 +1,16 @@
 # Sabre Booking Management API Postman files
 
-The Booking Management API (integral part of Sabre's Business Services) facilitates working with Sabre reservations (bookings) by providing a normalized set of services for the most common travel related use-cases.
+The [Booking Management API](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) (integral part of Sabre's Business Services) facilitates working with Sabre reservations (bookings) by providing a normalized set of services for the most common travel related use-cases.
 
 ## Current Release 
 
-The services available in this API are listed below (direct link to the documentation to be added soon):
+The services available in this API are listed below:
 
 | Service | Description | Endpoint | Type |  
 |---------|-------------|----------|------|
-|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized view of the Sabre Booking | /trip/orders/getBooking |RPC/JSON|
-|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized view of the Sabre Booking | /trip/orders/getBooking/graphql |GraphQL|
-|[Cancel Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
+|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=get-booking)| Normalized view of the Sabre Booking | /trip/orders/getBooking |RPC/JSON|
+|[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=get-booking-graphql-beta)| Normalized view of the Sabre Booking | /trip/orders/getBooking/graphql |GraphQL|
+|[Cancel Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=cancel-booking)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
 
 
 This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
