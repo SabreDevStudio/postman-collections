@@ -8,11 +8,14 @@ Sabre’s NDC-enabled, REST/JSON-based APIs support the shopping, booking and fu
 * Create an Order
 * Cancel an Order (pre-fulfillment) 
 * Fulfill an Order
+* Update an Order
 * Display an Order
+* Get a Seat Map from an Order
 
-This Postman collection was created to showcase these APIs and provide developers the ability to test* them freely.
 
-*Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
+This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
+
+> Note: Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
 
 ## Getting Started
 
@@ -22,7 +25,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Things you need to install:
 
-* [Postman](https://www.getpostman.com/) app
+* [Postman](https://www.postman.com/) app
 
 You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
 
@@ -32,7 +35,14 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [environment file](./NDC_Demo.postman_environment.json) into Postman using the File -> Import option
-* Import the [NDC collection file](./NDC%20Demo.postman_collection.json) into Postman using the File -> Import option 
+* Import the latest NDC collection file(see below) into Postman using the File -> Import option 
+
+
+| Collection version | Comments |
+| - | - | 
+| [2020.04](./NDC%20Demo%20v2020.04.postman_collection.json) | Version incorporates:</br>- Get Seat Map API examples</br>- Order Change Fulfill example with additional form of payment </br>- Order Change examples for Order updates </br>- Inclusion of normalized Get Booking & Cancel Booking services</br>- Additional workflows (incl. State Management examples) | 
+| [2019.10](./NDC%20Demo%20v2019.10.postman_collection.json) | Version incorporates scripting logic to seamlessly transition from shop -> price -> book |
+| [2019.06](./NDC%20Demo%20v2019.06.postman_collection.json) | Version published during Sabre's 2019 STX event which includes initial set of samples for Sabre's Offer & Order APIs supporting booking of NDC content | 
 
 ### Use Your Credentials
 
@@ -59,7 +69,7 @@ For more information on Sabre's approach to NDC and how you can send content up 
 
 ## License
 
-Copyright (c) 2019 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2020 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
