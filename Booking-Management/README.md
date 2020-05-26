@@ -35,7 +35,12 @@ Here are one-time steps for getting your test environment set up:
 
 * Run the Postman app on your local development machine 
 * Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
-* Import the [Booking Management Collection](./Booking_Management_API_v2020.04.postman_collection.json) into Postman using the File -> Import option 
+* Import the latest collection file (see below) into Postman using the File -> Import option
+
+| Collection version | Comments |
+| - | - | 
+| [2020.05](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
+| [2020.04](./Booking_Management_API_v2020.04.postman_collection.json) | Launch version for this API, which contains:</br>- Get Booking samples (RPC/JSON)</br>- Get Booking samples (GraphQL) </br>- Cancel Booking samples (RPC/JSON) | 
 
 ### Use Your Credentials
 
@@ -51,7 +56,7 @@ Update the dummy values with your official credentials. To do that follow these 
   * Click on the name of your imported environment file to see a list of all key/value pairs.
   * Enter your credentials, and press the "Update" button.    
 
-![environment varaibles](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/postman_environ_vars.jpg)
+![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/postman_environ_vars.jpg)
 
 ## Running the Tests
 
