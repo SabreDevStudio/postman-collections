@@ -40,6 +40,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2020.05](./NDC%20Demo%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
 | [2020.04](./NDC%20Demo%20v2020.04.postman_collection.json) | Version incorporates:</br>- Get Seat Map API examples</br>- Order Change Fulfill example with additional form of payment </br>- Order Change examples for Order updates </br>- Inclusion of normalized Get Booking & Cancel Booking services</br>- Additional workflows (incl. State Management examples) | 
 | [2019.10](./NDC%20Demo%20v2019.10.postman_collection.json) | Version incorporates scripting logic to seamlessly transition from shop -> price -> book |
 | [2019.06](./NDC%20Demo%20v2019.06.postman_collection.json) | Version published during Sabre's 2019 STX event which includes initial set of samples for Sabre's Offer & Order APIs supporting booking of NDC content | 
