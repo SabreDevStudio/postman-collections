@@ -24,10 +24,12 @@ Here are one-time steps for getting your test environment set up:
 * Run the Postman app on your local development machine 
 * Import the [Sabre APIs CERT environment file](./Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option
 * Import the desired collection file into Postman using the File -> Import option 
+
   * See table below on current and past versions, we strongly recommend downloading the latest version as we continuously add new APIs and examples:
 
 | Collection version | Comments |
 | - | - | 
+| [2020.05](./Sabre%20APIs%20v2020.05.postman_collection.json) | Version incorporates:</br> - Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic</br> - Sabre Profiles examples</br> - RPC/JSON Car Booking example</br> - RPC/SJON Seat Map example </br> - Updated NDC Offer/Order examples | 
 | [2020.04](./Sabre_APIs_v2020.04.postman_collection.json) | Version incorporates version upgrades and samples for the Booking Management API | 
 | [2019.09](./Sabre_APIs_v2019.09.postman_collection.json) | Version incorporates additional workflows, version upgrades and additional API samples |
 | [2019.06](./STX_2019.postman_collection.json) | Version published during Sabre's 2019 STX event which includes samples for the general Sabre API portfolio including CSL & NDC APIs | 
