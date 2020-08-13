@@ -40,7 +40,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
-| [2020.08](./Booking_Management_API_v2020.08.postman_collection.json) | Version incorporates:</br>- Cancel Flight Tickets samples (RPC/JSON </br>- Additional Canceel Booking samples| 
+| [2020.08](./Booking_Management_API_v2020.08.postman_collection.json) | Version incorporates:</br>- Cancel Flight Tickets samples (RPC/JSON) </br>- Additional Cancel Booking samples| 
 | [2020.05](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
 | [2020.04](./Booking_Management_API_v2020.04.postman_collection.json) | Launch version for this API, which contains:</br>- Get Booking samples (RPC/JSON)</br>- Get Booking samples (GraphQL) </br>- Cancel Booking samples (RPC/JSON) | 
 
