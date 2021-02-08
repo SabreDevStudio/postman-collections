@@ -573,42 +573,6 @@
 					"response": []
 				},
 				{
-					"name": "Cancel Booking /v1 Cancel All and Refund corresponding tickets",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Conversation-ID",
-								"type": "text",
-								"value": "{{conv_id}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"flightTicketOperation\": \"REFUND\",\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\"\n}"
-						},
-						"url": {
-							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
-							"host": [
-								"{{rest_endpoint}}"
-							],
-							"path": [
-								"v1",
-								"trip",
-								"orders",
-								"cancelBooking"
-							]
-						},
-						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
-					},
-					"response": []
-				},
-				{
 					"name": "Cancel Booking /v1 Cancel Flights and Void corresponding tickets",
 					"request": {
 						"method": "POST",
