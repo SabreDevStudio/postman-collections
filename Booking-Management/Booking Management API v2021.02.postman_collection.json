@@ -1530,7 +1530,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"OTA_AirLowFareSearchRQ\": {\n\t\t\"Version\": \"1\",\n\t\t\"POS\": {\n\t\t\t\"Source\": [{\n\t\t\t\t\t\"PseudoCityCode\": \"{{pcc}}\",\n\t\t\t\t\t\"RequestorID\": {\n\t\t\t\t\t\t\"Type\": \"1\",\n\t\t\t\t\t\t\"ID\": \"1\",\n\t\t\t\t\t\t\"CompanyName\": {\n\t\t\t\t\t\t\t\"Code\": \"TN\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"OriginDestinationInformation\": [{\n\t\t\t\t\"RPH\": \"1\",\n\t\t\t\t\"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"SYD\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"BNE\"\n\t\t\t\t}\n\t\t\t}, {\n\t\t\t\t\"RPH\": \"2\",\n\t\t\t\t\"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"BNE\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"SYD\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"TravelPreferences\": {\n\t\t\t\"TPA_Extensions\": {\n\t\t\t\t\"NumTrips\": {\n\t\t\t\t\t\"Number\": 10\n\t\t\t\t},\n\t\t\t\t\"DataSources\": {\n\t\t\t\t\t\"NDC\": \"Enable\",\n\t\t\t\t\t\"ATPCO\": \"Disable\",\n\t\t\t\t\t\"LCC\": \"Disable\"\n\t\t\t\t},\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                }\n\n\t\t\t}\n\t\t},\n\t\t\"TravelerInfoSummary\": {\n\t\t\t\"AirTravelerAvail\": [{\n\t\t\t\t\t\"PassengerTypeQuantity\": [{\n\t\t\t\t\t\t\t\"Code\": \"ADT\",\n\t\t\t\t\t\t\t\"Quantity\": 1\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"TPA_Extensions\": {\n\t\t\t\"IntelliSellTransaction\": {\n\t\t\t\t\"RequestType\": {\n\t\t\t\t\t\"Name\": \"200ITINS\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
+									"raw": "{\n\t\"OTA_AirLowFareSearchRQ\": {\n\t\t\"Version\": \"1\",\n\t\t\"POS\": {\n\t\t\t\"Source\": [{\n\t\t\t\t\t\"PseudoCityCode\": \"{{pcc}}\",\n\t\t\t\t\t\"RequestorID\": {\n\t\t\t\t\t\t\"Type\": \"1\",\n\t\t\t\t\t\t\"ID\": \"1\",\n\t\t\t\t\t\t\"CompanyName\": {\n\t\t\t\t\t\t\t\"Code\": \"TN\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"OriginDestinationInformation\": [{\n\t\t\t\t\"RPH\": \"1\",\n\t\t\t\t\"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t}\n\t\t\t}, {\n\t\t\t\t\"RPH\": \"2\",\n\t\t\t\t\"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"TravelPreferences\": {\n\t\t\t\"TPA_Extensions\": {\n\t\t\t\t\"NumTrips\": {\n\t\t\t\t\t\"Number\": 10\n\t\t\t\t},\n\t\t\t\t\"DataSources\": {\n\t\t\t\t\t\"NDC\": \"Enable\",\n\t\t\t\t\t\"ATPCO\": \"Disable\",\n\t\t\t\t\t\"LCC\": \"Disable\"\n\t\t\t\t},\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                }\n\n\t\t\t}\n\t\t},\n\t\t\"TravelerInfoSummary\": {\n\t\t\t\"AirTravelerAvail\": [{\n\t\t\t\t\t\"PassengerTypeQuantity\": [{\n\t\t\t\t\t\t\t\"Code\": \"ADT\",\n\t\t\t\t\t\t\t\"Quantity\": 1\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"TPA_Extensions\": {\n\t\t\t\"IntelliSellTransaction\": {\n\t\t\t\t\"RequestType\": {\n\t\t\t\t\t\"Name\": \"200ITINS\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{rest_endpoint}}/v2/offers/shop",
@@ -1673,46 +1673,6 @@
 									]
 								},
 								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
-							},
-							"response": []
-						},
-						{
-							"name": "Orders View /v1 Copy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Conversation-ID",
-										"value": "{{conv_id}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{  \r\n   \"id\":\"{{pnr}}\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{rest_endpoint}}/v1/orders/view",
-									"host": [
-										"{{rest_endpoint}}"
-									],
-									"path": [
-										"v1",
-										"orders",
-										"view"
-									]
-								},
-								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/reservation/ordermanagement), [Resources](https://developer.sabre.com/docs/rest_apis/air/reservation/ordermanagement/resources)</b>\n\n[//]: # \"End\""
 							},
 							"response": []
 						},
@@ -2100,7 +2060,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"OTA_AirLowFareSearchRQ\": {\n\t\t\"Version\": \"1\",\n\t\t\"POS\": {\n\t\t\t\"Source\": [{\n\t\t\t\t\t\"PseudoCityCode\": \"{{pcc}}\",\n\t\t\t\t\t\"RequestorID\": {\n\t\t\t\t\t\t\"Type\": \"1\",\n\t\t\t\t\t\t\"ID\": \"1\",\n\t\t\t\t\t\t\"CompanyName\": {\n\t\t\t\t\t\t\t\"Code\": \"TN\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"OriginDestinationInformation\": [{\n\t\t\t\t\"RPH\": \"1\",\n\t\t\t\t\"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"SYD\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"BNE\"\n\t\t\t\t}\n\t\t\t}, {\n\t\t\t\t\"RPH\": \"2\",\n\t\t\t\t\"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"BNE\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"SYD\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"TravelPreferences\": {\n\t\t\t\"TPA_Extensions\": {\n\t\t\t\t\"NumTrips\": {\n\t\t\t\t\t\"Number\": 10\n\t\t\t\t},\n\t\t\t\t\"DataSources\": {\n\t\t\t\t\t\"NDC\": \"Enable\",\n\t\t\t\t\t\"ATPCO\": \"Disable\",\n\t\t\t\t\t\"LCC\": \"Disable\"\n\t\t\t\t},\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                }\n\n\t\t\t}\n\t\t},\n\t\t\"TravelerInfoSummary\": {\n\t\t\t\"AirTravelerAvail\": [{\n\t\t\t\t\t\"PassengerTypeQuantity\": [{\n\t\t\t\t\t\t\t\"Code\": \"ADT\",\n\t\t\t\t\t\t\t\"Quantity\": 1\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"TPA_Extensions\": {\n\t\t\t\"IntelliSellTransaction\": {\n\t\t\t\t\"RequestType\": {\n\t\t\t\t\t\"Name\": \"200ITINS\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
+											"raw": "{\n\t\"OTA_AirLowFareSearchRQ\": {\n\t\t\"Version\": \"1\",\n\t\t\"POS\": {\n\t\t\t\"Source\": [{\n\t\t\t\t\t\"PseudoCityCode\": \"{{pcc}}\",\n\t\t\t\t\t\"RequestorID\": {\n\t\t\t\t\t\t\"Type\": \"1\",\n\t\t\t\t\t\t\"ID\": \"1\",\n\t\t\t\t\t\t\"CompanyName\": {\n\t\t\t\t\t\t\t\"Code\": \"TN\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"OriginDestinationInformation\": [{\n\t\t\t\t\"RPH\": \"1\",\n\t\t\t\t\"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t}\n\t\t\t}, {\n\t\t\t\t\"RPH\": \"2\",\n\t\t\t\t\"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n\t\t\t\t\"OriginLocation\": {\n\t\t\t\t\t\"LocationCode\": \"ABQ\"\n\t\t\t\t},\n\t\t\t\t\"DestinationLocation\": {\n\t\t\t\t\t\"LocationCode\": \"DEN\"\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"TravelPreferences\": {\n\t\t\t\"TPA_Extensions\": {\n\t\t\t\t\"NumTrips\": {\n\t\t\t\t\t\"Number\": 10\n\t\t\t\t},\n\t\t\t\t\"DataSources\": {\n\t\t\t\t\t\"NDC\": \"Enable\",\n\t\t\t\t\t\"ATPCO\": \"Disable\",\n\t\t\t\t\t\"LCC\": \"Disable\"\n\t\t\t\t},\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                }\n\n\t\t\t}\n\t\t},\n\t\t\"TravelerInfoSummary\": {\n\t\t\t\"AirTravelerAvail\": [{\n\t\t\t\t\t\"PassengerTypeQuantity\": [{\n\t\t\t\t\t\t\t\"Code\": \"ADT\",\n\t\t\t\t\t\t\t\"Quantity\": 1\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t\"TPA_Extensions\": {\n\t\t\t\"IntelliSellTransaction\": {\n\t\t\t\t\"RequestType\": {\n\t\t\t\t\t\"Name\": \"200ITINS\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{rest_endpoint}}/v2/offers/shop",
@@ -2181,7 +2141,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"agency\": {\n\t\t\"address\": {\n\t\t\t\"name\": \"John Smith\",\n\t\t\t\"street\": \"1230 Ellen Ave, apt 10\",\n\t\t\t\"city\": \"Dallas\",\n\t\t\t\"stateProvince\": \"TX\",\n\t\t\t\"postalCode\": \"75063\",\n\t\t\t\"countryCode\": \"US\",\n\t\t\t\"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n\t\t},\n\t\t\"agencyCustomerNumber\": \"1234567\",\n\t\t\"ticketingPolicy\": \"TODAY\"\n\t\t},\n\t\"profiles\": [ \n\t\t{\n\t\t\"uniqueId\": \"{{profileId}}\",\n\t\t\"profileTypeCode\": \"TVL\",\n\t\t\"domainId\": \"{{pcc}}\"\n\t\t}\n\t],\n\t\"flightDetails\": {\n\t\t\"flights\": [\n\t\t\t{\n\t\t\t\t\"flightNumber\": 463,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"MEL\",\n\t\t\t\t\"toAirportCode\": \"AUH\",\n\t\t\t\t\"departureDate\": \"2021-03-30\",\n\t\t\t\t\"departureTime\": \"16:55\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"flightNumber\": 462,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"AUH\",\n\t\t\t\t\"toAirportCode\": \"MEL\",\n\t\t\t\t\"departureDate\": \"2021-04-15\",\n\t\t\t\t\"departureTime\": \"09:00\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t}\n\t\t]\n\t}\n}"
+											"raw": "{\n\t\n\t\"profiles\": [ \n\t\t{\n\t\t\"uniqueId\": \"{{profileId}}\",\n\t\t\"profileTypeCode\": \"TVL\",\n\t\t\"domainId\": \"{{pcc}}\"\n\t\t}\n\t],\n\t\t\"flightOffer\": {\n\t\t\"offerId\": \"{{price_offer_id}}\",\n\t\t\"selectedOfferItems\": [\n\t\t\t\"{{price_offer_item_id}}\"\n\t\t]\n\t},\n\t\t\"travelers\": [\n\t\t{\n\t\t\t\"id\": \"{{price_passenger_id}}\"\n\t\t}\n\t]\n}"
 										},
 										"url": {
 											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
