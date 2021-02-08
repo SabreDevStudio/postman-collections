@@ -10,8 +10,11 @@ The services available in this API are listed below:
 |---------|-------------|----------|------|
 |[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=get-booking)| Normalized view of the Sabre Booking | /trip/orders/getBooking |RPC/JSON|
 |[Get Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=get-booking-graphql-beta)| Normalized view of the Sabre Booking | /trip/orders/getBooking/graphql |GraphQL|
+|[Create Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=get-booking)| Create Booking provides a single, unified service to create an air booking for different content sources (NDC, Traditional, LCC). | /trip/orders/createBooking |RPC/JSON|
 |[Cancel Booking](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help?page=cancel-booking)| Normalized cancel of Sabre Products within a Booking| /trip/orders/cancelBooking |RPC/JSON|
-|[Cancel Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Normalized cancel(void) for flight tickets and electronic miscellaneous documents (EMD)| /trip/orders/cancelFlightTickets |RPC/JSON|
+|[Check Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Check Flight Tickets provides a single, unified service to verify voidability and refundablity for a list of electronic documents (ATPCO). Refund-Checks are currently limited electronic tickets. | /trip/orders/checkFlightTickets |RPC/JSON|
+|[Void Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Void Flight Tickets provides a single, unified service to void a list of electronic documents (ATPCO). This includes electronic tickets as well as electronic miscellaneous documents (EMD). | /trip/orders/voidFlightTickets |RPC/JSON|
+|[Refund Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Refund Flight Tickets provides a single, unified service to refund a list of electronic documents (ATPCO). The service allows to specify refund qualifiers. This is currently limited electronic tickets. | /trip/orders/refundFlightTickets |RPC/JSON|
 
 
 This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
@@ -40,6 +43,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2021.02](./Booking_Management_API_v2021.02.postman_collection.json) | Version incorporates:</br>- BETA CreateBooking RPC/JSON service to book air content  (NDC, Traditional, LCC). </br>- Check Flight Tickets samples </br>- Void Flight Tickets samples </br>- Refund Flight Tickets samples </br>- Additional Cancel Booking samples| 
 | [2020.08](./Booking_Management_API_v2020.08.postman_collection.json) | Version incorporates:</br>- Cancel Flight Tickets samples (RPC/JSON) </br>- Additional Cancel Booking samples| 
 | [2020.05](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
 | [2020.04](./Booking_Management_API_v2020.04.postman_collection.json) | Launch version for this API, which contains:</br>- Get Booking samples (RPC/JSON)</br>- Get Booking samples (GraphQL) </br>- Cancel Booking samples (RPC/JSON) | 
