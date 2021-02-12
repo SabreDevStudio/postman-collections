@@ -590,7 +590,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"confirmationId\": \"RPMHRI\",\n    \"retrieveBooking\": false,\n    \"cancelAll\": false,\n    \"flightTicketOperation\": \"VOID\",\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"flights\": [\n        {\n            \"itemId\": 25\n        },\n        {\n            \"itemId\": 26\n        }\n    ]\n}"
+							"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"retrieveBooking\": false,\n    \"cancelAll\": false,\n    \"flightTicketOperation\": \"VOID\",\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\",\n    \"flights\": [\n        {\n            \"itemId\": 25\n        },\n        {\n            \"itemId\": 26\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
@@ -1305,6 +1305,42 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t \"agency\": {\n\t\t\"address\": {\n\t\t\t\"name\": \"John Smith\",\n\t\t\t\"street\": \"1230 Ellen Ave, apt 10\",\n\t\t\t\"city\": \"Dallas\",\n\t\t\t\"stateProvince\": \"TX\",\n\t\t\t\"postalCode\": \"75063\",\n\t\t\t\"countryCode\": \"US\",\n\t\t\t\"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n\t\t},\n\t\t\"agencyCustomerNumber\": \"1234567\",\n\t\t\"ticketingPolicy\": \"TODAY\"\n  \t},\n\t\"travelers\": [\n\t\t{\n\t\t\t\"givenName\": \"John\",\n\t\t\t\"surname\": \"Smith\",\n\t\t\t\"birthDate\": \"1970-01-23\",\n\t\t\t\"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n            {\n                \"documentNumber\": \"0123456789\",\n                \"documentType\": \"PASSPORT\",\n                \"expiryDate\": \"2024-07-09\",\n                \"issuingCountryCode\": \"US\",\n                \"residenceCountryCode\": \"US\",\n                \"givenName\": \"John\",\n                \"middleName\": \"Jack\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1980-12-02\",\n                \"gender\": \"MALE\"\n            }\n            ]\n\t\t}\n\t],\n\t\"contactInfo\":\n    {\n      \"emails\": [\n        \"travel@sabre.com\",\n\t\t\"travel2@sabre.com\"\n      ],\n      \"phones\": [\n        \"+123456\"\n      ]\n    },\n\t\"flightDetails\": {\n\t\t\"flights\": [\n\t\t\t{\n\t\t\t\t\"flightNumber\": 463,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"MEL\",\n\t\t\t\t\"toAirportCode\": \"AUH\",\n\t\t\t\t\"departureDate\": \"2021-03-30\",\n\t\t\t\t\"departureTime\": \"16:55\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"flightNumber\": 462,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"AUH\",\n\t\t\t\t\"toAirportCode\": \"MEL\",\n\t\t\t\t\"departureDate\": \"2021-04-15\",\n\t\t\t\t\"departureTime\": \"09:00\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t}\n\t\t],\n        \"flightPricing\": [\n        {\n        \"qualifiers\": {\n            \"validatingAirlineCode\": \"EY\"\n        }\n        }\n    ]\n\t},\n    \"payment\": {\n        \"billingAddress\": {\n        \"name\": \"John Smith\",\n        \"street\": \"1230 Ellen Ave, apt 10\",\n        \"city\": \"Dallas\",\n        \"stateProvince\": \"TX\",\n        \"postalCode\": \"75063\",\n        \"countryCode\": \"US\"\n        }\n  } \n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"createBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "createBooking - Air with loyaltyPrograms",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Conversation-ID",
+								"type": "text",
+								"value": "{{conv_id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t \"agency\": {\n\t\t\"address\": {\n\t\t\t\"name\": \"John Smith\",\n\t\t\t\"street\": \"1230 Ellen Ave, apt 10\",\n\t\t\t\"city\": \"Dallas\",\n\t\t\t\"stateProvince\": \"TX\",\n\t\t\t\"postalCode\": \"75063\",\n\t\t\t\"countryCode\": \"US\",\n\t\t\t\"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n\t\t},\n\t\t\"agencyCustomerNumber\": \"1234567\"\n  \t},\n\t\"travelers\": [\n\t\t{\n\t\t\t\"givenName\": \"John\",\n\t\t\t\"surname\": \"Kowalski\",\n\t\t\t\"birthDate\": \"1970-01-23\",\n\t\t\t\"passengerCode\": \"ADT\",\n            \"loyaltyPrograms\": [\n                {\n                \"supplierCode\": \"LO\",\n                \"programNumber\": \"992001557133731\",\n                \"tierLevel\": \"1\",\n                \"receiverCode\": \"LO\"\n              }\n            ]\n\t\t},\n                {\n\t\t\t\"givenName\": \"Infant\",\n\t\t\t\"surname\": \"Mrozicki\",\n\t\t\t\"birthDate\": \"2020-01-23\",\n\t\t\t\"passengerCode\": \"INF\"\n\t\t},\n        {\n\t\t\t\"givenName\": \"All\",\n\t\t\t\"surname\": \"Mrozicki\",\n\t\t\t\"birthDate\": \"2000-01-23\",\n\t\t\t\"passengerCode\": \"ADT\",\n                        \"loyaltyPrograms\": [\n              {\n                \"supplierCode\": \"AA\",\n                \"programNumber\": \"7L9TB38\",\n                \"tierLevel\": \"1\",\n                \"receiverCode\": \"AA\"\n              }\n            ]\n\t\t}\n\t],\n\t\"contactInfo\":\n    {\n      \"emails\": [\n        \"travel@sabre.com\",\n\t\t\"travel2@sabre.com\"\n      ],\n      \"phones\": [\n        \"+123456\"\n      ]\n    },\n\t\"flightDetails\": {\n\t\t\"flights\": [\n\t\t\t{\n\t\t\t\t\"flightNumber\": 463,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"MEL\",\n\t\t\t\t\"toAirportCode\": \"AUH\",\n\t\t\t\t\"departureDate\": \"2021-03-31\",\n\t\t\t\t\"departureTime\": \"16:55\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"flightNumber\": 462,\n\t\t\t\t\"airlineCode\": \"EY\",\n\t\t\t\t\"fromAirportCode\": \"AUH\",\n\t\t\t\t\"toAirportCode\": \"MEL\",\n\t\t\t\t\"departureDate\": \"2021-04-16\",\n\t\t\t\t\"departureTime\": \"09:00\",\n\t\t\t\t\"bookingClass\": \"Y\",\n\t\t\t\t\"marriageGroup\": false,\n\t\t\t\t\"flightStatusCode\": \"NN\"\n\t\t\t}\n\t\t],\n        \"flightPricing\": [\n        {\n        }\n    ]\n\t},\n    \"payment\": {\n        \"billingAddress\": {\n        \"name\": \"John Smith\",\n        \"street\": \"1230 Ellen Ave, apt 10\",\n        \"city\": \"Dallas\",\n        \"stateProvince\": \"TX\",\n        \"postalCode\": \"75063\",\n        \"countryCode\": \"US\"\n        }\n  } \n}"
 						},
 						"url": {
 							"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
