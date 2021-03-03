@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "0995f703-0995-41d8-99d2-3a38e70de5e5",
+		"name": "VDB_20210302",
+		"description": "BFM collection with examples from Virtual Developer Bench session March 2nd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{rest_credentials}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Accept",
+							"value": "*/*",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/auth/token",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_basic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"JFK\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"LHR\"\n                },\n                \"RPH\": \"1\"\n            },\n            {\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"LHR\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"JFK\"\n                },\n                \"RPH\": \"2\"\n            }\n        ],\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        },\n                        \"ID\": \"1\",\n                        \"Type\": \"1\"\n                    }\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"50ITINS\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"Version\": \"2\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				},
+				"description": "Basic regular request with bare minimum criteria"
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_Alternate Airport Shop_defined",
+			"protocolProfileBehavior": {
+				"disableCookies": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"OTA_AirLowFareSearchRQ\": {\r\n        \"Version\": \"2\",\r\n        \"OriginDestinationInformation\": [\r\n            {\r\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"JFK\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"LAX\"\r\n                },\r\n                \"RPH\": \"1\",\r\n                \"TPA_Extensions\": {\r\n                    \"SisterOriginLocation\": [\r\n                        {\r\n                            \"LocationCode\": \"EWR\"\r\n                        }\r\n                    ],\r\n                    \"SisterDestinationLocation\": [\r\n                        {\r\n                            \"LocationCode\": \"SNA\"\r\n                        },\r\n                        {\r\n                            \"LocationCode\": \"ONT\"\r\n                        },\r\n                        {\r\n                            \"LocationCode\": \"SAN\"\r\n                        }\r\n                    ]\r\n                }\r\n            },\r\n            {\r\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"LAX\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"JFK\"\r\n                },\r\n                \"RPH\": \"2\",\r\n                \"TPA_Extensions\": {\r\n                    \"SisterOriginLocation\": [\r\n                        {\r\n                            \"LocationCode\": \"SNA\"\r\n                        },\r\n                        {\r\n                            \"LocationCode\": \"ONT\"\r\n                        },\r\n                        {\r\n                            \"LocationCode\": \"SAN\"\r\n                        }\r\n                    ],\r\n                    \"SisterDestinationLocation\": [\r\n                        {\r\n                            \"LocationCode\": \"EWR\"\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        ],\r\n        \"POS\": {\r\n            \"Source\": [\r\n                {\r\n                    \"PseudoCityCode\": \"FF9A\",\r\n                    \"RequestorID\": {\r\n                        \"CompanyName\": {\r\n                            \"Code\": \"TN\"\r\n                        },\r\n                        \"ID\": \"1\",\r\n                        \"Type\": \"1\"\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        \"TPA_Extensions\": {\r\n            \"IntelliSellTransaction\": {\r\n                \"RequestType\": {\r\n                    \"Name\": \"100ITINS\"\r\n                }\r\n            }\r\n        },\r\n        \"TravelerInfoSummary\": {\r\n            \"AirTravelerAvail\": [\r\n                {\r\n                    \"PassengerTypeQuantity\": [\r\n                        {\r\n                            \"Code\": \"ADT\",\r\n                            \"Quantity\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_Alternate Airport Shop_radius",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"OTA_AirLowFareSearchRQ\": {\r\n        \"Version\": \"2\",\r\n        \"OriginDestinationInformation\": [\r\n            {\r\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"JFK\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"LAX\"\r\n                },\r\n                \"RPH\": \"1\",\r\n                \"TPA_Extensions\": {\r\n                    \"SisterOriginMileage\": {\r\n                        \"Number\": 99,\r\n                        \"AllowBorderCross\": false\r\n                    },\r\n                    \"SisterDestinationMileage\": {\r\n                        \"Number\": 99,\r\n                        \"AllowBorderCross\": false\r\n                    }\r\n                }\r\n            },\r\n            {\r\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"LAX\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"JFK\"\r\n                },\r\n                \"RPH\": \"2\",\r\n                \"TPA_Extensions\": {\r\n                    \"SisterOriginMileage\": {\r\n                        \"Number\": 99,\r\n                        \"AllowBorderCross\": false\r\n                    },\r\n                    \"SisterDestinationMileage\": {\r\n                        \"Number\": 99,\r\n                        \"AllowBorderCross\": false\r\n                    }\r\n                }\r\n            }\r\n        ],\r\n        \"POS\": {\r\n            \"Source\": [\r\n                {\r\n                    \"PseudoCityCode\": \"FF9A\",\r\n                    \"RequestorID\": {\r\n                        \"CompanyName\": {\r\n                            \"Code\": \"TN\"\r\n                        },\r\n                        \"ID\": \"1\",\r\n                        \"Type\": \"1\"\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        \"TPA_Extensions\": {\r\n            \"IntelliSellTransaction\": {\r\n                \"RequestType\": {\r\n                    \"Name\": \"100ITINS\"\r\n                }\r\n            }\r\n        },\r\n        \"TravelerInfoSummary\": {\r\n            \"AirTravelerAvail\": [\r\n                {\r\n                    \"PassengerTypeQuantity\": [\r\n                        {\r\n                            \"Code\": \"ADT\",\r\n                            \"Quantity\": 1\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_Alternate Date",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"2021-06-21T00:00:00\",\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"LAX\"\n                },\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MIA\"\n                },\n                \"RPH\": \"1\",\n                \"TPA_Extensions\": {\n                    \"DateFlexibility\": [\n                        {\n                            \"Plus\": 1,\n                            \"Minus\": 1\n                        }\n                    ]\n                }\n            },\n            {\n                \"DepartureDateTime\": \"2021-06-27T00:00:00\",\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MIA\"\n                },\n                \"OriginLocation\": {\n                    \"LocationCode\": \"LAX\"\n                },\n                \"RPH\": \"2\",\n                \"TPA_Extensions\": {\n                    \"DateFlexibility\": [\n                        {\n                            \"Plus\": 5,\n                            \"Minus\": 4\n                        }\n                    ]\n                }\n            }\n        ],\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"FF9A\",\n                    \"RequestorID\": {\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        },\n                        \"ID\": \"1\",\n                        \"Type\": \"1\"\n                    }\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"AD7\"\n                }\n            }\n        },\n        \"TravelPreferences\": {\n            \"TPA_Extensions\": {\n                \"DataSources\": {\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\",\n                    \"NDC\": \"Disable\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"SeatsRequested\": [\n                1\n            ]\n        },\n        \"Version\": \"1\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v6.1.0/shop/altdates/flights?mode=live",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v6.1.0",
+						"shop",
+						"altdates",
+						"flights"
+					],
+					"query": [
+						{
+							"key": "mode",
+							"value": "live"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_stops+connections",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"NYC\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"RPH\": \"1\",\n                \"TPA_Extensions\": {\n                    \"ConnectionTime\": {\n                        \"Min\": 60,\n                        \"Max\": 300,\n                        \"ExcludedConnectionBegin\": \"2200\",\n                        \"ExcludedConnectionEnd\": \"0100\",\n                        \"EnableExcludedConnection\": true\n                    }\n                }\n            },\n            {\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"NYC\"\n                },\n                \"RPH\": \"2\"\n            }\n        ],\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        },\n                        \"ID\": \"1\",\n                        \"Type\": \"1\"\n                    }\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        },\n        \"TravelPreferences\": {\n            \"FlightTypePref\": {\n                \"MaxConnections\": \"1\"\n            },\n            \"TPA_Extensions\": {\n                \"LongConnectTime\": {\n                    \"Enable\": true,\n                    \"Min\": 600\n                },\n                \"LongConnectPoints\": {\n                    \"Min\": 1,\n                    \"Max\": 2\n                },\n                \"DiversityParameters\": {\n                    \"AdditionalNonStopsNumber\": 10\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"Version\": \"2\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_carrierFilters",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"NYC\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"PAR\"\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"PAR\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"NYC\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"AF\",\n                    \"PreferLevel\": \"Preferred\"\n                },\n                {\n                    \"Code\": \"AA\",\n                    \"PreferLevel\": \"Preferred\"\n                },\n                {\n                    \"Code\": \"DL\",\n                    \"PreferLevel\": \"Unacceptable\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"CodeShareIndicator\": {\n                    \"ExcludeCodeshare\": true,\n                    \"KeepOnlines\": false\n                },\n                \"OnlineIndicator\": {\n                    \"Ind\": false\n                },\n                \"ValidatingCarrier\": {\n                    \"Preference\": [\n                        {\n                            \"Code\": \"AF\",\n                            \"Level\": \"Unacceptable\"\n                        },\n                        {\n                            \"Code\": \"FI\",\n                            \"Level\": \"Unacceptable\"\n                        },\n                        {\n                            \"Code\": \"KL\",\n                            \"Level\": \"Unacceptable\"\n                        }\n                    ]\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_fareFilters",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MCI\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"CPH\"\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"CPH\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MCI\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"CabinPref\": [\n                {\n                    \"Cabin\": \"J\",\n                    \"PreferLevel\": \"Preferred\"\n                }\n            ]\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        },\n                        {\n                            \"Code\": \"CNN\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"NegotiatedFareCode\": [\n                    {\n                        \"Code\": \"ABC12\"\n                    }\n                ],\n                \"AccountCode\": [\n                    {\n                        \"Code\": \"SUMMER12\"\n                    }\n                ],\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_attributeFilters",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MCI\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"CPH\"\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"CPH\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MCI\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"Baggage\": {\n                \"RequestType\": \"C\",\n                \"Description\": true,\n                \"FreePieceRequired\": true\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1,\n                            \"TPA_Extensions\": {\n                                \"VoluntaryChanges\": {\n                                    \"Match\": \"Info\"\n                                }\n                            }\n                        },\n                        {\n                            \"Code\": \"CNN\",\n                            \"Quantity\": 1,\n                            \"TPA_Extensions\": {\n                                \"VoluntaryChanges\": {\n                                    \"Match\": \"Info\"\n                                }\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true,\n                        \"ReturnBrandAncillaries\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_multipleBrands",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SFO\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"ROM\"\n                },\n                \"RPH\": \"0\"\n            },\n            {\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"ROM\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SFO\"\n                },\n                \"RPH\": \"1\"\n            }\n        ],\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"F9GE\",\n                    \"RequestorID\": {\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        },\n                        \"ID\": \"1\",\n                        \"Type\": \"1\"\n                    }\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"MultipleBrandedFares\": true,\n                        \"ReturnBrandAncillaries\": true,\n                        \"UpsellLimit\": 3\n                    }\n                }\n            }\n        },\n        \"Version\": \"2\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_MultipleFaresPerItin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"OTA_AirLowFareSearchRQ\": {\n    \"Version\": \"2\",\n    \"POS\": {\n      \"Source\": [\n        {\n          \"PseudoCityCode\": \"F9GE\",\n          \"RequestorID\": {\n            \"Type\": \"1\",\n            \"ID\": \"1\",\n            \"CompanyName\": {\n              \"Code\": \"TN\"\n            }\n          }\n        }\n      ]\n    },\n    \"OriginDestinationInformation\": [\n      {\n        \"RPH\": \"1\",\n        \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n        \"OriginLocation\": {\n          \"LocationCode\": \"LAX\"\n        },\n        \"DestinationLocation\": {\n          \"LocationCode\": \"BKK\"\n        }\n      },\n      {\n        \"RPH\": \"2\",\n        \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n        \"OriginLocation\": {\n          \"LocationCode\": \"BKK\"\n        },\n        \"DestinationLocation\": {\n          \"LocationCode\": \"LAX\"\n        }\n      }\n    ],\n    \"TravelPreferences\": {\n      \"TPA_Extensions\": {\n        \"FlexibleFares\": {\n          \"FareParameters\": [\n            {\n              \"XOFares\": {\n                \"Ind\": true\n              },\n              \"PassengerTypeQuantity\": [\n                {\n                  \"Code\": \"ITX\",\n                  \"Quantity\": 1\n                }\n              ]\n            },\n            {\n              \"Cabin\": {\n                \"Type\": \"Business\"\n              }\n            },\n            {\n              \"Baggage\": {\n                \"FreePieceRequired\": true\n              }\n            },\n            {\n              \"NegotiatedFaresOnly\": {\n                \"Ind\": true\n              },\n              \"AccountCode\": [\n                {\n                  \"Code\": \"OTA15\"\n                },\n                {\n                  \"Code\": \"SUMMERS2\"\n                },\n                {\n                  \"Code\": \"SBR11\"\n                }\n              ]\n            },\n            {\n              \"VoluntaryChanges\": {\n                \"Match\": \"Any\"\n              }\n            }\n          ]\n        }\n      },\n      \"Baggage\": {\n        \"RequestType\": \"C\",\n        \"Description\": true\n      }\n    },\n    \"TravelerInfoSummary\": {\n      \"AirTravelerAvail\": [\n        {\n          \"PassengerTypeQuantity\": [\n            {\n              \"Code\": \"ADT\",\n              \"Quantity\": 1,\n              \"TPA_Extensions\": {\n                \"VoluntaryChanges\": {\n                  \"Match\": \"Info\"\n                }\n              }\n            }\n          ]\n        }\n      ],\n      \"PriceRequestInformation\": {\n        \"TPA_Extensions\": {\n          \"BrandedFareIndicators\": {\n            \"SingleBrandedFare\": true\n          }\n        }\n      }\n    },\n    \"TPA_Extensions\": {\n      \"IntelliSellTransaction\": {\n        \"RequestType\": {\n          \"Name\": \"100ITINS\"\n        }\n      }\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_Anchored",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"FF9A\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"Fixed\": true,\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"CHI\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MAD\"\n                },\n                \"TPA_Extensions\": {\n                    \"Flight\": [\n                        {\n                            \"ClassOfService\": \"N\",\n                            \"Number\": 6274,\n                            \"DepartureDateTime\": \"2021-10-18T16:35:00\",\n                            \"ArrivalDateTime\": \"2021-10-19T07:50:00\",\n                            \"Type\": \"A\",\n                            \"OriginLocation\": {\n                                \"LocationCode\": \"ORD\"\n                            },\n                            \"DestinationLocation\": {\n                                \"LocationCode\": \"MAD\"\n                            },\n                            \"Airline\": {\n                                \"Operating\": \"IB\",\n                                \"Marketing\": \"IB\"\n                            }\n                        }\n                    ]\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MAD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"CHI\"\n                }\n            }\n        ],\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax_GIR_JSON_multiTicket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"FF9A\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2021-10-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MCO\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"DEN\"\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2021-10-28T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"DEN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MCO\"\n                }\n            }\n        ],\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            },\n            \"MultiTicket\": {\n                \"DisplayPolicy\": \"SOW\",\n                \"RequestedOneWays\": 30\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{rest_endpoint}}/v2/offers/shop",
+					"host": [
+						"{{rest_endpoint}}"
+					],
+					"path": [
+						"v2",
+						"offers",
+						"shop"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
