@@ -43,7 +43,8 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
-| [2021.02](./Booking%20Management%20API%20v2021.02.postman_collection.json) | Version incorporates:</br>- BETA CreateBooking RPC/JSON service to book air content  (NDC, Traditional, LCC). </br>- Check Flight Tickets samples </br>- Void Flight Tickets samples </br>- Refund Flight Tickets samples </br>- New e2e workflows | 
+| [2021.05](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- CreateBooking samples for sending other service information (OSI) </br>- CreateBooking sample using a profile filtered by the ID </br>- CheckFlightTickets request by confirmationId. This allows you to check all ATPCO tickets of a reservation and check the refund or void option of a NDC Order </br>- CancelBooking samples for voids or refunds for NDC orders |
+| [2021.02](./Booking%20Management%20API%20v2021.02.postman_collection.json) | Version incorporates:</br>- CreateBooking RPC/JSON service to book air content  (NDC, Traditional, LCC). </br>- Check Flight Tickets samples </br>- Void Flight Tickets samples </br>- Refund Flight Tickets samples </br>- New e2e workflows | 
 | [2020.08](./Booking_Management_API_v2020.08.postman_collection.json) | Version incorporates:</br>- Cancel Flight Tickets samples (RPC/JSON) </br>- Additional Cancel Booking samples| 
 | [2020.05](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
 | [2020.04](./Booking_Management_API_v2020.04.postman_collection.json) | Launch version for this API, which contains:</br>- Get Booking samples (RPC/JSON)</br>- Get Booking samples (GraphQL) </br>- Cancel Booking samples (RPC/JSON) | 
