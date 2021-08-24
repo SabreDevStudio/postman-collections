@@ -75,7 +75,7 @@ For more information regarding our Booking Management API offering please [read 
 
 ## Running the Tests using the Collection Runner. 
 
-The Collection Runner allows you to run sets of requests in a specified sequence. The Collection Runner will log your request test results, and your scripts can pass data between requests as well as alter the request workflow. You can use the Runner for the `Deep Dive into E2E NDC Reservation Management with the Booking Management API collection`.
+The Collection Runner allows you to run sets of requests in a specified sequence. The Collection Runner will log your request test results, and your scripts can pass data between requests as well as alter the request workflow. You can use the Runner for the `Deep Dive into E2E NDC Reservation Management with the Booking Management` API collection.
 
 1.	Click on the root folder of the project. 
 2.	Click on “run” icon.
