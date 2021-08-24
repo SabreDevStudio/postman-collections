@@ -1,0 +1,128 @@
+{
+	"id": "7dd3b9cd-c99c-44ec-bc45-705189ad2679",
+	"name": "A Deep Dive into E2E NDC Reservation Management with the Booking Management API",
+	"timestamp": "2021-08-23T14:09:25.728Z",
+	"collection_id": "14522044-709a7949-2f2f-4672-8291-70b187ec32e0",
+	"folder_id": 0,
+	"environment_id": "ca782ace-5ecf-490c-97dd-6532ab0939cc",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d02db96d-21af-4aea-a636-59ec04dd7bb4",
+			"name": "1. Bargain Finder Max /v2",
+			"url": "https://api-crt.cert.havail.sabre.com/v2/offers/shop",
+			"time": 1815,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				1815
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "d488560c-6e13-4ffd-8212-120c26091b0e",
+			"name": "2. Offers Price /v1",
+			"url": "https://api-crt.cert.havail.sabre.com/v1/offers/price",
+			"time": 3190,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				3190
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "d8fac5bf-6395-49f0-b6e5-e478edc8ae6e",
+			"name": "3.1 Simple NDC booking for single traveler",
+			"url": "https://api-crt.cert.havail.sabre.com/v1/trip/orders/createBooking",
+			"time": 15577,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				15577
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "2b8d35b4-1e58-46cc-850e-dd84c35c2926",
+			"name": "4. GetBooking /v1 General",
+			"url": "https://api-crt.cert.havail.sabre.com/v1/trip/orders/getBooking",
+			"time": 3636,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				3636
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "793b96e9-eb79-4285-9708-7e2cc88d8c11",
+			"name": "5.1 With cancelAll = true",
+			"url": "https://api-crt.cert.havail.sabre.com/v1/trip/orders/cancelBooking",
+			"time": 13186,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				13186
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 37404,
+	"collection": {
+		"requests": [
+			{
+				"id": "d02db96d-21af-4aea-a636-59ec04dd7bb4",
+				"method": "POST"
+			},
+			{
+				"id": "d488560c-6e13-4ffd-8212-120c26091b0e",
+				"method": "POST"
+			},
+			{
+				"id": "d8fac5bf-6395-49f0-b6e5-e478edc8ae6e",
+				"method": "POST"
+			},
+			{
+				"id": "2b8d35b4-1e58-46cc-850e-dd84c35c2926",
+				"method": "POST"
+			},
+			{
+				"id": "793b96e9-eb79-4285-9708-7e2cc88d8c11",
+				"method": "POST"
+			}
+		]
+	}
+}
