@@ -43,6 +43,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2021.09](./Booking%20Management%20API%20v2020.09.postman_collection.json) | Version incorporates:</br>- CreateBooking samples for booking ancillaries |
 | [2021.06](./Booking%20Management%20API%20v2020.06.postman_collection.json) | Version incorporates:</br>- CreateBooking samples for booking hotel content |
 | [2021.04](./Booking%20Management%20API%20v2020.05.postman_collection.json) | Version incorporates:</br>- CreateBooking samples for sending other service information (OSI) </br>- CreateBooking sample using a profile filtered by the ID </br>- CheckFlightTickets request by confirmationId. This allows you to check all ATPCO tickets of a reservation and check the refund or void option of a NDC Order </br>- CancelBooking samples for voids or refunds for NDC orders |
 | [2021.02](./Booking%20Management%20API%20v2021.02.postman_collection.json) | Version incorporates:</br>- CreateBooking RPC/JSON service to book air content  (NDC, Traditional, LCC). </br>- Check Flight Tickets samples </br>- Void Flight Tickets samples </br>- Refund Flight Tickets samples </br>- New e2e workflows | 
