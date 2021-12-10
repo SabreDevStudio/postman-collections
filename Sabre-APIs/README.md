@@ -29,6 +29,7 @@ Here you will find the steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2021.07](./Sabre%20APIs%20v2021.07.postman_collection.json) | Version incorporates:</br> - examples for the new Enhanced Vehicle Book API (check the following locations: SOAP/XML.Cars.Car Sell.Car Sell Stateful / Workflows.9.1 / Workflows.9.2 
 | [2021.01](./Sabre%20APIs%20v2021.01.postman_collection.json) | Version incorporates:</br> - Tree structure reorganization to better illustrate the REST(RPC)/JSON & SOAP/XML API portfolios</br> - Updated versions of our authentication methods that support the new [Client ID](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids) parameter</br> - Updated versions of all services in the collection</br> - Updated RPC/JSON Booking Management examples (cancel, void) </br> - BETA CreateBooking RPC/JSON service to book NDC + traditional air content </br> - Updated NDC Offer/Order examples | 
 | [2020.05](./Sabre%20APIs%20v2020.05.postman_collection.json) | Version incorporates:</br> - Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic</br> - Sabre Profiles examples</br> - RPC/JSON Car Booking example</br> - RPC/SJON Seat Map example </br> - Updated NDC Offer/Order examples | 
 | [2020.04](./Sabre_APIs_v2020.04.postman_collection.json) | Version incorporates version upgrades and samples for the Booking Management API | 
