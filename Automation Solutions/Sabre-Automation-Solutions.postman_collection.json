@@ -1,0 +1,2773 @@
+{
+	"info": {
+		"_postman_id": "99c29272-d48e-4ac8-ab7c-66987da93ade",
+		"name": "Sabre Automation Solutions",
+		"description": "# Automation Solutions Postman collection\n\nThis Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.\n\n# Process outline\n\nThe collection depicts common scenarios to automate your post-booking processes.\n\nUsing Postman scripting capabilities, we've created a simple workflow to illustrate how to implement automation :\n\n![](./APIs-AutomationProcessor.drawio.svg)\n\n# APIs used on this collection\n\n| API | Description | Documentation |\n| --- | --- | --- |\n| Create Booking | Create Booking provides a single, unified service to create a booking for different content sources (NDC, ATPCO, LCC, CSL hotels, cars, and legacy GDS hotels). This is achieved by executing internal calls to the PNR, Order, Pricing, Hotel, and Car domains respectively. The newly created Order and/or Sabre Passenger Name Record (PNR) information is then consolidated into a single normalized response | [Booking Management APIs](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) |\n| InstaFlights Search | The InstaFlights Search API retrieves roundtrip or one-way flight itineraries with published fares and fare breakdowns for a given city pair and departure date. | [Inspirational Search and Intelligence APIs](https://developer.sabre.com/inspirational-search-and-intelligence-apis) |\n| Access Queue | The Access Queue (QueueAccessLLSRQ) API is used to access a designated queue or to navigate within the particular queue. | [QueueAccessLLSRQ](https://developer.sabre.com/docs/soap_apis/management/queue/Access_Queue) |\n| Get Booking | Get Booking provides a normalized view of reservations by combining both PNRs and orders. | [Booking Managment APIs](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) |\n| Issue Tickets | The Enhanced Air Ticket API is used to issue one or multiple air tickets and/or EMDs (Electronic Miscellaneous Documents) within a single API call. | [Enhanced Air Ticket](https://developer.sabre.com/docs/rest_apis/air/fulfill/enhanced_air_ticket) |\n| Void Flight Tickets | Void Flight Tickets provides a single, unified service to void a list of electronic documents (ATPCO). This includes electronic tickets and electronic miscellaneous documents (EMD). | [Booking Management APIs](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) |\n| Cancel Booking | Cancel Booking provides a single, unified service to cancel the entire reservation, or a part of the reservation, irrespective of what it contains (flight, hotel, car, others) and where it is created (NDC, Sabre, CSL). This includes an option to void or refund corresponding electronic documents for flights (ATPCO & NDC). | [Booking Management APIs](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) |\n\nFor more information abut Sabre APIs suitable for Automation Solutions take a look at the [Product Collection on Sabre DevStudio](https://developer.sabre.com/automation-solutions)\n\n# Scripts and Variables\n\nThis collection deeply utilizes Postman scripting capabilities which let you parse an API call result, and store values into variable so it can be used on subsequent calls. Also, Postman allows you to programatically chain requests according to logic defined by the developer.\n\nCollection level scripts\n\n*   Fill in authentication token depending on the API request type (REST or SOAP)\n*   Parse response for Transport and Service errors\n    \n\nIndividual Request scripts\n\n*   Pre fill variables to be used on the request body\n*   Parse results and store values onto variables for subsequent usage\n*   Control request flow by using of SetNextRequest()\n    \n\n# Postman Runner\n\nThis collection is suitable for usage of Runners, which will allow you to simulate the queue automation scenario depicted above. There are 3 main workflows that could be executed \"automatically\" :\n\n*   Create Sample booking and move to post booking queue\n*   Iterate over post booking queue and issue tickets where applicable, move to post ticketing queue or manual processing queue where applicable\n*   Iterate over post ticketing queue and void ticket and cancel booking where applicable.\n    \n\n### Installing\n\nHere are one-time steps for getting your test environment set up:\n\n*   Run the Postman app on your local development machine\n*   Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/Sabre_APIs_CERT.postman_environment.json) into Postman using the File -> Import option\n*   Import the Postman Collection file (link below) into Postman using the File -> Import option\n    \n\n| Collection version | Comments |\n| --- | --- |\n| [current](./Sabre-Automation-Solutions.postman_collection.json) | Automation Solutions Postman collection, first release |\n\n### Use Your Credentials\n\nThe environment file you imported has a list of key/value pairs that you need to update with your REST API credentials. The following variables have been marked out with dummy values:\n\n*   `username` - also known as EPR (employee profile record)\n*   `password` - your Sabre provisioned password\n*   `pcc` - also known as pseudo city code (your agency's unique identifier)\n    \n\nUpdate the dummy values with your official credentials. To do that follow these steps:\n\n*   Click the gear icon to go to the manage environments pop-up dialog box.\n*   Click on the name of your imported environment file to see a list of all key/value pairs.\n*   Enter your credentials, and press the \"Update\" button.\n    \n\n## License\n\nCopyright (c) 2021 Sabre Corp Licensed under the MIT license.\n\n## Disclaimer of Warranty and Limitation of Liability\n\nThis software and any compiled programs created using this software are furnished “as is” without warranty of any kind, including but not limited to the implied warranties of merchantability and fitness for a particular purpose. No oral or written information or advice given by Sabre, its agents or employees shall create a warranty or in any way increase the scope of this warranty, and you may not rely on any such information or advice.  \nSabre does not warrant, guarantee, or make any representations regarding the use, or the results of the use, of this software, compiled programs created using this software, or written materials in terms of correctness, accuracy, reliability, currentness, or otherwise. The entire risk as to the results and performance of this software and any compiled applications created using this software is assumed by you. Neither Sabre nor anyone else who has been involved in the creation, production or delivery of this software shall be liable for any direct, indirect, consequential, or incidental damages (including damages for loss of business profits, business interruption, loss of business information, and the like) arising out of the use of or inability to use such product even if Sabre has been advised of the possibility of such damages.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Automation example",
+			"item": [
+				{
+					"name": "Prepare Sample Bookings",
+					"item": [
+						{
+							"name": "1. Set-up Itinerary variables",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//define scope variables",
+											"// Capture today's date",
+											"const moment = require('moment');",
+											"// Add 30 days to today's date and use this date in start_date",
+											"const today = moment().format(\"YYYY-MM-DD\");",
+											"pm.variables.set('today', today);",
+											"// Add 30 days to today's date and use this date in start_date",
+											"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+											"pm.variables.set('start_date', start_date);",
+											"// Add 37 days to today's date and use this date in end_date",
+											"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");",
+											"pm.variables.set('end_date', end_date);",
+											"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)",
+											"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");",
+											"pm.variables.set('short_end_date', short_end_date);",
+											"",
+											"// Array of citypairs to use as Origin Destination locations for the itinerary",
+											"const cityPairs = pm.collectionVariables.get(\"pbCityPairs\")?JSON.parse(pm.collectionVariables.get(\"pbCityPairs\")):\"DFW-LAS\";",
+											"console.log(\"city-pairs\",cityPairs);",
+											"// this script will select a random pair from the array",
+											"const randomAirItin = cityPairs[Math.floor( Math.random() * ( cityPairs.length ) )];",
+											"const originApt = randomAirItin.substring(0,3);",
+											"const destinationApt = randomAirItin.substring(4,7);",
+											"",
+											"pm.variables.set(\"randomOriginAirport\",originApt);",
+											"pm.variables.set(\"randomDestinationAirport\",destinationApt);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const respObject = pm.response.json();",
+											"const automationModel = respObject.data;",
+											"",
+											"//this will allow select different itinerary models from the body",
+											"const itineraryKey = \"RANDOM\";",
+											"",
+											"pm.test(\"prepare \" + itineraryKey + \" Itinerary data\",()=>{",
+											"",
+											"    pm.collectionVariables.set(\"pbItinerary\",\"\");",
+											"",
+											"    pm.expect(automationModel).to.not.be.null;",
+											"    pm.expect(automationModel.itinerary[itineraryKey]).to.not.be.null;",
+											"    var genItinerary = automationModel.itinerary[itineraryKey];",
+											"    //console.log(\"it\",genItinerary);",
+											"    //consolidate Traveler Information",
+											"    genItinerary.travelerInfo = [];",
+											"    for(var i=0;i<genItinerary.numberInParty;i++){",
+											"        const px = automationModel.randomTraveler[i];",
+											"        genItinerary.travelerInfo.push(px);",
+											"",
+											"    }",
+											"",
+											"    pm.collectionVariables.set(\"pbItinerary\",JSON.stringify(genItinerary));",
+											"});",
+											"",
+											"//pm.collectionVariables.set(\"pbAutomationData\",JSON.stringify(automationModel));",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"itinerary\":{\n        \"RANDOM\":{\n            \"originLocationCode\": \"{{randomOriginAirport}}\",\n            \"destinationLocationCode\":\"{{randomDestinationAirport}}\",\n            \"roundTrip\": true,\n            \"startDate\":\"{{start_date}}\",\n            \"endDate\":\"{{end_date}}\",\n            \"numberInParty\":1,\n            \"flights\":{\n                \"shopSegments\":[],\n                \"bookSegments\":[],\n                \"priceQuotes\":[],\n                \"eTickets\":[]\n            },\n            \"lodging\":{},\n            \"transport\":{}\n        }\n    },\n    \"randomTraveler\" : [\n        {\n        \"ref\":\"1.1\",\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"phone\": \"{{$randomPhoneNumber}}\",\n        \"email\": \"{{$randomExampleEmail}}\",\n        \"address\": \"{{$randomStreetAddress}}\",\n        \"city\": \"{{$randomCity}}\",\n        \"country\":\"US\",\n        \"typeCode\":\"ADT\",\n        \"birthDate\":\"1970-07-05\",\n        \"genderCode\":\"M\",\n        \"identityDocuments\": [\n                {\n                \"documentNumber\": \"0123456789\",\n                \"documentType\": \"PASSPORT\",\n                \"expiryDate\": \"2024-07-09\",\n                \"issuingCountryCode\": \"US\",\n                \"residenceCountryCode\": \"US\",\n                \"givenName\": \"\",\n                \"surname\": \"\",\n                \"birthDate\": \"\",\n                \"gender\": \"\"\n                },{\n                \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                \"givenName\": \"\",\n                \"surname\": \"\",\n                \"birthDate\": \"\",\n                \"gender\": \"\",\n                \"isPrimaryDocumentHolder\": true\n                }\n\n             \n        ]\n        },{\n        \"ref\":\"2.1\",\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"phone\": \"{{$randomPhoneNumber}}\",\n        \"email\": \"{{$randomExampleEmail}}\",\n        \"address\": \"{{$randomStreetAddress}}\",\n        \"city\": \"{{$randomCity}}\",\n        \"country\":\"US\",\n        \"typeCode\":\"ADT\",\n        \"birthDate\":\"1990-01-01\",\n        \"genderCode\":\"F\",\n        \"identityDocuments\":[]\n        }\n    ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://postman-echo.com/post",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 Air Shopping with InstaFlights",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const itinerary = JSON.parse(pm.variables.get(\"pbItinerary\"));",
+											"pm.variables.set(\"pbItinerary_originLocationCode\",itinerary.originLocationCode);",
+											"pm.variables.set(\"pbItinerary_destinationLocationCode\", itinerary.destinationLocationCode);",
+											"pm.variables.set(\"pbItinerary_startDate\", itinerary.startDate);",
+											"pm.variables.set(\"pbItinerary_endDate\", itinerary.endDate);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//collect error information",
+											"const pbResults = pm.variables.get(\"pbResults\");",
+											"(pbResults.httpPass===true?pm.test:pm.test.skip)(\"Parse InstaFlights results\",()=>{",
+											"",
+											"    const respJson = pm.response.json();",
+											"    //console.log(\"response\",respJson);",
+											"    const itinerary = JSON.parse(pm.collectionVariables.get(\"pbItinerary\"));",
+											"    const airShopItineraries = [];",
+											"    const itineraries = respJson.PricedItineraries;",
+											"    itineraries.each((pricedItin)=>{",
+											"        const compactItin = {",
+											"            AirItinerary: pricedItin.AirItinerary,",
+											"            SequenceNumber: pricedItin.SequenceNumber,",
+											"            AirItineraryPricingInfo:{",
+											"                ItinTotalFare : {",
+											"                    TotalFare: pricedItin.AirItineraryPricingInfo.ItinTotalFare.TotalFare",
+											"                }",
+											"            }",
+											"        };",
+											"        airShopItineraries.push(compactItin);",
+											"    });",
+											"",
+											"",
+											"    const randomOption = airShopItineraries[Math.floor(Math.random()*(airShopItineraries.length-1))];",
+											"",
+											"    itinerary.flights.shopSegments = randomOption;",
+											"    pm.collectionVariables.set(\"pbItinerary\",JSON.stringify(itinerary));",
+											"//    pm.collectionVariables.set(\"pbAirItinerary\", JSON.stringify( randomOption ))",
+											"//    console.log(\"selected random\",airShopItineraries, randomOption);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/shop/flights?origin={{pbItinerary_originLocationCode}}&destination={{pbItinerary_destinationLocationCode}}&departuredate={{pbItinerary_startDate}}&returndate={{pbItinerary_endDate}}&onlineitinerariesonly=N&limit=10&offset=1&eticketsonly=N&sortby=totalfare&order=asc&sortby2=departuretime&order2=asc&pointofsalecountry=US",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"shop",
+										"flights"
+									],
+									"query": [
+										{
+											"key": "origin",
+											"value": "{{pbItinerary_originLocationCode}}"
+										},
+										{
+											"key": "destination",
+											"value": "{{pbItinerary_destinationLocationCode}}"
+										},
+										{
+											"key": "departuredate",
+											"value": "{{pbItinerary_startDate}}"
+										},
+										{
+											"key": "returndate",
+											"value": "{{pbItinerary_endDate}}"
+										},
+										{
+											"key": "onlineitinerariesonly",
+											"value": "N"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "offset",
+											"value": "1"
+										},
+										{
+											"key": "eticketsonly",
+											"value": "N"
+										},
+										{
+											"key": "sortby",
+											"value": "totalfare"
+										},
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "sortby2",
+											"value": "departuretime"
+										},
+										{
+											"key": "order2",
+											"value": "asc"
+										},
+										{
+											"key": "pointofsalecountry",
+											"value": "US"
+										}
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/search/instaflights_search), [Resources](https://developer.sabre.com/docs/rest_apis/air/search/instaflights_search/reference-documentation)</b>\n\n[//]: # \"End\""
+							},
+							"response": []
+						},
+						{
+							"name": "3. Book and Price Itinerary using CreateBooking API",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/**",
+											" * Creates a javascript object representing createBookingRq model",
+											" * consumes collections variables which holds itinerary to book",
+											" */",
+											"",
+											"const postBookQueueID = pm.variables.get(\"postBookingQueue\");",
+											"",
+											"const agencyInfo = JSON.parse(pm.variables.get(\"pbAgencyInfo\")!=undefined?pm.variables.get(\"pbAgencyInfo\"):null);",
+											"const pbItinerary = JSON.parse(pm.variables.get(\"pbItinerary\")!=undefined?pm.variables.get(\"pbItinerary\"):null);",
+											"",
+											"//const pbAirItinerary = JSON.parse(pm.variables.get(\"pbAirItinerary\")!=undefined?pm.variables.get(\"pbAirItinerary\"):null);",
+											"const pbAirItinerary = pbItinerary && pbItinerary.flights && pbItinerary.flights.shopSegments?pbItinerary.flights.shopSegments:null;",
+											"console.log(\"airItin\",pbAirItinerary);",
+											"",
+											"var createBookingRq = {}",
+											"",
+											"//configures contactInfo element",
+											"createBookingRq.contactInfo = {};",
+											"createBookingRq.contactInfo.emails = [];",
+											"createBookingRq.contactInfo.phones = [];",
+											"",
+											"//configures Agency element",
+											"createBookingRq.agency = {}",
+											"if(agencyInfo!=null){",
+											"    createBookingRq.agency.address = {",
+											"        name: agencyInfo.address.name,",
+											"        street: agencyInfo.address.street,",
+											"        city: agencyInfo.address.city,",
+											"        stateProvince: agencyInfo.address.stateProvince,",
+											"        postalCode: agencyInfo.address.postalCode,",
+											"        countryCode: agencyInfo.address.countryCode,",
+											"        freeText: agencyInfo.address.freeText",
+											"    }",
+											"    createBookingRq.agency.agencyCustomerNumber=agencyInfo.agencyCustomerNumber;",
+											"    createBookingRq.agency.ticketingPolicy= agencyInfo.ticketingPolicy;",
+											"    createBookingRq.contactInfo.phones = agencyInfo.contactInfo.phones;",
+											"    createBookingRq.contactInfo.emails = agencyInfo.contactInfo.emails;",
+											"}",
+											"",
+											"var passengerTypeCodesAndQuantity = {};",
+											"if(pbItinerary!=null){",
+											"    //populate booking Travelers",
+											"    createBookingRq.travelers = [];",
+											"    for(let i=0;i<pbItinerary.numberInParty;i++){",
+											"        const px = pbItinerary.travelerInfo[i];",
+											"        passengerTypeCodesAndQuantity[px.typeCode] = passengerTypeCodesAndQuantity[px.typeCode]!=undefined?passengerTypeCodesAndQuantity[px.typeCode]+1:1;",
+											"",
+											"        var pxBooking = {",
+											"            givenName: px.firstName,",
+											"            surname: px.lastName,",
+											"            birthDate: px.birthDate,",
+											"            passengerCode: px.typeCode,",
+											"            identityDocuments:px.identityDocuments.map((doc)=>{",
+											"                var nd = doc;",
+											"                nd.givenName = px.firstName;",
+											"                nd.surname = px.lastName;",
+											"                nd.birthDate = px.birthDate;",
+											"                nd.gender = px.genderCode==\"M\"?\"MALE\":\"FEMALE\"",
+											"",
+											"                return nd;",
+											"            })",
+											"        }",
+											"        createBookingRq.travelers.push(pxBooking);",
+											"        if(i==0){",
+											"            //add contact info for the first passenger",
+											"            createBookingRq.contactInfo.phones.push(px.phone);",
+											"            createBookingRq.contactInfo.emails.push(px.email);",
+											"        }",
+											"    }",
+											"}",
+											"",
+											"",
+											"",
+											"if(pbAirItinerary!=null){",
+											"",
+											"    createBookingRq.flightDetails = {}",
+											"    createBookingRq.flightDetails.flights = [];",
+											"",
+											"    const airOptions = pbAirItinerary.AirItinerary && pbAirItinerary.AirItinerary.OriginDestinationOptions.OriginDestinationOption;",
+											"    airOptions.each((odOption)=>{",
+											"        odOption.FlightSegment.each((flightSeg)=>{",
+											"",
+											"            let bookSeg = {",
+											"                flightNumber: flightSeg.FlightNumber,",
+											"                airlineCode: flightSeg.MarketingAirline.Code,",
+											"                fromAirportCode: flightSeg.DepartureAirport.LocationCode,",
+											"                toAirportCode: flightSeg.ArrivalAirport.LocationCode,",
+											"                departureDate: flightSeg.DepartureDateTime.substring(0,flightSeg.DepartureDateTime.indexOf(\"T\")),",
+											"                departureTime: flightSeg.DepartureDateTime.substring(flightSeg.DepartureDateTime.indexOf(\"T\")+1,flightSeg.DepartureDateTime.indexOf(\"T\")+6),",
+											"                bookingClass: \"Y\",",
+											"                marriageGroup: false,",
+											"                flightStatusCode: \"NN\"",
+											"            }",
+											"",
+											"            createBookingRq.flightDetails.flights.push(bookSeg);",
+											"",
+											"        });",
+											"    });",
+											"",
+											"    //consider Pricing?",
+											"    createBookingRq.flightDetails.flightPricing = [{",
+											"        \"qualifiers\": {",
+											"            \"passengersPricing\": [",
+											"",
+											"            ]",
+											"        }",
+											"    }];",
+											"    console.log(\"passengers\",passengerTypeCodesAndQuantity);",
+											"    for(k in passengerTypeCodesAndQuantity){",
+											"        console.log(\"each\",k,passengerTypeCodesAndQuantity[k]);",
+											"        const paxPrice = {",
+											"            passengerCode: k,",
+											"            forcePassengerCode: \"false\",",
+											"            numberOfpassengers: passengerTypeCodesAndQuantity[k].toString()",
+											"        }",
+											"        createBookingRq.flightDetails.flightPricing[0][\"qualifiers\"][\"passengersPricing\"].push(paxPrice);",
+											"    };",
+											"",
+											"",
+											"}",
+											"//add general remarks and move to post booking queue",
+											"createBookingRq.remarks = [];",
+											"createBookingRq.remarks.push({",
+											"    type: \"GENERAL\",",
+											"    text: \"test booking done through Postman collection\"",
+											"});",
+											"",
+											"",
+											"createBookingRq.notification = {};",
+											"createBookingRq.notification.queuePlacement = [];",
+											"createBookingRq.notification.queuePlacement.push({",
+											"    queueNumber: postBookQueueID,",
+											"    prefatoryInstructionCode: \"11\"",
+											"})",
+											"",
+											"",
+											"pm.variables.set(\"varCreateBookingRequest\",JSON.stringify(createBookingRq));",
+											"console.log(\"createBooking\",JSON.stringify(createBookingRq));",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Conversation-ID",
+										"type": "text",
+										"value": "{{conv_id}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{varCreateBookingRequest}}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"trip",
+										"orders",
+										"createBooking"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Queue Processing sample",
+					"item": [
+						{
+							"name": "Post Booking - Fulfil actions",
+							"item": [
+								{
+									"name": "1. QueueAccessLLSRQ - reads Post Booking queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//validates error information gathered on global script",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"",
+													"let businessPass = false;",
+													"(httpPass?pm.test:pm.test.skip)(\"parsing API response\",()=>{",
+													"",
+													"    pm.expect(businessPrePass,\"pre validation of business logic\").to.be.true;",
+													"    //use cheerio to parse XML response",
+													"    const cherrioDoc = cheerio.load(pm.response.text(), { ignoreWhitespace: true, xmlMode: true });",
+													"    //get all Line elements    ",
+													"    const lineNodes = cherrioDoc(\"QueueAccessRS\").find(\"Line\");",
+													"",
+													"    const recLocs = [];",
+													"    //iterate over all Line elements and gather record locator to the PNR",
+													"    lineNodes.each((it, itdet) => {",
+													"        recLocs.push(cherrioDoc(itdet).find(\"UniqueID\").attr(\"ID\"));",
+													"    });",
+													"",
+													"    pm.collectionVariables.set(\"postBookingQueueRecords\", JSON.stringify(recLocs));",
+													"    pm.collectionVariables.set(\"postBookingQueuePointer\", 0);",
+													"",
+													"",
+													"    businessPass = true;",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.warn(\"setting next request for : 2. Reads next PNR from Queue\");",
+													"    postman.setNextRequest(\"59433e18-b176-4b28-b30f-c15c35cbf37e\");",
+													"    console.info(\"finished reading PNRs into postBookingQueueRecords\",pm.collectionVariables.get(\"postBookingQueueRecords\"));",
+													"}else{",
+													"    console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"    postman.setNextRequest(null);",
+													"}",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueAccessRQ ReturnHostCommand=\"true\" Version=\"2.1.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueIdentifier Number=\"{{postBookingQueue}}\" PseudoCityCode=\"{{pcc}}\">\r\n        <List Ind=\"true\" PrimaryPassenger=\"true\"/>\r\n    </QueueIdentifier>\r\n</QueueAccessRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "2. Reads next PNR from Queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"//read record locator from queue array",
+													"const qArray = JSON.parse(pm.collectionVariables.get(\"postBookingQueueRecords\"));",
+													"const qPointer = JSON.parse(pm.collectionVariables.get(\"postBookingQueuePointer\"));",
+													"const recLocator = qArray[qPointer];",
+													"pm.collectionVariables.set(\"currentPnr\",recLocator)",
+													"pm.collectionVariables.set(\"postBookingQueuePointer\",qPointer+1)",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"",
+													"let businessPass = false;",
+													"let hasFaresToTicket = false;",
+													"let faresToStore = null;",
+													"(httpPass?pm.test:pm.test.skip)(\"parsing API response\",()=>{",
+													"",
+													"    pm.expect(businessPrePass,\"pre validation of business logic\").to.be.true;",
+													"",
+													" ",
+													"    const respJson = pm.response.json();",
+													"",
+													"    //confirm record locator",
+													"    const recLoc = _.get(respJson,\"request.confirmationId\");",
+													"",
+													"    //look for any issued tickets",
+													"    const isTicketed = _.get(respJson,\"isTicketed\")?true:false;",
+													"",
+													"    //Price quotes",
+													"    const airFares = {",
+													"        fares: _.get(respJson,\"fares\")",
+													"    }",
+													"",
+													"    if(isTicketed==false && airFares.fares!=null){",
+													"        //has PQs to ticket, store data for ticketing request",
+													"        hasFaresToTicket = true;",
+													"        faresToStore = airFares.fares;",
+													"    }",
+													"    businessPass=true;",
+													"",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.warn(\"setting next request for : 2. Reads next PNR from Queue\");",
+													"    postman.setNextRequest(\"59433e18-b176-4b28-b30f-c15c35cbf37e\");",
+													"    console.info(\"finished reading next PNR from postBookingQueueRecords:\",pm.variables.get(\"currentPnr\"),\"fares to ticket:\",hasFaresToTicket,faresToStore);",
+													"    if(hasFaresToTicket){",
+													"        pm.collectionVariables.set(\"pbAirFares\",JSON.stringify(faresToStore));",
+													"        postman.setNextRequest('6cafd8ea-d15b-465c-9601-95e97a65bf96');",
+													"        console.warn(\"set next request for: 3. EnhancedAirTicket\");",
+													"    }else{",
+													"        pm.collectionVariables.set(\"pbAirFares\",\"\");",
+													"        console.warn(\"set next request for: 4. SabreCommandLLSRQ - move to Manual processing queue\");",
+													"        postman.setNextRequest(\"272c1fa2-744c-424f-8e0d-662f0d8d08b2\");",
+													"    }",
+													"}else{",
+													"    console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"    postman.setNextRequest(null);",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"confirmationId\": \"{{currentPnr}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "3. EnhancedAirTicket",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"//count fares stored pn letast call to GetBooking API",
+													"const airFares = JSON.parse(pm.collectionVariables.get(\"pbAirFares\")!=undefined && !_.isEmpty(pm.collectionVariables.get(\"pbAirFares\"))?pm.collectionVariables.get(\"pbAirFares\"):\"{}\");",
+													"const paymentData = JSON.parse(pm.collectionVariables.get(\"pbFormsOfPayment\")!=undefined?pm.collectionVariables.get(\"pbFormsOfPayment\"):null);",
+													"",
+													"const printersData = JSON.parse(pm.collectionVariables.get(\"pbPrinters\")!=undefined?pm.collectionVariables.get(\"pbPrinters\"):null);",
+													"",
+													"const desigPrinter = printersData!=null?{\"Printers\":printersData}:{\"Profile\":{\"Number\":1}};",
+													"",
+													"",
+													"//collect total of Price quotes",
+													"//airFares.reduce((anter,atual)=>{})",
+													"",
+													"//EndNumber:airFares.length,",
+													"",
+													"const convPQs = [{",
+													"    Record:[",
+													"    ]",
+													"}];",
+													"airFares.each((it)=>{",
+													"    convPQs[0].Record.push(        {",
+													"            Number:parseInt(it.recordId) ,",
+													"            Reissue: false",
+													"        } ",
+													"    )",
+													"})",
+													"",
+													"//set form of payment as cash",
+													"pm.variables.set(\"basicFOP\",JSON.stringify(paymentData[\"CA\"]))",
+													"pm.variables.set(\"priceQuote\",JSON.stringify(convPQs));",
+													"pm.variables.set(\"designatePrinter\",JSON.stringify(desigPrinter));",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"let businessPass = false;",
+													"let businessLogicInfo = \"\";",
+													"(httpPass == true ? pm.test : pm.test.skip)(\"parsing API response\", () => {",
+													" ",
+													"    const respJson = pm.response.json();",
+													"",
+													"    const operationStatus = _.get(respJson,\"AirTicketRS.ApplicationResults.status\");",
+													"    const ticketErrors= _.get(respJson,\"AirTicketRS.ApplicationResults.Error\");",
+													"    const ticketWarnings=_.get(respJson,\"AirTicketRS.ApplicationResults.Warning\");",
+													"",
+													"    if(operationStatus==\"Complete\" && ticketErrors!=null){",
+													"        //console.info(\"Ticketing complete\",operationStatus,ticketErrors,ticketWarnings)",
+													"        businessLogicInfo = \"operatiomStatus:\" + operationStatus + \" Errors :\" + JSON.stringify(ticketErrors) + \" Warnings:\" + JSON.stringify(ticketWarnings)",
+													"        businessPass=true;",
+													"",
+													"    }else{",
+													"        businessLogicInfo = \"operatiomStatus:\" + operationStatus + \" Errors :\" + JSON.stringify(ticketErrors) + \" Warnings:\" + JSON.stringify(ticketWarnings)",
+													"        //console.error(\"Ticketing failed\",operationStatus,ticketErrors,ticketWarnings)",
+													"    }",
+													"    pm.expect(businessPass,\"check sucessfull ticketing\").to.be.true;",
+													"",
+													"})",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.info(\"finished Ticketing fares for the PNR\",businessLogicInfo)",
+													"    //PNR ticketed, sent for postFillfilmentQueue",
+													"    pm.collectionVariables.set(\"originQueue\",pm.collectionVariables.get(\"postBookingQueue\"))",
+													"    pm.collectionVariables.set(\"destinationQueue\",pm.collectionVariables.get(\"postFullfilmentQueue\"))",
+													"    console.warn(\"set next request for: 4. QueueMoveLLSRQ 2.0.0 - Move to queue (post fullfiment queue)\");",
+													"    postman.setNextRequest(\"4c187f29-c1ff-44f8-981c-103ca872cb55\");",
+													"",
+													"}else{",
+													"    if(httpPass){",
+													"        //business error, sent PNR to manual procesing queue",
+													"        console.error(\"could not complete Ticketing fares for the PNR\",businessLogicInfo);",
+													"        pm.collectionVariables.set(\"originQueue\",pm.collectionVariables.get(\"postBookingQueue\"))",
+													"        pm.collectionVariables.set(\"destinationQueue\",pm.collectionVariables.get(\"manualProcessingQueue\"))",
+													"        console.warn(\"set next request for: 4. QueueMoveLLSRQ 2.0.0 - Move to queue (manual processing queue)\");",
+													"        postman.setNextRequest(\"4c187f29-c1ff-44f8-981c-103ca872cb55\");",
+													"",
+													"    }else{",
+													"        console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"        postman.setNextRequest(null);",
+													"    }",
+													"}",
+													"",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"AirTicketRQ\": {\n        \"DesignatePrinter\": {{designatePrinter}},\n        \"Itinerary\": {\n            \"ID\": \"{{currentPnr}}\"\n        },\n        \"Ticketing\": [\n            {\n                \"FOP_Qualifiers\": {\n                    \"BasicFOP\":{{basicFOP}}\n                },\n                \"PricingQualifiers\": {\n                    \"PriceQuote\": {{priceQuote}}\n                }\n            }\n        ],\n        \"PostProcessing\": {\n            \"EndTransaction\": {\n                \"Source\": {\n                    \"ReceivedFrom\": \"API TEST\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.2.1/air/ticket",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.2.1",
+												"air",
+												"ticket"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/fulfill/enhanced_air_ticket), [Resources](https://developer.sabre.com/docs/rest_apis/air/fulfill/enhanced_air_ticket/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "4. QueueMoveLLSRQ 2.0.0 - Move to queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"let businessPass = false;",
+													"(httpPass == true ? pm.test : pm.test.skip)(\"testing for business logic\", () => {",
+													"    businessPass = true;",
+													"",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.info(\"finished Moving PNR :\",pm.variables.get(\"currentPNR\"),\"from\",pm.variables.get(\"originQueue\"),\"to\",pm.variables.get(\"destinationQueue\"))",
+													"",
+													"    console.warn(\"set next request for: 2. Reads next PNR from queue\");",
+													"    postman.setNextRequest(\"14562366-59433e18-b176-4b28-b30f-c15c35cbf37e\");",
+													"",
+													"}else{",
+													"    console.error(\"error processing API request :\",pm.info.requestName,pbResults);",
+													"    postman.setNextRequest(null);",
+													"}",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueMoveRQ ReturnHostCommand=\"true\" Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <DestinationQueue>\r\n            <QueueIdentifier Number=\"{{destinationQueue}}\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </DestinationQueue>\r\n        <OriginQueue>\r\n            <QueueIdentifier Number=\"{{originQueue}}\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </OriginQueue>\r\n    </QueueInfo>\r\n    <Selection Criteria=\"{{currentPnr}}\" Function=\"PR\" />\r\n</QueueMoveRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message), [Resources](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/resources), [Legacy Versions](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Post Fullfilment - Void",
+							"item": [
+								{
+									"name": "1. QueueAccessLLSRQ - reads Post Booking queue Copy",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"",
+													"//validates error information gathered on global script",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"",
+													"let businessPass = false;",
+													"(httpPass?pm.test:pm.test.skip)(\"parsing API response\",()=>{",
+													"",
+													"    pm.expect(businessPrePass,\"pre validation of business logic\").to.be.true;",
+													"    //use cheerio to parse XML response",
+													"    const cherrioDoc = cheerio.load(pm.response.text(), { ignoreWhitespace: true, xmlMode: true });",
+													"    //get all Line elements    ",
+													"    const lineNodes = cherrioDoc(\"QueueAccessRS\").find(\"Line\");",
+													"",
+													"    const recLocs = [];",
+													"    //iterate over all Line elements and gather record locator to the PNR",
+													"    lineNodes.each((it, itdet) => {",
+													"        recLocs.push(cherrioDoc(itdet).find(\"UniqueID\").attr(\"ID\"));",
+													"    });",
+													"",
+													"    pm.collectionVariables.set(\"postFullfilmentQueueRecords\", JSON.stringify(recLocs));",
+													"    pm.collectionVariables.set(\"postFullfilmentQueuePointer\", 0);",
+													"",
+													"",
+													"    businessPass = true;",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.warn(\"setting next request for : 2. Reads next PNR from Queue\");",
+													"    postman.setNextRequest(\"2000cbda-dd64-4222-b5a7-4b2908c77b77\");",
+													"    console.info(\"finished reading PNRs into postFullfilmentQueueRecords\",pm.collectionVariables.get(\"postFullfilmentQueueRecords\"));",
+													"}else{",
+													"    console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"    postman.setNextRequest(null);",
+													"}",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueAccessRQ ReturnHostCommand=\"true\" Version=\"2.1.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueIdentifier Number=\"{{postFullfilmentQueue}}\" PseudoCityCode=\"{{pcc}}\">\r\n        <List Ind=\"true\" PrimaryPassenger=\"true\"/>\r\n    </QueueIdentifier>\r\n</QueueAccessRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "2. Reads next PNR from Queue",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"",
+													"let businessPass = false;",
+													"let hasTicketsToVoid = false;",
+													"let TicketsToVoid = null;",
+													"(httpPass?pm.test:pm.test.skip)(\"parsing API response\",()=>{",
+													"",
+													"    //Document is OK validate GetBooking response",
+													"    const respJson = pm.response.json();",
+													"    const recLoc = _.get(respJson,\"request.confirmationId\");",
+													"",
+													"    //look for price quotes that may not have been ticketed",
+													"    const isTicketed = _.get(respJson,\"isTicketed\")?true:false;",
+													"",
+													"    //fares",
+													"    const airTickets = _.get(respJson,\"flightTickets\");",
+													"",
+													"    if(isTicketed==true && airTickets!=null){",
+													"        //has tickets to void, store data for cancel ticket request",
+													"        pm.collectionVariables.set(\"pbAirTickets\",JSON.stringify(airTickets))",
+													"        businessPass=true;",
+													"",
+													"",
+													" ",
+													"    }else{",
+													"        pm.collectionVariables.set(\"pbAirTickets\",JSON.stringify({}))",
+													"        console.log(\"set next request for: 5. SabreCommandLLSRQ - move to Manual Operations queue\");",
+													"        postman.setNextRequest('1ee6dd88-91ec-4680-89f9-96cb45d60a2d');",
+													"    }",
+													"        ",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.info(\"finished reading next PNR from postFillfilmentQueueRecords:\",pm.variables.get(\"currentPnr\"),\"tickets to void:\",hasTicketsToVoid,TicketsToVoid);",
+													"    console.log(\"set next request for : 3. Cancel Booking\");",
+													"    postman.setNextRequest('a17feb15-1c54-4e02-b0e5-f7ad9dcbc8cd');",
+													"",
+													"}else{",
+													"    if(httpPass){",
+													"        //business error, sent PNR to manual procesing queue",
+													"        console.error(\"could not complete Cancel booking\");",
+													"        console.warn(\"set next request for: 4. QueueMoveLLSRQ 2.0.0 - Move to queue (manual processing queue)\");",
+													"        postman.setNextRequest(\"a007ae07-fddb-4c08-9152-7d6a7ff5ac61\");",
+													"",
+													"    }else{",
+													"        console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"        postman.setNextRequest(null);",
+													"    }",
+													"}",
+													"",
+													"",
+													"",
+													"/*else{",
+													"    console.log(\"Interrupt runner operation\")",
+													"    postman.setNextRequest(null);",
+													"}*/",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"//read record locator from queue array",
+													"const qArray = JSON.parse(pm.collectionVariables.get(\"postFullfilmentQueueRecords\"));",
+													"const qPointer = JSON.parse(pm.collectionVariables.get(\"postFullfilmentQueuePointer\"));",
+													"const recLocator = qArray[qPointer];",
+													"pm.collectionVariables.set(\"currentPnr\",recLocator)",
+													"pm.collectionVariables.set(\"postFullfilmentQueuePointer\",qPointer+1)",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"confirmationId\": \"{{currentPnr}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "3. Cancel Booking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"let businessPass = false;",
+													"let businessLogicInfo = \"\";",
+													"(httpPass == true ? pm.test : pm.test.skip)(\"parsing API response\", () => {",
+													" ",
+													"    const respJson = pm.response.json();",
+													"",
+													"    //const operationStatus = _.get(respJson,\"AirTicketRS.ApplicationResults.status\");",
+													"    const cancelErrors= _.get(respJson,\"errors\");",
+													"    //const ticketWarnings=_.get(respJson,\"AirTicketRS.ApplicationResults.Warning\");",
+													"",
+													"    businessLogicInfo =  \"Errors :\" + JSON.stringify(cancelErrors);",
+													"",
+													"    if(cancelErrors==null){",
+													"        businessPass=true;",
+													"    }",
+													"",
+													"    pm.expect(businessPass,\"check sucessfull void\").to.be.true;",
+													"",
+													"})",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.info(\"finished Cancel Booking\",businessLogicInfo)",
+													"    console.warn(\"set next request for: 4. QueueMoveLLSRQ 2.0.0 - Move to queue (manual processing queue)\");",
+													"    postman.setNextRequest(\"a007ae07-fddb-4c08-9152-7d6a7ff5ac61\");",
+													"",
+													"}else{",
+													"    if(httpPass){",
+													"        //business error, sent PNR to manual procesing queue",
+													"        console.error(\"could not complete Cancel Booking\",businessLogicInfo);",
+													"        console.warn(\"set next request for: 4. QueueMoveLLSRQ 2.0.0 - Move to queue (manual processing queue)\");",
+													"        postman.setNextRequest(\"a007ae07-fddb-4c08-9152-7d6a7ff5ac61\");",
+													"    }else{",
+													"        console.error(\"error processing API request :\",pm.info.requestName,pbResults,pm.response);",
+													"        postman.setNextRequest(null);",
+													"    }",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{currentPnr}}\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"flightTicketOperation\": \"VOID\",\n    \"errorHandlingPolicy\": \"ALLOW_PARTIAL_CANCEL\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"cancelBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "4. QueueMoveLLSRQ 2.0.0  - Move to manual processing queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//collect error information",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"const httpPass = pm.variables.get(\"pbHttpPass\");",
+													"const businessPrePass = pm.variables.get(\"pbBusinessPass\");",
+													"",
+													"let businessPass = false;",
+													"(httpPass == true ? pm.test : pm.test.skip)(\"testing for business logic\", () => {",
+													"    businessPass = true;",
+													"",
+													"});",
+													"",
+													"if(httpPass && businessPass){",
+													"    console.info(\"finished Moving PNR :\",pm.variables.get(\"currentPNR\"),\"from\",pm.variables.get(\"postFullfilmentQueue\"),\"to\",pm.variables.get(\"manualProcessingQueue\"))",
+													"",
+													"    console.warn(\"set next request for: 2. Reads next PNR from queue\");",
+													"    postman.setNextRequest(\"2000cbda-dd64-4222-b5a7-4b2908c77b77\");",
+													"",
+													"}else{",
+													"    console.error(\"error processing API request :\",pm.info.requestName,pbResults);",
+													"    postman.setNextRequest(null);",
+													"}",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueMoveRQ ReturnHostCommand=\"true\" Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <DestinationQueue>\r\n            <QueueIdentifier Number=\"{{manualProcessingQueue}}\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </DestinationQueue>\r\n        <OriginQueue>\r\n            <QueueIdentifier Number=\"{{postFullfilmentQueue}}\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </OriginQueue>\r\n    </QueueInfo>\r\n    <Selection Criteria=\"{{currentPnr}}\" Function=\"PR\" />\r\n</QueueMoveRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message), [Resources](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/resources), [Legacy Versions](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Manual processing",
+							"item": [
+								{
+									"name": "1. QueueAccessLLSRQ - reads Manual Processing queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//validates error information gathered on global script",
+													"const pbResults = pm.variables.get(\"pbResults\");",
+													"(pbResults.httpPass===true?pm.test:pm.test.skip)(\"Parse Queue Access response\",()=>{",
+													"",
+													"    //use cheerio to parse XML response",
+													"    const cherrioDoc = cheerio.load(pm.response.text(), { ignoreWhitespace: true, xmlMode: true });",
+													"    //get all Line elements    ",
+													"    const lineNodes = cherrioDoc(\"QueueAccessRS\").find(\"Line\");",
+													"",
+													"    const recLocs = [];",
+													"    //iterate over all Line elements and gather details from the PNR (RecordLocator, Names, Agent)",
+													"    lineNodes.each((it, itdet) => {",
+													"        /*{",
+													"            recLocator: cherrioDoc(itdet).find(\"UniqueID\").attr(\"ID\"),",
+													"            paxName: cherrioDoc(itdet).find(\"PassengerName\").text(),",
+													"            sourceSine: cherrioDoc(itdet).find(\"Source\").attr(\"AgentSine\"),",
+													"            sourcePcc: cherrioDoc(itdet).find(\"Source\").attr(\"PseudoCityCode\")",
+													"        }*/",
+													"        recLocs.push(cherrioDoc(itdet).find(\"UniqueID\").attr(\"ID\"));",
+													"    });",
+													"",
+													"    pm.collectionVariables.set(\"manualProcessingQueueRecords\", JSON.stringify(recLocs));",
+													"    pm.collectionVariables.set(\"manualProcessingQueuePointer\", 0);",
+													"",
+													"});",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueAccessRQ ReturnHostCommand=\"true\" Version=\"2.1.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueIdentifier Number=\"{{manualProcessingQueue}}\" PseudoCityCode=\"{{pcc}}\">\r\n        <List Ind=\"true\" PrimaryPassenger=\"true\"/>\r\n    </QueueIdentifier>\r\n</QueueAccessRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "2. Reads next PNR from queue",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"//read record locator from queue array",
+													"const qArray = JSON.parse(pm.collectionVariables.get(\"manualProcessingQueueRecords\"));",
+													"const qPointer = JSON.parse(pm.collectionVariables.get(\"manualProcessingQueuePointer\"));",
+													"const recLocator = qArray[qPointer];",
+													"pm.collectionVariables.set(\"currentPnr\",recLocator)",
+													"pm.collectionVariables.set(\"manualProcessingQueuePointer\",qPointer+1)"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"confirmationId\": \"{{currentPnr}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Automation Solution APIs Reference",
+					"item": [
+						{
+							"name": "Queues",
+							"item": [
+								{
+									"name": "QueueAccessLLSRQ 2.1.0 Get PNR List from Queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueAccessRQ ReturnHostCommand=\"true\" Version=\"2.1.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueIdentifier Number=\"9\" PseudoCityCode=\"{{pcc}}\">\r\n        <List Ind=\"true\" PrimaryPassenger=\"true\"/>\r\n    </QueueIdentifier>\r\n</QueueAccessRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "QueueAccessLLSRQ 2.1.0 Access Queue (Q/)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueAccessRQ ReturnHostCommand=\"true\" Version=\"2.1.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueIdentifier Number=\"9\" PseudoCityCode=\"{{pcc}}\"/>\r\n</QueueAccessRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/access_queue/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "QueueCountLLSRQ 2.2.1 List Queues (with PNR count)",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueCountRQ ReturnHostCommand=\"true\" Version=\"2.2.1\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <QueueIdentifier PseudoCityCode=\"{{pcc}}\"/>\r\n    </QueueInfo>\r\n</QueueCountRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/get_queue_count), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/get_queue_count/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/get_queue_count/legacy)</b>\n\n- [v2.2.1 Quick Start Guide](http://webservices.sabre.com/drc/servicedoc/QueueCountLLSRQ_v2.x_QuickStartGuide.xlsx)\n- [v2.2.1 Request Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueueCountLLSRQ_v2.2.1_Design.xml)\n- [v2.2.1 Response Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueueCountLLSRS_v2.2.1_Design.xml)\n- [v2.2.1 Request Schema](http://webservices.sabre.com/wsdl/tpfc/QueueCountLLS2.2.1RQ.xsd)\n- [v2.2.1 Request/Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueueCountLLS2.2.1RQRS.xsd)\n- [v2.2.1 Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueueCountLLS2.2.1RS.xsd)\n- [v2.2.1 Sample Payloads](http://webservices.sabre.com/drc/servicedoc/QueueCountLLSRQ_v2.2.1_Sample_Payloads.xml)\n- [v2.2.1 WSDL](http://webservices.sabre.com/wsdl/tpfc/QueueCountLLS2.2.1RQ.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "QueuePlaceLLSRQ 2.0.4 Stateless Single Queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueuePlaceRQ ReturnHostCommand=\"true\" Version=\"2.0.4\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <QueueIdentifier Number=\"401\" PrefatoryInstructionCode=\"11\" PseudoCityCode=\"{{pcc}}\"/>\r\n        <UniqueID ID=\"XWBEBD\"/>\r\n    </QueueInfo>\r\n</QueuePlaceRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message/legacy)</b>\n\n- [v2.0.4 Quick Start Guide](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.x_QuickStartGuide.xlsx)\n- [v2.0.4 Request Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQ.xsd)\n- [v2.0.4 Request/Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQRS.xsd)\n- [v2.0.4 Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RS.xsd)\n- [v2.0.4 Request Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.0.4_Design.xml)\n- [v2.0.4 Response Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRS_v2.0.4_Design.xml)\n- [v2.0.4 Sample Payloads](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.0.4_Sample_Payloads.xml)\n- [v2.0.4 WSDL](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQ.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "QueuePlaceLLSRQ 2.0.4 Stateful Single Queue",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueuePlaceRQ ReturnHostCommand=\"true\" Version=\"2.0.4\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <QueueIdentifier Number=\"400\" PrefatoryInstructionCode=\"11\" PseudoCityCode=\"{{pcc}}\"/>\r\n    </QueueInfo>\r\n</QueuePlaceRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/queue/place_queue_message/legacy)</b>\n\n- [v2.0.4 Quick Start Guide](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.x_QuickStartGuide.xlsx)\n- [v2.0.4 Request Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQ.xsd)\n- [v2.0.4 Request/Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQRS.xsd)\n- [v2.0.4 Response Schema](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RS.xsd)\n- [v2.0.4 Request Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.0.4_Design.xml)\n- [v2.0.4 Response Design Documentation](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRS_v2.0.4_Design.xml)\n- [v2.0.4 Sample Payloads](http://webservices.sabre.com/drc/servicedoc/QueuePlaceLLSRQ_v2.0.4_Sample_Payloads.xml)\n- [v2.0.4 WSDL](http://webservices.sabre.com/wsdl/tpfc/QueuePlaceLLS2.0.4RQ.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "QueueMoveLLSRQ 2.0.0",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<QueueMoveRQ ReturnHostCommand=\"true\" Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n    <QueueInfo>\r\n        <DestinationQueue>\r\n            <QueueIdentifier Number=\"401\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </DestinationQueue>\r\n        <OriginQueue>\r\n            <QueueIdentifier Number=\"400\" PseudoCityCode=\"{{pcc}}\"/>\r\n        </OriginQueue>\r\n    </QueueInfo>\r\n    <Selection Criteria=\"{{currentPnr}}\" Function=\"PR\" />\r\n</QueueMoveRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message), [Resources](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/resources), [Legacy Versions](https://developer.sabre.com/docs/soap_apis/management/queue/move_queue_message/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Booking management",
+							"item": [
+								{
+									"name": "CreatePNR",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Conversation-ID",
+												"type": "text",
+												"value": "{{conv_id}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"CreatePassengerNameRecordRQ\": {\r\n    \"version\": \"2.4.0\",\r\n    \"TravelItineraryAddInfo\": {\r\n      \"AgencyInfo\": {\r\n        \"Ticketing\": {\r\n          \"TicketType\": \"7TAW\"\r\n        }\r\n      },\r\n      \"CustomerInfo\": {\r\n        \"ContactNumbers\": {\r\n          \"ContactNumber\": [\r\n            {\r\n              \"Phone\": \"74991234567\",\r\n              \"PhoneUseType\": \"A\"\r\n            }\r\n          ]\r\n        },\r\n        \"PersonName\": [\r\n          {\r\n            \"NameNumber\": \"1.1\",\r\n            \"GivenName\": \"MAX\",\r\n            \"Surname\": \"POWER\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"AirBook\": {\r\n      \"OriginDestinationInformation\": {\r\n        \"FlightSegment\": [\r\n          {\r\n            \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\r\n            \"FlightNumber\": \"577\",\r\n            \"NumberInParty\": \"1\",\r\n            \"ResBookDesigCode\": \"Y\",\r\n            \"Status\": \"NN\",\r\n            \"DestinationLocation\": {\r\n              \"LocationCode\": \"SCL\"\r\n            },\r\n            \"MarketingAirline\": {\r\n              \"Code\": \"LA\",\r\n              \"FlightNumber\": \"577\"\r\n            },\r\n            \"OriginLocation\": {\r\n              \"LocationCode\": \"BOG\"\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"PostProcessing\": {\r\n      \"EndTransaction\": {\r\n        \"Source\": {\r\n          \"ReceivedFrom\": \"API\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v2.4.0/passenger/records?mode=create",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v2.4.0",
+												"passenger",
+												"records"
+											],
+											"query": [
+												{
+													"key": "mode",
+													"value": "create"
+												}
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/book/create_passenger_name_record), [Resources](https://developer.sabre.com/docs/rest_apis/air/book/create_passenger_name_record/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/air/book/create_passenger_name_record/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "CreateBooking",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Conversation-ID",
+												"type": "text",
+												"value": "{{conv_id}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"agency\": {\n        \"address\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n        },\n        \"agencyCustomerNumber\": \"1234567\",\n        \"ticketingPolicy\": \"TODAY\"\n    },\n    \"travelers\": [\n        {\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1970-01-23\",\n            \"passengerCode\": \"ADT\"\n        },\n        {\n            \"givenName\": \"Child\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"2000-01-23\",\n            \"passengerCode\": \"CNN\"\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\",\n            \"travel2@sabre.com\"\n        ],\n        \"phones\": [\n            \"+123456\"\n        ]\n    },\n    \"flightDetails\": {\n        \"flights\": [\n            {\n                \"flightNumber\": 463,\n                \"airlineCode\": \"EY\",\n                \"fromAirportCode\": \"MEL\",\n                \"toAirportCode\": \"AUH\",\n                \"departureDate\": \"{{start_date}}\",\n                \"departureTime\": \"16:55\",\n                \"bookingClass\": \"Y\",\n                \"marriageGroup\": false,\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": 462,\n                \"airlineCode\": \"EY\",\n                \"fromAirportCode\": \"AUH\",\n                \"toAirportCode\": \"MEL\",\n                \"departureDate\": \"{{end_date}}\",\n                \"departureTime\": \"09:00\",\n                \"bookingClass\": \"Y\",\n                \"marriageGroup\": false,\n                \"flightStatusCode\": \"NN\"\n            }\n        ],\n        \"flightPricing\": [\n            {\n            }\n        ]\n    },\n    \"payment\": {\n        \"billingAddress\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\"\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"createBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "GetBooking",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"confirmationId\": \"{{pnr}}\"\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "UpdatePNR",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"UpdatePassengerNameRecordRQ\": {\n        \"Itinerary\": {\n            \"id\": \"{{pnr}}\"\n        },\n        \"TravelItineraryAddInfo\": {\n            \"CustomerInfo\": {\n                \"ContactNumbers\": {\n                    \"ContactNumber\": [\n                        {\n                            \"NameNumber\": \"1.1\",\n                            \"Phone\": \"817-555-1212\",\n                            \"PhoneUseType\": \"H\"\n                        }\n                    ]\n                }\n            }\n        },\n        \"PostProcessing\": {\n            \"RedisplayReservation\": {\n                \"waitInterval\": 100\n            },\n            \"EndTransaction\": {\n                \"Source\": {\n                    \"ReceivedFrom\": \"API TEST\"\n                }\n            }\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.1.0/passenger/records?mode=update",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.1.0",
+												"passenger",
+												"records"
+											],
+											"query": [
+												{
+													"key": "mode",
+													"value": "update"
+												}
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/book/update_passenger_name_record), [Resources](https://developer.sabre.com/docs/rest_apis/air/book/update_passenger_name_record/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/air/book/update_passenger_name_record/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "CancelBooking",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"retrieveBooking\": true,\n    \"cancelAll\": true,\n    \"errorHandlingPolicy\": \"ALLOW_PARTIAL_CANCEL\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"cancelBooking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "CancelFlightTickets",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Conversation-ID",
+												"type": "text",
+												"value": "{{conv_id}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tickets\": [\n    \"6077531617197\",\n    \"6077531617198\",\n    \"6077531617199\"\n  ],\n  \"errorHandlingPolicy\": \"HALT_ON_ERROR\"  \n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/cancelFlightTickets",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"cancelFlightTickets"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Post booking",
+							"item": [
+								{
+									"name": "TKT_ExchangeRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<ExchangeRQ version=\"1.4.0\" xmlns=\"http://www.sabre.com/ns/Ticketing/ExchangeRefund/1.0\" xmlns:ns1=\"http://www.sabre.com/ns/Ticketing/TTL/1.0\">\n    <POS>\n        <ns1:Company>1S</ns1:Company>\n        <ns1:Pseudo>{{pcc_tkt}}</ns1:Pseudo>\n    </POS>\n\t<TransactionInfo>\n\t\t<TicketingDocument>\n\t\t\t<Number>{{tkt}}</Number>\n\t\t</TicketingDocument>\n\t</TransactionInfo>\n</ExchangeRQ>\n\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/soap_apis/air/fulfill/schedule_change), [Resources](https://developer.sabre.com/docs/soap_apis/air/fulfill/schedule_change/resources), [Legacy Versions](https://developer.sabre.com/docs/soap_apis/air/fulfill/schedule_change/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "EnhancedAirTicket",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Conversation-ID",
+												"type": "text",
+												"value": "{{conv_id}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"AirTicketRQ\": {\r\n        \"DesignatePrinter\": {\r\n            \"Printers\": {\r\n                \"Ticket\": {\r\n                    \"CountryCode\": \"{{country_code}}\"\r\n                }\r\n            }\r\n        },\r\n        \"Itinerary\": {\r\n            \"ID\": \"{{pnr}}\"\r\n        },\r\n        \"Ticketing\": [\r\n            {\r\n                \"PricingQualifiers\": {\r\n                    \"PriceQuote\": [\r\n                        {\r\n                            \"Record\": [\r\n                                {\r\n                                    \"Number\": 1,\r\n                                    \"Reissue\": false\r\n                                }\r\n                            ]\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        ],\r\n        \"PostProcessing\": {\r\n            \"EndTransaction\": {\r\n                \"Source\": {\r\n                    \"ReceivedFrom\": \"API TEST\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.2.1/air/ticket",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.2.1",
+												"air",
+												"ticket"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/fulfill/enhanced_air_ticket), [Resources](https://developer.sabre.com/docs/rest_apis/air/fulfill/enhanced_air_ticket/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "ExchangeShoppingRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<ExchangeShoppingRQ version=\"2.4.0\" xmlns=\"http://services.sabre.com/sp/exchange/shopping/v2_4\">\n    <STL_Header.RQ/>\n    <POS>\n        <Pseudo>{{pcc_tkt}}</Pseudo>\n        <Actual>DFW</Actual>\n        <ShoppingPath bookingChannel=\"TN\" requestType=\"TNEXC\"/>\n    </POS>\n    <TicketingProvider>1S</TicketingProvider>\n    <PassengerInformation>\n        <PassengerWithPNR firstName=\"Max\" lastName=\"Power\" pnrLocator=\"{{pnr}}\" referenceNumber=\"1.1\">\n            <DocumentNumber localIssueDate=\"{{tkt_date}}\">{{tkt}}</DocumentNumber>\n        </PassengerWithPNR>\n    </PassengerInformation>\n    <OriginDestinationInformation shopIndicator=\"true\">\n        <DateTimeSelection>\n            <DepartureDate>2021-03-01</DepartureDate>\n        </DateTimeSelection>\n        <StartLocation>DFW</StartLocation>\n        <EndLocation>MIA</EndLocation>\n    </OriginDestinationInformation>\n    <OriginDestinationInformation shopIndicator=\"true\">\n        <DateTimeSelection>\n            <DepartureDate>2021-03-07</DepartureDate>\n        </DateTimeSelection>\n        <StartLocation>MIA</StartLocation>\n        <EndLocation>DFW</EndLocation>\n    </OriginDestinationInformation>\n    <TravelPreferences>\n        <PriceRequestInformation>\n            <TPA_Extensions>\n                <BrandedFareIndicators singleBrandedFare=\"true\"/>\n            </TPA_Extensions>\n        </PriceRequestInformation>\n    </TravelPreferences>\n</ExchangeShoppingRQ>\n\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/search/exchange_shopping), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/search/exchange_shopping/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/search/exchange_shopping/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "ExchangeBooking",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"ExchangeBookingRQ\": {\r\n        \"targetCity\": \"{{pcc_tkt}}\",\r\n        \"Itinerary\": {\r\n            \"id\": \"{{pnr}}\"\r\n        },\r\n        \"Cancel\": {\r\n            \"Segment\": [\r\n                {\r\n                    \"Number\": 1\r\n                },\r\n                {\r\n                    \"Number\": 2\r\n                }\r\n            ]\r\n        },\r\n        \"AirBook\": {\r\n            \"HaltOnStatus\": [\r\n                {\r\n                    \"Code\": \"HL\"\r\n                },\r\n                {\r\n                    \"Code\": \"KK\"\r\n                },\r\n                {\r\n                    \"Code\": \"LL\"\r\n                },\r\n                {\r\n                    \"Code\": \"NN\"\r\n                },\r\n                {\r\n                    \"Code\": \"NO\"\r\n                },\r\n                {\r\n                    \"Code\": \"UC\"\r\n                },\r\n                {\r\n                    \"Code\": \"US\"\r\n                }\r\n            ],\r\n            \"OriginDestinationInformation\": {\r\n                \"FlightSegment\": [\r\n                    {\r\n                        \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\r\n                        \"FlightNumber\": \"781\",\r\n                        \"NumberInParty\": \"1\",\r\n                        \"ResBookDesigCode\": \"G\",\r\n                        \"Status\": \"NN\",\r\n                        \"DestinationLocation\": {\r\n                            \"LocationCode\": \"PDX\"\r\n                        },\r\n                        \"MarketingAirline\": {\r\n                            \"Code\": \"AS\",\r\n                            \"FlightNumber\": \"781\"\r\n                        },\r\n                        \"OriginLocation\": {\r\n                            \"LocationCode\": \"LAS\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\r\n                        \"FlightNumber\": \"2172\",\r\n                        \"NumberInParty\": \"1\",\r\n                        \"ResBookDesigCode\": \"G\",\r\n                        \"Status\": \"NN\",\r\n                        \"DestinationLocation\": {\r\n                            \"LocationCode\": \"SEA\"\r\n                        },\r\n                        \"MarketingAirline\": {\r\n                            \"Code\": \"AS\",\r\n                            \"FlightNumber\": \"2172\"\r\n                        },\r\n                        \"OriginLocation\": {\r\n                            \"LocationCode\": \"PDX\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        },\r\n        \"AutomatedExchanges\": [\r\n            {\r\n                \"ExchangeComparison\": {\r\n                    \"OriginalTicketNumber\": \"{{tkt}}\",\r\n                    \"PriceRequestInformation\": {\r\n                        \"OptionalQualifiers\": {\r\n                            \"PricingQualifiers\": {\r\n                                \"NameSelect\": {\r\n                                    \"NameNumber\": \"1.1\"\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                \"PriceComparison\": {\r\n                    \"amountSpecified\": 0,\r\n                    \"AcceptablePriceIncrease\": {\r\n                        \"haltOnNonAcceptablePrice\": true,\r\n                        \"Amount\": 10\r\n                    },\r\n                    \"AcceptablePriceDecrease\": {\r\n                        \"haltOnNonAcceptablePrice\": false,\r\n                        \"Amount\": 10\r\n                    }\r\n                }\r\n            }\r\n        ],\r\n        \"PostProcessing\": {\r\n            \"returnPQRInfo\": true,\r\n            \"redisplayReservation\": true,\r\n            \"EndTransaction\": {\r\n                \"Source\": {\r\n                    \"ReceivedFrom\": \"API TEST\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.0.0/exchange/booking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.0.0",
+												"exchange",
+												"booking"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/fulfill/exchange_booking), [Resources](https://developer.sabre.com/docs/rest_apis/air/fulfill/exchange_booking/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "TKT_RefundRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<RefundRQ version=\"1.1.0\" xmlns=\"http://www.sabre.com/ns/Ticketing/ExchangeRefund/1.0\" xmlns:STL=\"http://services.sabre.com/STL/v01\">\n    <POS>\n        <STL:Company>1S</STL:Company>\n        <STL:Pseudo>{{pcc_tkt}}</STL:Pseudo>\n    </POS>\n    <TransactionInfo requestType=\"Price\">\n        <TicketingDocument>\n            <Number>{{tkt}}</Number>\n        </TicketingDocument>\n    </TransactionInfo>\n</RefundRQ>\n\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/auto_price_air_refunds), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/auto_price_air_refunds/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/auto_price_air_refunds/legacy)</b>\n\n- [v1.1.0 User Guide](http://files.developer.sabre.com/doc/providerdoc/Ticketing/Automated_Refunds_Web_Service_User_Guide_V1.0.pdf)\n- [v1.1.0 Workflow](http://files.developer.sabre.com/doc/providerdoc/Ticketing/GDS_Automated_Refunds_CAT33_End_to_end_flows.pdf)\n- [v1.1.0 Schema](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/fulfillment/TKT_ExchangeRefund_v.1.1.0.xsd)\n- [v1.1.0 Refund Request Design Document](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_RefundRQ_Design.xml)\n- [v1.1.0 Refund Response Design Document](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_RefundRS_Design.xml)\n- [v1.1.0 Sample Payloads](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_RefundRQ_Sample_RQ_and_RS_payloads_1_1_0.zip)\n- [v1.1.0 WSDL](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/fulfillment/TKT_Refund_v.1.1.0.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "EnhancedSeatMapRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<EnhancedSeatMapRQ version=\"6.0.0\" xmlns=\"http://stl.sabre.com/Merchandising/v5\">\r\n    <SeatMapQueryEnhanced>\r\n        <RequestType>Payload</RequestType>\r\n        <Flight destination=\"DFW\" origin=\"EZE\">\r\n            <DepartureDate>{{start_date}}</DepartureDate>\r\n            <Marketing carrier=\"AA\">996</Marketing>\r\n        </Flight>\r\n        <CabinDefinition>\r\n            <RBD>P</RBD>\r\n        </CabinDefinition>\r\n        <POS>\r\n            <PCC>{{pcc}}</PCC>\r\n        </POS>\r\n    </SeatMapQueryEnhanced>\r\n</EnhancedSeatMapRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/book/seat_map), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/book/seat_map/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/book/seat_map/legacy)</b>\n\n- [v6.0.0 Workflow](http://files.developer.sabre.com/doc/providerdoc/Merchandising/EnhancedSeatMap_v6_Workflow.pdf)\n- [v6.0.0 Design Documentation](https://beta.developer.sabre.com/sites/default/files/2019-05/Sample%20Payloads_Design_Docs_ESMV6.zip)\n- [v6.0.0 Sample Payloads](https://beta.developer.sabre.com/sites/default/files/2019-05/Sample%20Payloads.zip)\n- [v6.0.0 Schema](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/Merchandising/EnhancedSeatMap_6_0_0.xsd)\n- [v6.0.0 User Guide](https://beta.developer.sabre.com/sites/default/files/2019-05/EnhancedSeatMap%20Web%20Service%20UG_Ver6_17_May_2019.pdf)\n- [v6.0.0 WSDL](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/Merchandising/EnhancedSeatMap_6_0_0.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "RevalidateItinerary",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Conversation-ID",
+												"type": "text",
+												"value": "{{conv_id}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"6.1.0\",\n        \"TravelPreferences\": {\n            \"TPA_Extensions\": {\n                \"VerificationItinCallLogic\": {\n                    \"Value\": \"B\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"SeatsRequested\": [\n                1\n            ],\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"{{start_date}}T18:50:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MIA\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MCO\"\n                },\n                \"TPA_Extensions\": {\n                    \"SegmentType\": {\n                        \"Code\": \"O\"\n                    },\n                    \"Flight\": [\n                        {\n                            \"Number\": 1278,\n                            \"DepartureDateTime\": \"{{start_date}}T18:50:00\",\n                            \"ArrivalDateTime\": \"{{start_date}}T19:58:00\",\n                            \"Type\": \"A\",\n                            \"ClassOfService\": \"K\",\n                            \"OriginLocation\": {\n                                \"LocationCode\": \"MIA\"\n                            },\n                            \"DestinationLocation\": {\n                                \"LocationCode\": \"MCO\"\n                            },\n                            \"Airline\": {\n                                \"Operating\": \"F9\",\n                                \"Marketing\": \"F9\"\n                            }\n                        }\n                    ]\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"{{end_date}}T07:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MCO\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MIA\"\n                },\n                \"TPA_Extensions\": {\n                    \"SegmentType\": {\n                        \"Code\": \"O\"\n                    },\n                    \"Flight\": [\n                        {\n                            \"Number\": 1279,\n                            \"DepartureDateTime\": \"{{end_date}}T07:00:00\",\n                            \"ArrivalDateTime\": \"{{end_date}}T08:08:00\",\n                            \"Type\": \"A\",\n                            \"ClassOfService\": \"K\",\n                            \"OriginLocation\": {\n                                \"LocationCode\": \"MCO\"\n                            },\n                            \"DestinationLocation\": {\n                                \"LocationCode\": \"MIA\"\n                            },\n                            \"Airline\": {\n                                \"Operating\": \"F9\",\n                                \"Marketing\": \"F9\"\n                            }\n                        }\n                    ]\n                }\n            }\n        ],\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"50ITINS\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v6.1.0/shop/flights/revalidate",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v6.1.0",
+												"shop",
+												"flights",
+												"revalidate"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/search/revalidate_itinerary), [Resources](https://developer.sabre.com/docs/rest_apis/air/search/revalidate_itinerary/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "OTA_AirPriceLLSRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<OTA_AirPriceRQ ReturnHostCommand=\"true\" Version=\"2.17.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\n\t<PriceRequestInformation/>\n</OTA_AirPriceRQ>\n\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/book/price_air_itinerary), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/book/price_air_itinerary/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/book/price_air_itinerary/legacy)</b>\n\n- [v2.17.0 QuickStart Guide](http://webservices.sabre.com/drc/servicedoc/OTA_AirPriceLLSRQ_v2.x_QuickStartGuide.xlsx)\n- [v2.17.0 Request Design Documentation](http://webservices.sabre.com/drc/servicedoc/OTA_AirPriceLLSRQ_v2.17.0_Design.xml)\n- [v2.17.0 Response Design Documentation](http://webservices.sabre.com/drc/servicedoc/OTA_AirPriceLLSRS_v2.17.0_Design.xml)\n- [v2.17.0 Request Schema](http://webservices.sabre.com/wsdl/tpfc/OTA_AirPriceLLS2.17.0RQ.xsd)\n- [v2.17.0 Request/Response Schema](http://webservices.sabre.com/wsdl/tpfc/OTA_AirPriceLLS2.17.0RQRS.xsd)\n- [v2.17.0 Response Schema](http://webservices.sabre.com/wsdl/tpfc/OTA_AirPriceLLS2.17.0RS.xsd)\n- [v2.17.0 Sample Payloads](http://webservices.sabre.com/drc/servicedoc/OTA_AirPriceLLSRQ_v2.17.0_Sample_Payloads.xml)\n- [v2.17.0 WSDL](http://webservices.sabre.com/wsdl/tpfc/OTA_AirPriceLLS2.17.0RQ.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "GetAncillaryOffersRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<gao:GetAncillaryOffersRQ version=\"3.1.0\" xmlns:anc=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:flt=\"http://services.sabre.com/merch/flight/v03\" xmlns:gao=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:itin=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:pax=\"http://services.sabre.com/merch/passenger/v03\">\r\n    <gao:RequestType>payload</gao:RequestType>\r\n    <gao:RequestMode>booking</gao:RequestMode>\r\n    <gao:AncillaryRequestOptions>\r\n        <anc:ServiceType>F</anc:ServiceType>\r\n    </gao:AncillaryRequestOptions>\r\n    <gao:QueryByItinerary>\r\n        <gao:QueryPassengerItinerary>\r\n            <gao:Passenger id=\"pax_1\" type=\"ADT\">\r\n                <pax:PersonName>\r\n                    <pax:First>IVAN MR</pax:First>\r\n                    <pax:Last>IVANOV</pax:Last>\r\n                </pax:PersonName>\r\n            </gao:Passenger>\r\n            <gao:PassengerItinerary>\r\n                <gao:PassengerSegment segmentRef=\"seg_1\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_1\"/>\r\n                </gao:PassengerSegment>\r\n                <gao:PassengerSegment segmentRef=\"seg_2\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_2\"/>\r\n                </gao:PassengerSegment>\r\n            </gao:PassengerItinerary>\r\n        </gao:QueryPassengerItinerary>\r\n        <gao:QueryPassengerItinerary>\r\n            <gao:Passenger id=\"pax_2\" type=\"ADT\">\r\n                <pax:PersonName>\r\n                    <pax:First>ELENA MS</pax:First>\r\n                    <pax:Last>IVANOVA</pax:Last>\r\n                </pax:PersonName>\r\n            </gao:Passenger>\r\n            <gao:PassengerItinerary>\r\n                <gao:PassengerSegment segmentRef=\"seg_1\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_1\"/>\r\n                </gao:PassengerSegment>\r\n                <gao:PassengerSegment segmentRef=\"seg_2\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_2\"/>\r\n                </gao:PassengerSegment>\r\n            </gao:PassengerItinerary>\r\n        </gao:QueryPassengerItinerary>\r\n        <gao:QueryPassengerItinerary>\r\n            <gao:Passenger id=\"pax_3\" type=\"CNN\">\r\n                <pax:PersonName>\r\n                    <pax:First>ANDREY</pax:First>\r\n                    <pax:Last>IVANOV</pax:Last>\r\n                </pax:PersonName>\r\n            </gao:Passenger>\r\n            <gao:PassengerItinerary>\r\n                <gao:PassengerSegment segmentRef=\"seg_1\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_3\"/>\r\n                </gao:PassengerSegment>\r\n                <gao:PassengerSegment segmentRef=\"seg_2\">\r\n                    <itin:FareBreakAssociation FareInfoRef=\"fare_4\"/>\r\n                </gao:PassengerSegment>\r\n            </gao:PassengerItinerary>\r\n        </gao:QueryPassengerItinerary>\r\n        <gao:Segment id=\"seg_1\">\r\n            <itin:FlightDetail id=\"flight_1\">\r\n                <flt:Airline>AF</flt:Airline>\r\n                <flt:FlightNumber>1845</flt:FlightNumber>\r\n                <flt:DepartureAirport>SVO</flt:DepartureAirport>\r\n                <flt:DepartureDate>2018-05-20</flt:DepartureDate>\r\n                <flt:DepartureTime>06:10:00</flt:DepartureTime>\r\n                <flt:ArrivalAirport>CDG</flt:ArrivalAirport>\r\n                <flt:ClassOfService>E</flt:ClassOfService>\r\n            </itin:FlightDetail>\r\n        </gao:Segment>\r\n        <gao:Segment id=\"seg_2\">\r\n            <itin:FlightDetail id=\"flight_2\">\r\n                <flt:Airline>AF</flt:Airline>\r\n                <flt:FlightNumber>1744</flt:FlightNumber>\r\n                <flt:DepartureAirport>CDG</flt:DepartureAirport>\r\n                <flt:DepartureDate>2018-05-22</flt:DepartureDate>\r\n                <flt:DepartureTime>12:55:00</flt:DepartureTime>\r\n                <flt:ArrivalAirport>SVO</flt:ArrivalAirport>\r\n                <flt:ClassOfService>R</flt:ClassOfService>\r\n            </itin:FlightDetail>\r\n        </gao:Segment>\r\n        <gao:FareInfo id=\"fare_1\">\r\n            <FareComponentID>1</FareComponentID>\r\n            <GoverningCarrier>AF</GoverningCarrier>\r\n            <FareBasisCode>ESRRU</FareBasisCode>\r\n        </gao:FareInfo>\r\n        <gao:FareInfo id=\"fare_2\">\r\n            <FareComponentID>2</FareComponentID>\r\n            <GoverningCarrier>AF</GoverningCarrier>\r\n            <FareBasisCode>RSRRU</FareBasisCode>\r\n        </gao:FareInfo>\r\n        <gao:FareInfo id=\"fare_3\">\r\n            <FareComponentID>1</FareComponentID>\r\n            <GoverningCarrier>AF</GoverningCarrier>\r\n            <FareBasisCode>ESRRU/CH25</FareBasisCode>\r\n        </gao:FareInfo>\r\n        <gao:FareInfo id=\"fare_4\">\r\n            <FareComponentID>2</FareComponentID>\r\n            <GoverningCarrier>AF</GoverningCarrier>\r\n            <FareBasisCode>RSRRU/CH25</FareBasisCode>\r\n        </gao:FareInfo>\r\n    </gao:QueryByItinerary>\r\n</gao:GetAncillaryOffersRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/search/get_ancillary_offers), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/search/get_ancillary_offers/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/search/get_ancillary_offers/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Utility & Reporting",
+							"item": [
+								{
+									"name": "TKT_TravelAgencyReportsRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<DailySalesSummaryRQ version=\"1.2.2\" xmlns=\"http://www.sabre.com/ns/Ticketing/AsrServices/1.0\">\r\n    <Header/>\r\n    <SelectionCriteria>\r\n        <PseudoCityCode>{{pcc_tkt}}</PseudoCityCode>\r\n        <ReportDate>2019-12-22</ReportDate>\r\n    </SelectionCriteria>\r\n</DailySalesSummaryRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/display_audit_trail), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/display_audit_trail/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/display_audit_trail/legacy)</b>\n\n- [v1.2.2 User Guide](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TN_TKT_TravelAgencyReports_WebServices_User_Guide_v3.pdf)\n- [v1.2.2 Workflow](http://files.developer.sabre.com/doc/providerdoc/Ticketing/DQBWS_Workflow.pdf)\n- [v1.2.2 Request Design Documentation](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_TravelAgencyReportsRQ_v.1.2.2.xml)\n- [v1.2.2 Response Design Documentation](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_TravelAgencyReportsRS_v.1.2.2.xml)\n- [v1.2.2 Schema](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/fulfillment/TKT_AsrServices_v.1.2.2.xsd)\n- [v1.2.2 Samples](http://files.developer.sabre.com/doc/providerdoc/Ticketing/TKT_TravelAgencyReports_v.1.2.2_Samples.zip)\n- [v1.2.2 WSDL](http://files.developer.sabre.com/wsdl/sabreXML1.0.00/fulfillment/TKT_AsrServices_v.1.2.2.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "UnusedeTicketReportLLSRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<UnusedeTicketReportRQ ReturnHostCommand=\"true\" Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\"/>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/get_unused_etickets), [Resources](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/get_unused_etickets/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/air/fulfill/get_unused_etickets/legacy)</b>\n\n- [v2.x Quick Start Guide](http://webservices.sabre.com/drc/servicedoc/UnusedeTicketReportLLSRQ_v2.x_QuickStartGuide.xlsx)\n- [v2.0.0 Request Documentation](http://webservices.sabre.com/drc/servicedoc/UnusedeTicketReportLLSRQ_v2.0.0_Design.xml)\n- [v2.0.0 Request Schema](http://webservices.sabre.com/wsdl/tpfc/UnusedeTicketReportLLS2.0.0RQ.xsd)\n- [v2.0.0 Request/Response Schema](http://webservices.sabre.com/wsdl/tpfc/UnusedeTicketReportLLS2.0.0RQRS.xsd)\n- [v2.0.0 Response Documentation](http://webservices.sabre.com/drc/servicedoc/UnusedeTicketReportLLSRS_v2.0.0_Design.xml)\n- [v2.0.0 Response Schema](http://webservices.sabre.com/wsdl/tpfc/UnusedeTicketReportLLS2.0.0RS.xsd)\n- [v2.0.0 Sample Payloads](http://webservices.sabre.com/drc/servicedoc/UnusedeTicketReportLLSRQ_v2.0.0_Sample_Payloads.xml)\n- [v2.0.0 WSDL](http://webservices.sabre.com/wsdl/tpfc/UnusedeTicketReportLLS2.0.0RQ.wsdl)\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "FareNabber-Create Subscription",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"expiryDate\": \"2021-01-27\",\n    \"priceCurrency\": \"RUB\",\n    \"pcc\": \"{{pcc}}\",\n    \"nonstop\": true,\n    \"PreferredAirlines\": [],\n    \"SubscriptionPassengers\": [\n        {\n            \"passengerType\": \"ADT\",\n            \"maxPrice\": 40000,\n            \"minPrice\": 0,\n            \"numberOfPassengers\": 1\n        }\n    ],\n    \"SubscriptionLegs\": [\n        {\n            \"departureDateFrom\": \"2021-04-01\",\n            \"departureDateTo\": \"2021-04-02\",\n            \"days\": null,\n            \"departureTimeWindow\": null,\n            \"origin\": \"MOW\",\n            \"destination\": \"LON\",\n            \"PreferredAirlines\": []\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.0/AirShopping/FareNabberSubscriptions",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.0",
+												"AirShopping",
+												"FareNabberSubscriptions"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/search/fare_nabber), [Resources](https://developer.sabre.com/docs/rest_apis/air/search/fare_nabber/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "FareNabber-Get Subscription",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Conversation-ID",
+												"value": "{{conv_id}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{rest_endpoint}}/v1.0/AirShopping/FareNabberSubscriptions/5w-SI2SbWEQ3_F6eBgAm7r1zDOQ=",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1.0",
+												"AirShopping",
+												"FareNabberSubscriptions",
+												"5w-SI2SbWEQ3_F6eBgAm7r1zDOQ="
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/air/search/fare_nabber), [Resources](https://developer.sabre.com/docs/rest_apis/air/search/fare_nabber/reference-documentation)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "Trip_SearchRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<Trip_SearchRQ Version=\"4.5.0\" xmlns=\"http://webservices.sabre.com/triprecord\">\r\n    <ReadRequests>\r\n        <ReservationReadRequest>\r\n            <LocatorCriteria>\r\n                <Locator Id=\"{{pnr}}\"/>\r\n            </LocatorCriteria>\r\n\t\t\t<PosCriteria AnyBranch=\"true\"/>\r\n            <ReturnOptions MaxItemsReturned=\"2\" ResponseFormat=\"STL\" SearchType=\"ACTIVE\" ViewName=\"TripSearchBlobTN\"/>\r\n            <!--ReturnOptions MaxItemsReturned=\"1\" ResponseFormat=\"TVL\" SearchType=\"INACTIVE\" ViewName=\"PastDate-TN\"/-->\r\n        </ReservationReadRequest>\r\n    </ReadRequests>\r\n</Trip_SearchRQ>\r\n\r\n{{footer}}"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/itinerary/search_for_itineraries), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/itinerary/search_for_itineraries/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/itinerary/search_for_itineraries/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								},
+								{
+									"name": "SabreCommandLLSRQ",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\r\n\r\n<SabreCommandLLSRQ ReturnHostCommand=\"true\" Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n\t<Request Output=\"SCREEN\">\r\n\t\t<HostCommand>117MAYJFKSFO¥AA/D</HostCommand>\r\n\t</Request>\r\n</SabreCommandLLSRQ>\r\n\r\n{{footer}}\r\n"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										},
+										"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/management/utility/send_sabre_command), [Resources](https://developer.sabre.com/docs/read/soap_apis/management/utility/send_sabre_command/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/management/utility/send_sabre_command/legacy)</b>\n\n[//]: # \"End\""
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Initialize collection variables",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respObject = pm.response.json();",
+									"const valuesToSet = respObject.data;",
+									"",
+									"pm.collectionVariables.clear();",
+									"",
+									"if(valuesToSet!=null && valuesToSet.queuesUsed!==undefined){",
+									"    pm.collectionVariables.set(\"postBookingQueue\",valuesToSet.queuesUsed.postBookingQueue);",
+									"    pm.collectionVariables.set(\"postFullfilmentQueue\",valuesToSet.queuesUsed.postFullfilmentQueue);",
+									"    pm.collectionVariables.set(\"manualProcessingQueue\",valuesToSet.queuesUsed.manualProcessingQueue);",
+									"}",
+									"",
+									"if(valuesToSet!=null && valuesToSet.agency!==undefined)",
+									"    pm.collectionVariables.set(\"pbAgencyInfo\",JSON.stringify(valuesToSet.agency));",
+									"if(valuesToSet!=null && valuesToSet.formsOfPayment!==undefined)",
+									"    pm.collectionVariables.set(\"pbFormsOfPayment\",JSON.stringify(valuesToSet.formsOfPayment));",
+									"if(valuesToSet!=null && valuesToSet.Printers!==undefined)",
+									"    pm.collectionVariables.set(\"pbPrinters\",JSON.stringify(valuesToSet.Printers));",
+									"",
+									"if(valuesToSet!=null && valuesToSet.itineraryOptions!==undefined && valuesToSet.itineraryOptions.cityPairs!==undefined)",
+									"    pm.collectionVariables.set(\"pbCityPairs\",JSON.stringify(valuesToSet.itineraryOptions.cityPairs));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"queuesUsed\" : {\n        \"postBookingQueue\" : \"400\",\n        \"postFullfilmentQueue\" : \"402\",\n        \"manualProcessingQueue\" : \"401\"\n    },\n    \"itineraryOptions\": {\n        \"cityPairs\" : [\"DFW-LAS\",\"NYC-MIA\"]\n    },\n    \"agency\": {\n        \"address\": {\n            \"name\": \"SABRE TRAVEL AGENCY\",\n            \"street\": \"3150 SABRE DRIVE\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"76092\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"powered by Sabre APIs.\"\n        },\n        \"agencyCustomerNumber\":\"1234567\",\n        \"ticketingPolicy\": \"TODAY\",\n        \"contactInfo\":{\n            \"phones\":[\"+1-120-9989-9989\"],\n            \"emails\":[\"travelagency@sabre.com\"]\n        }\n    },\n    \"Printers\": {\n        \"Ticket\": {\n          \"CountryCode\": \"{{country_code}}\"\n        }\n    },\n    \"formsOfPayment\": {\n        \"CC\":{\n            \"CC_Info\": {\n                \"PaymentCard\": {\n                    \"Code\": \"\",\n                    \"ExpireDate\": \"\",\n                    \"Number\": 0,\n                    \"CardSecurityCode\": \"\"\n                }\n            }\n        },\n        \"CA\": {\"Type\":\"CA\"}\n    }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SessionCreateRQ 1.0.0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//validates error information gathered on global script",
+							"const pbResults = pm.variables.get(\"pbResults\");",
+							"(pbResults && pbResults.httpPass===true?pm.test:pm.test.skip)(\"gather SessionCreateRS data: session token and conversation id.\",()=>{",
+							"",
+							"    //uses cheerio library to read and parse XML content",
+							"    const doc = cheerio.load(pm.response.text());",
+							"",
+							"    //gather returned Security Token, will be used in all   subsequent API calls. ",
+							"    const secTokenElement = doc(\"wsse\\\\:BinarySecurityToken\");",
+							"    const token = secTokenElement.length>0?secTokenElement.text():null;",
+							"    pm.expect(token,\"parsing SecurityToken\").to.not.be.null",
+							"    pm.environment.set(\"token\", token.replace(/^ATH:/, ''));",
+							"",
+							"    //gather ConversationID",
+							"    const convIDElement = doc(\"SessionCreateRS > ConversationId\");",
+							"    const convID = convIDElement.length>0?convIDElement.text():null;",
+							"    pm.expect(convID,\"parsing ConversationId\").to.not.be.null;",
+							"    pm.environment.set(\"conv_id\",convID);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//clear environment variables",
+							"pm.environment.set(\"token\", \"\");",
+							"pm.environment.set(\"conv_id\", \"\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2021.01.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ returnContextID=\"true\" Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{soap_endpoint}}",
+					"host": [
+						"{{soap_endpoint}}"
+					]
+				},
+				"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/resources)</b>\n\n- SessionCreateRQ v1.0.0 is the traditional method for authentication & authorization of **Stateful Sabre SOAP APIs**. \n- v1.0.0 requires the standard authentication parameters: username, password, organization & domain (see [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management) if you need to reset your password).\n- SessionCreateRQ v2.0.0 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret (see [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids) for further references).\n- Be mindful of these differences when choosing which version to use.\n<br/><br/>\n*note:* The below example depicts a **v1.0.0** request where only the 4 standard security attributes are required. <br/>\nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.<br/><br/>\nThe general script logic in this collection will take the values you define in these variables and will use them in the execution of this service.\nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)\n\n[//]: # \"End\""
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Get the first string of the URI",
+					"const URI = request.url.split(\"/\")[0];",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}",
+					"const isSoap = ((URI) == ('{{soap_endpoint}}'));",
+					"const isRest = ((URI) == ('{{rest_endpoint}}'));",
+					"",
+					"if(isSoap==true){",
+					"    // Get service action code from request name and ignore the following prefixes if present:",
+					"    // underscore (_)",
+					"    // number & dot (1.)",
+					"    // these variations are used in different examples across this collection",
+					"    const action = request.name.replace(/^_|[0-9]./, '').trim().split(' ')[0];",
+					"    const token = pm.variables.get(\"token\");",
+					"    const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2021.01.DevStudio</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"",
+					"    // Same as previous item, this footer variable is used to close the entire SOAP envelope",
+					"    const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';",
+					"",
+					"    // Add header & footer variables into the scope variables",
+					"    pm.variables.set('header', header);",
+					"    pm.variables.set('footer', footer);",
+					"}",
+					"if(isRest==true){",
+					"    //Using Conversation_ID",
+					"}",
+					"",
+					"//define scope variables",
+					"// Capture today's date",
+					"var moment = require('moment');",
+					"// Add 30 days to today's date and use this date in start_date",
+					"const today = moment().format(\"YYYY-MM-DD\");",
+					"pm.variables.set('today', today);",
+					"// Add 30 days to today's date and use this date in start_date",
+					"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+					"pm.variables.set('start_date', start_date);",
+					"// Add 37 days to today's date and use this date in end_date",
+					"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");",
+					"pm.variables.set('end_date', end_date);",
+					"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)",
+					"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");",
+					"pm.variables.set('short_end_date', short_end_date);",
+					"",
+					"console.info(\"processing API (pre)request :\",pm.info.requestName,pm.info.requestId,pm.info.URI)"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var errorMessage = '';",
+					"var httpPass = false;",
+					"var businessPass = false;",
+					"var webServiceError = null;",
+					"var businesLogicError = null;",
+					"//console.log(\"about request:\", pm, pm.info.eventName, \"last\"+pm.info.requestId.toString()+\"RS\", pm.response, pm.request.url, pm.request.url.getHost());",
+					"",
+					"/**",
+					" * Tests HTTP response",
+					" * status code ok (200)",
+					" * has body",
+					" */",
+					"pm.test(\"validate HTTP server response\", () => {",
+					"    pm.expect(pm.response.code,\"expect http status (OK,200)\").to.be.equal(200);",
+					"    pm.expect(pm.response.responseSize,\"expect content on response body\").to.be.greaterThan(0);",
+					"",
+					"    httpPass = true;",
+					"",
+					"})",
+					"",
+					"/**",
+					" * Validate API response",
+					" * infer SOAP or REST api according the the URL (endpoint)",
+					" * checks for default Error / Warning nodes, ",
+					" * ",
+					" */",
+					"const isSoap = pm.variables.replaceIn(\"{{soap_endpoint}}\").toString().indexOf(pm.request.url.getHost()) > -1 ? true : false;",
+					"const isRest = pm.variables.replaceIn(\"{{rest_endpoint}}\").toString().indexOf(pm.request.url.getHost()) > -1 ? true : false;",
+					"",
+					"//SOAP API Calls, test for Fault nodes on the SOAP response",
+					"(isSoap?pm.test:pm.test.skip)(\"Sabre SOAP API call, validate service response \",()=>{",
+					"    const doc = cheerio.load(pm.response.text());",
+					"    webServiceError = doc(\"soap-env\\\\:Fault\");",
+					"    businesLogicError = doc(\"stl\\\\:ApplicationResults\\stl\\\\:Error\");",
+					"    //convert to HTML strings",
+					"    webServiceError = webServiceError!==null && webServiceError.length>0?webServiceError.parent().html():'';",
+					"    businesLogicError = businesLogicError!==null && businesLogicError.length>0?businesLogicError.parent().html():'';",
+					"",
+					"    //console.log(\"soap error\",webServiceError,businesLogicError, xml2Json(doc(\"soap-env\\\\:Fault\").parent().html()));",
+					"    pm.expect(webServiceError,\"webservice error\").to.be.empty;",
+					"    pm.expect(businesLogicError,\"business logic error\").to.be.empty;",
+					"    businessPass = true;",
+					"",
+					"});",
+					"",
+					"//REST API Calls, test for errors collection, or when under non 200 HTTP requests, the entire body",
+					"(isRest?pm.test:pm.test.skip)(\"Sabre REST API call, validate service response\",()=>{",
+					"    let doc = pm.response.json();",
+					"    webServiceError = httpPass==false?doc!=null?JSON.stringify(doc):'':'';",
+					"    businesLogicError = httpPass==true?doc.errors!=null?JSON.stringify(doc.errors):'':'';",
+					"    pm.expect(webServiceError,\"webservice error\").to.be.empty;",
+					"    pm.expect(businesLogicError,\"business logic error\").to.be.empty;",
+					"",
+					"    businessPass = true;",
+					"});",
+					"",
+					"",
+					"//logs result and store variables",
+					"const pbResults = {",
+					"    \"httpPass\":httpPass,",
+					"    \"businessPass\":businessPass,",
+					"    \"webServiceError\":webServiceError,",
+					"    \"businesLogicError\":businesLogicError,",
+					"    \"info\":{",
+					"        \"url\": pm.request.url.toString(),",
+					"        \"pmInfo\": JSON.stringify(pm.info)",
+					"    }",
+					"}",
+					"pm.variables.set(\"pbResults\", pbResults);",
+					"pm.variables.set(\"pbHttpPass\", httpPass);",
+					"pm.variables.set(\"pbBusinessPass\", businessPass);",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "pbAgencyInfo",
+			"value": ""
+		},
+		{
+			"key": "pbFormsOfPayment",
+			"value": ""
+		},
+		{
+			"key": "postBookingQueue",
+			"value": ""
+		},
+		{
+			"key": "postFullfilmentQueue",
+			"value": ""
+		},
+		{
+			"key": "manualProcessingQueue",
+			"value": ""
+		},
+		{
+			"key": "pbPrinters",
+			"value": ""
+		},
+		{
+			"key": "pbCityPairs",
+			"value": ""
+		},
+		{
+			"key": "pbItinerary",
+			"value": ""
+		}
+	]
+}
