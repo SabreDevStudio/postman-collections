@@ -44,6 +44,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2022.10](./Booking%20Management%20API%20v2022.10.postman_collection.json)| Version incorporates:</br>- modifyBooking service examples for ATPCO modifications. Each use case scenario is presented as a workflow. We hope that this would simplify tests and integration. On top of that, we added data preparation scenarios for createBooking service, which may help you build up flight/hotel/car flow|
 | [2022.06](./Booking%20Management%20API%20v2022.06.postman_collection.json)| Version incorporates:</br>- new modifyBooking service examples for changing CSL hotel bookings. Each use case scenario is presented as a workflow. We hope that this should simplify tests and integration. |
 | [2021.12](./Booking%20Management%20API%20v2021.12.postman_collection.json)| Version incorporates:</br>- new CreateBooking examples for booking vehicle content,</br>- an extra CreateBooking example for CSL hotel + strong customer authentication, </br>- 'Workflows' folder has been updated and revised (added new vehicle workflow, corrected wrong REST endpoints, updated various variables). |
 | [2021.09](https://github.com/SabreDevStudio/postman-collections/blob/master/Booking-Management/Booking%20Management%20API%20v2021.09.postman_collection.json) | Version incorporates:</br>- CreateBooking samples for booking ancillaries |
@@ -91,7 +92,7 @@ The Collection Runner allows you to run sets of requests in a specified sequence
 
 ## License
 
-Copyright (c) 2020 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2022 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
