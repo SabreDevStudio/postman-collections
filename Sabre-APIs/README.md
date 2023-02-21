@@ -74,7 +74,7 @@ For more information on Sabre APIs please access our Developer Portal [Sabre Dev
 
 ## License
 
-Copyright (c) 2020 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2023 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
