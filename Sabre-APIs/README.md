@@ -61,7 +61,7 @@ In order to successfully authenticate to consume Sabre APIs, you will need to up
   * Click on the name of your imported environment file to see a list of all key/value pairs.
   * Enter your credentials, and press the "Update" button.    
 
-![environment variables](./postman_environ_vars.jpg)
+![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Booking-Management/Credentials.png)
 
 ## Running the Tests
 
