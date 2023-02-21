@@ -69,7 +69,7 @@ Update the dummy values with your official credentials. To do that follow these 
   * Click on the name of your imported environment file to see a list of all key/value pairs.
   * Enter your credentials, and press the "Update" button.    
 
-![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Sabre-APIs/postman_environ_vars.jpg)
+![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Booking-Management/Credentials.png)
 
 ## Running the Tests
 
