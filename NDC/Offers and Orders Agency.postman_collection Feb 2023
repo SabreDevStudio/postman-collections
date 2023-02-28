@@ -1,0 +1,1450 @@
+{
+	"info": {
+		"_postman_id": "ebe7f070-6683-4fd0-9919-32963b0ac2ed",
+		"name": "Offers and Orders Agency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Workflows",
+			"item": [
+				{
+					"name": "0. REST Authorize ATK",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{secret}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "grant_type=client_credentials"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v2/auth/token",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v2",
+								"auth",
+								"token"
+							]
+						},
+						"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "0. SessionCreateRQ 1.0.0 ATH",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2020.03.DevStudio_NDC</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{soap_endpoint}}",
+							"host": [
+								"{{soap_endpoint}}"
+							]
+						},
+						"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/legacy)</b>\n\n- [v1.0.0 Create Session Test Suite](https://github.com/SabreDevStudio/SabreAPIsWorkflows/tree/master/SabreAPIsTestSuites/SessionCreateRQ-v1.0.0)\n- [Request Documentation](http://webservices.sabre.com/drc/servicedoc/SessionCreateRQ_Envelope_Design.xml)\n- [Request Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.xsd)\n- [Request/Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQRS.xsd)\n- [Response Documentation](http://webservices.sabre.com/drc/servicedoc/SessionCreateRS_Envelope_Design.xml)\n- [Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRS.xsd)\n- [SOAP Field Size Overview](http://webservices.sabre.com/drc/servicedoc/SOAP_Field_Size_Overview.pdf)\n- [WSDL](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.wsdl)\n- [Service Description/Notes](http://webservices.sabre.com/drc/servicedoc/SessionCreateRQ.htm)\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 All Carriers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [{\n                    \"PseudoCityCode\": \"AB12\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [{\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-07-15T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"ORD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"DEN\"\n                }\n            },\n            {\n                   \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2023-07-18T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"DEN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"ORD\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 10\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Enable\",\n                    \"ATPCO\": \"Disable\",\n                    \"LCC\": \"Disable\"\n                },\n                 \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                               },\n                \"NDCIndicators\": {\n                    \"MultipleBrandedFares\": {\n                        \"Value\": true\n                    },\n                    \"MaxNumberOfUpsells\": {\n                        \"Value\": 20\n                    }\n                }\n\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [{\n                    \"PassengerTypeQuantity\": [{\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}\n"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 7 legs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"2\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"AB12\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-07-16T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"IAH\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SAN\"\n                }\n            },\n            {\n                \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2023-07-20T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SAN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"LAX\"\n                }\n            },\n            {\n                \"RPH\": \"3\",\n                \"DepartureDateTime\": \"2023-07-23T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"LAX\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SFO\"\n                }\n            },\n            {\n                \"RPH\": \"4\",\n                \"DepartureDateTime\": \"2023-07-25T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SFO\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SEA\"\n                }\n            },\n            {\n                \"RPH\": \"5\",\n                \"DepartureDateTime\": \"2023-07-27T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SEA\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"LAX\"\n                }\n            },\n            {\n                \"RPH\": \"6\",\n                \"DepartureDateTime\": \"2023-07-29T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"LAX\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SAN\"\n                }\n            },\n                        {\n                \"RPH\": \"7\",\n                \"DepartureDateTime\": \"2023-07-31T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SAN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"IAH\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"UA\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 10\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Disable\",\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                },\n                \"NDCIndicators\": {\n                    \"MultipleBrandedFares\": {\n                        \"Value\": true\n                    },\n                    \"MaxNumberOfUpsells\": {\n                        \"Value\": 20\n                    }\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 Carrier Specific 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"AB12\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-05-09T00:00:00\",\n                \"DepartureWindow\": \"06001900\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MEL\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"QF\"\n                }\n            ],\n            \"MaxStopsQuantity\": 1,\n            \"FlightTypePref\": {\n                \"MaxConnections\": \"1\"\n            },\n            \"Baggage\": {\n                \"RequestType\": \"A\",\n                \"FreePieceRequired\": true\n            },\n            \"CabinPref\": [\n                {\n                    \"Cabin\": \"Y\",\n                    \"PreferLevel\": \"Only\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 50\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Enable\",\n                    \"ATPCO\": \"Disable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": true\n                },\n                \"KeepSameCabin\": {\n                    \"Enabled\": false\n                },\n                \"NDCIndicators\": {\n                    \"MultipleBrandedFares\": {\n                        \"Value\": true\n                    },\n                    \"MaxNumberOfUpsells\": {\n                        \"Value\": 6\n                    },\n                    \"CarrierSpecificQualifiers\": [\n                        {\n                            \"CarrierCode\": \"QF\",\n                            \"AccountCode\": {\n                                \"Code\": \"ABC12\"\n                            }\n                        }\n                    ],\n                    \"FrequentFlyer\": [\n                        {\n                            \"AccountNumber\": \"7531246\",\n                            \"AirlineDesignator\": \"QF\",\n                            \"PassengerId\": \"Passenger1\"\n                        }\n                    ]\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1,\n                            \"PassengerId\": \"Passenger1\",\n                            \"PersonName\": {\n                                \"GivenName\": \"SMITH\",\n                                \"Surname\": \"JOHN\"\n                            }\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 Carrier Specific 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"AB12\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-07-13T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"FRA\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"GVA\"\n                }\n            }\n            ],\n            \"TravelPreferences\": {\n                \"VendorPref\": [\n                    {\n                        \"Code\": \"LH\"\n                    }\n                ],\n                \"TPA_Extensions\": {\n                    \"NumTrips\": {\n                        \"Number\": 50\n                    },\n                    \"DataSources\": {\n                        \"NDC\": \"Enable\",\n                        \"ATPCO\": \"Disable\",\n                        \"LCC\": \"Disable\"\n                    },\n                    \"PreferNDCSourceOnTie\": {\n                        \"Value\": true\n                    },\n                    \"NDCIndicators\": {\n                        \"MultipleBrandedFares\": {\n                            \"Value\": true\n                        },\n                        \"MaxNumberOfUpsells\": {\n                            \"Value\": 6\n                        }\n                    }\n                }\n            },\n            \"TravelerInfoSummary\": {\n                \"AirTravelerAvail\": [\n                    {\n                        \"PassengerTypeQuantity\": [\n                            {\n                                \"Code\": \"ADT\",\n                                \"Quantity\": 1\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"TPA_Extensions\": {\n                \"IntelliSellTransaction\": {\n                    \"RequestType\": {\n                        \"Name\": \"200ITINS\"\n                    }\n                }\n            }\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 Carrier sector fares",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"27M7\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-05-09T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"MEL\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SYD\"\n                }\n            },\n            {\n                   \"RPH\": \"2\",\n                \"DepartureDateTime\": \"2023-05-16T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"MEL\"\n                }\n            }\n        ],\n            \"TravelPreferences\": {\n                \"VendorPref\": [\n                    {\n                        \"Code\": \"QF\"\n                    }\n                ],\n                \"TPA_Extensions\": {\n                    \"NumTrips\": {\n                        \"Number\": 50\n                    },\n                    \"DataSources\": {\n                        \"NDC\": \"Enable\",\n                        \"ATPCO\": \"Disable\",\n                        \"LCC\": \"Disable\"\n                    },\n                    \"NDCIndicators\": {\n                        \"MultipleBrandedFares\": {\n                            \"Value\": true\n                        },\n                        \"MaxNumberOfUpsells\": {\n                            \"Value\": 6\n                        },\n                        \"ShowOneWays\": {\n                            \"Value\": true\n                        }\n                    }\n                }\n            },\n            \"TravelerInfoSummary\": {\n                \"AirTravelerAvail\": [\n                    {\n                        \"PassengerTypeQuantity\": [\n                            {\n                                \"Code\": \"ADT\",\n                                \"Quantity\": 1\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"TPA_Extensions\": {\n                \"IntelliSellTransaction\": {\n                    \"RequestType\": {\n                        \"Name\": \"200ITINS\"\n                    }\n                }\n            }\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 Carrier Specific multi-ADT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"AB12\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"2023-10-22T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"BNE\"\n                }\n            }\n\n            ],\n            \"TravelPreferences\": {\n                \"VendorPref\": [\n                    {\n                        \"Code\": \"QF\"\n                    }\n                ],\n                \"TPA_Extensions\": {\n                    \"NumTrips\": {\n                        \"Number\": 50\n                    },\n                    \"DataSources\": {\n                        \"NDC\": \"Enable\",\n                        \"ATPCO\": \"Disable\",\n                        \"LCC\": \"Disable\"\n                    },\n                    \"PreferNDCSourceOnTie\": {\n                        \"Value\": true\n                    },\n                    \"NDCIndicators\": {\n                        \"MultipleBrandedFares\": {\n                            \"Value\": true\n                        },\n                        \"MaxNumberOfUpsells\": {\n                            \"Value\": 6\n                        }\n                    }\n                }\n            },\n            \"TravelerInfoSummary\": {\n                \"AirTravelerAvail\": [\n                    {\n                        \"PassengerTypeQuantity\": [\n                            {\n                                \"Code\": \"ADT\",\n                                \"Quantity\": 1\n                            }\n                        ]\n                    }\n                ]\n            },\n            \"TPA_Extensions\": {\n                \"IntelliSellTransaction\": {\n                    \"RequestType\": {\n                        \"Name\": \"200ITINS\"\n                    }\n                }\n            }\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "1. BFM /v4 Carrier Specific multiple source per itinerary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"OTA_AirLowFareSearchRQ\": {\n    \"Version\": \"1\",\n    \"POS\": {\n      \"Source\": [\n        {\n          \"PseudoCityCode\": \"AB12\",\n          \"RequestorID\": {\n            \"Type\": \"1\",\n            \"ID\": \"1\",\n            \"CompanyName\": {\n              \"Code\": \"TN\"\n            }\n          }\n        }\n      ]\n    },\n    \"OriginDestinationInformation\": [\n      {\n        \"RPH\": \"1\",\n        \"DepartureDateTime\": \"2023-03-20T00:00:00\",\n        \"OriginLocation\": {\n          \"LocationCode\": \"SYD\"\n        },\n        \"DestinationLocation\": {\n          \"LocationCode\": \"MEL\"\n        }\n      }\n    ],\n    \"TravelPreferences\": {\n      \"VendorPref\": [\n        {\n          \"Code\": \"QF\"\n        }\n      ],\n      \"TPA_Extensions\": {\n        \"NumTrips\": {\n          \"Number\": 50\n        },\n        \"DataSources\": {\n          \"NDC\": \"Enable\",\n          \"ATPCO\": \"Enable\",\n          \"LCC\": \"Disable\"\n        },\n        \"NDCIndicators\": {\n          \"MultipleBrandedFares\": {\n            \"Value\": true\n          },\n          \"MaxNumberOfUpsells\": {\n            \"Value\": 6\n          }\n        }\n      },\n      \"MaxStopsQuantity\": 0\n    },\n    \"TravelerInfoSummary\": {\n      \"AirTravelerAvail\": [\n        {\n          \"PassengerTypeQuantity\": [\n            {\n              \"Code\": \"ADT\",\n              \"Quantity\": 1\n            }\n          ]\n        }\n      ]\n    },\n    \"TPA_Extensions\": {\n      \"IntelliSellTransaction\": {\n        \"RequestType\": {\n          \"Name\": \"200ITINS\"\n        },\n        \"MultipleSourcePerItinerary\": {\n          \"Value\": true\n        }\n      }\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v4/offers/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v4",
+								"offers",
+								"shop"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Reference](https://beta.developer.sabre.com/docs/rest_apis/air/search/bargain_finder_max)</b>\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "2. Offers Price /v1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": [\n        {\n            \"offerItemId\": [\n                \n                \"{{shop_offer_item_id}}\"\n                \n            ]\n        }\n    ],\n    \"params\": {\n        \"formOfPayment\": [\n            {\n                \"binNumber\": \"545251\",\n                \"subCode\": \"FDA\",\n                \"cardType\": \"MC\"\n            }\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/price",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Offers Price sector fares",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"query\": [\n\n        {\n\n            \"offerItemId\": [\n\n                \"ce7f9648db9dp46t8l8m2drla0-1-1\",\n\n                \"ce7f9648db9dp46t8l8m2drla0-40-1\"\n\n            ]\n\n        }\n\n    ],\n\n    \"passengers\": [\n\n        {\n\n            \"id\": \"Passenger1\"\n\n        }\n\n    ],\n\n    \"diags\": [\n\n        \"session\",\n\n        \"listDiags\",\n\n        \"ATSE_PRICING_REQUEST\",\n\n        \"ATSE_PRICING_RESPONSE\",\n\n        \"LCC_PRICING_REQUEST\",\n\n        \"LCC_PRICING_RESPONSE\",\n\n        \"OFFER_STORE_GET_REQUEST\",\n\n        \"OFFER_STORE_GET_RESPONSE\",\n\n        \"OFFER_STORE_ID_REQUEST\",\n\n        \"OFFER_STORE_ID_RESPONSE\",\n\n        \"OFFER_STORE_PUT_REQUEST\",\n\n        \"OFFER_STORE_PUT_RESPONSE\",\n\n        \"NDC_CONNECTOR_REQUEST\",\n\n        \"NDC_CONNECTOR_RESPONSE\",\n\n        \"NDC_CONNECTOR_RESPONSE_DIAGS\"\n\n    ]\n\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/price",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Orders Create /v1 ATH - Simple",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionOptions\": {\n        \"requestType\": \"STATELESS\",\n        \"commitTransaction\": true,\n        \"movePassengerDetails\": true,\n        \"intialIgnore\": false\n    },\n    \"contactInfos\": [\n        {\n            \"id\": \"CI-1\",\n            \"emailAddresses\": [\n                {\n                    \"address\": \"DAVE@SABRE.COM\"\n                }\n            ],\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ]\n        },\n        {\n            \"id\": \"CI-2\",\n            \"phones\": [\n                {\n                    \"number\": \"5556667777\"\n                }\n            ]\n        }\n    ],\n    \"createOrders\": [\n        {\n            \"offerId\": \"{{price_offer_id}}\",\n            \"selectedOfferItems\": [\n                {\n                    \"id\": \"{{price_offer_item_id}}\"\n                }\n            ]\n        }\n    ],\n    \"customerNumber\": {\n        \"contactInfoRefId\": \"CI-1\",\n        \"number\": \"123456\"\n    },\n    \"passengers\": [\n        {\n            \"id\": \"Passenger1\",\n            \"contactInfoRefId\": \"CI-1\",\n            \"birthdate\": \"1975-09-01\",\n            \"genderCode\": \"M\",\n            \"givenName\": \"FERDIE\",\n            \"surname\": \"FOXTROT\",\n            \"typeCode\": \"ADT\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/create",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Orders Create /v1 ATH - Complex",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionOptions\": {\n        \"requestType\": \"STATELESS\",\n        \"commitTransaction\": true,\n        \"movePassengerDetails\": true,\n        \"intialIgnore\": true\n    },\n    \"createOrders\": [\n        {\n            \"offerId\": \"{{price_offer_id}}\",\n            \"selectedOfferItems\": [\n                {\n                    \"id\": \"{{price_offer_item_id}}\"\n                }\n            ]\n        }\n    ],\n    \"contactInfos\": [\n        {\n            \"id\": \"CI-1\",\n            \"phones\": [\n                {\n                    \"number\": \"1234123\"\n                }\n            ]\n        }\n    ],\n    \"passengers\": [\n        {\n            \"id\": \"{{price_passenger_id}}\",\n            \"typeCode\": \"ADT\",\n            \"contactInfoRefId\": \"CI-1\",\n            \"birthdate\": \"1975-09-01\",\n            \"genderCode\": \"M\",\n            \"givenName\": \"ALAN\",\n            \"surname\": \"ALPHA\",\n            \"loyaltyProgramAccounts\": [\n                {\n                    \"id\": \"LY-1\",\n                    \"accountNumber\": \"43KXJ60-1.1\",\n                    \"carrier\": {\n                        \"carrierCode\": \"AA\"\n                    }\n                }\n            ],\n            \"remarks\": [\n                {\n                    \"id\": \"RM-1\",\n                    \"text\": \"TEST REMARK\"\n                }\n            ],\n            \"identityDocuments\": [\n                {\n                    \"id\": \"ID-1\",\n                    \"documentNumber\": \"0123456789\",\n                    \"documentTypeCode\": \"PT\",\n                    \"issuingCountryCode\": \"US\",\n                    \"placeOfIssue\": \"GB\",\n                    \"citizenshipCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"titleName\": \"Mr\",\n                    \"givenName\": \"PREMIUMAC\",\n                    \"middleName\": \"GEORGE\",\n                    \"surname\": \"AADVANTAGE\",\n                    \"suffixName\": \"Jr.\",\n                    \"birthdate\": \"1977-01-20\",\n                    \"genderCode\": \"M\",\n                    \"issueDate\": \"2011-12-20\",\n                    \"expiryDate\": \"2025-12-30\",\n                    \"hostCountryCode\": \"US\"\n                }\n            ]\n        }\n    ],\n    \"customerNumber\": {\n        \"number\": \"2345678\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/create",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Offers GetSeats /v1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestType\": \"orderId\",\r\n    \"party\": {\r\n        \"sender\": {\r\n            \"travelAgency\": {\r\n                \"name\": \"1S\",\r\n                \"type\": \"TravelAgency\",\r\n                \"iataNumber\": \"23211112\",\r\n                \"agencyID\": \"34S7\",\r\n                \"pseudoCityID\": \"AB12\"\r\n            }\r\n        }\r\n    },\r\n    \"request\": {\r\n        \"order\": {\r\n            \"orderId\": \"{{sabre_order_id}}\"\r\n        }\r\n    },\r\n    \"pointOfSale\": {\r\n        \"agentDutyCode\": \"*\",\r\n        \"location\": {\r\n            \"countryCode\": \"AU\",\r\n            \"cityCode\": \"BNE\"\r\n        }\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/getseats",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"getseats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Orders Cancel /v1 Prefulfil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n   \"id\":\"{{sabre_order_id}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/cancel",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Orders Change /v1 Add Seats",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{sabre_order_id}}\",\r\n    \"seatAdds\": [\r\n        {\r\n            \"offerItemId\": \"{{seat_offer_item_id}}\",\r\n            \"passengerRefs\": \"{{seat_offer_pax_ref}}\",\r\n            \"segmentRefId\": \"{{seat_offer_seg_ref}}\",\r\n            \"row\": \"15\",\r\n            \"column\": \"A\"\r\n        }\r\n\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Orders Change /v1 Cash FOP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{sabre_order_id}}\",\r\n    \"actions\": [\r\n        {\r\n            \"fulfillOrder\": {\r\n                \"paymentInfo\": {\r\n                    \"amount\": {\r\n                        \"amount\": \"{{total_amount}}\",\r\n                        \"code\": \"{{currency_code}}\"\r\n                    },\r\n                    \"paymentMethod\": {\r\n                        \"paymentCash\": {}\r\n                    },\r\n                    \"orderItemRefIds\": [\r\n                        \"{{order_item_ref_id}}\"\r\n                    ]\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Orders Change /v1 Cash FOP Ticket and seats",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"ZTQKCR\",\r\n    \"actions\": [\r\n        {\r\n            \"fulfillOrder\": {\r\n                \"paymentInfo\": {\r\n                    \"amount\": {\r\n                        \"amount\": \"{{total_amount}}\",\r\n                        \"code\": \"{{currency_code}}\"\r\n                    },\r\n                    \"paymentMethod\": {\r\n                        \"paymentCash\": {}\r\n                    },\r\n                    \"orderItemRefIds\": [\r\n                        \"{{order_item_ref_id}}\"\r\n                    ]\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Orders Change /v1 CC FOP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": \"{{sabre_order_id}}\",\r\n\t\"actions\": [{\r\n\t\t\t\"fulfillOrder\": {\r\n\t\t\t\t\"paymentInfo\": {\r\n\t\t\t\t\t\"amount\": {\r\n\t\t\t\t\t\t\"amount\": \"{{total_amount}}\",\r\n\t\t\t\t\t\t\"code\": \"{{currency_code}}\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"paymentMethod\": {\r\n\t\t\t\t\t\t\"paymentCard\": {\r\n\t\t\t\t\t\t\t\"cardNumber\": \"345678000000007\",\r\n\t\t\t\t\t\t\t\"contactInfoRefId\": \"CI-1\",\r\n\t\t\t\t\t\t\t\"cvv\": \"4111\",\r\n\t\t\t\t\t\t\t\"expirationDate\": \"0139\",\r\n\t\t\t\t\t\t\t\"vendorCode\": \"AX\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t},\r\n                    \"orderItemRefIds\": [\r\n                          \"{{order_item_ref_id}}\"\r\n                    ]\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Orders Change /v1 CC FOP MOTO",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": \"{{sabre_order_id}}\",\r\n\t\"actions\": [{\r\n\t\t\t\"fulfillOrder\": {\r\n\t\t\t\t\"paymentInfo\": {\r\n\t\t\t\t\t\"amount\": {\r\n\t\t\t\t\t\t\"amount\": \"{{total_amount}}\",\r\n\t\t\t\t\t\t\"code\": \"{{currency_code}}\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"paymentMethod\": {\r\n\t\t\t\t\t\t\"paymentCard\": {\r\n\t\t\t\t\t\t\t\"cardNumber\": \"345678000000007\",\r\n\t\t\t\t\t\t\t\"contactInfoRefId\": \"CI-1\",\r\n\t\t\t\t\t\t\t\"cvv\": \"4111\",\r\n\t\t\t\t\t\t\t\"expirationDate\": \"0139\",\r\n\t\t\t\t\t\t\t\"vendorCode\": \"AX\",\r\n                             \"securePaymentVersion2\": {\r\n                                \"paymentTrxChannelCode\": \"MO\"\r\n                            }\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t},\r\n                    \"orderItemRefIds\": [\r\n                          \"{{order_item_ref_id}}\"\r\n                    ]\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Offers Reprice Order /v1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"request\": {\r\n        \"orderId\": \"{{sabre_order_id}}\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/repriceOrder",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"repriceOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Orders Change /v1 Accept repriced offer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1SXXXC43RUPWF\",\r\n    \"orderItemUpdates\": [\r\n        {\r\n            \"acceptOffers\": [\r\n                {\r\n                    \"offerId\": \"cd0757cdbf75sxmnslbqi8k343-1\",\r\n                    \"selectedOfferItems\": [\r\n                        {\r\n                            \"id\": \"cd0757cdbf75sxmnslbqi8k343-1-1\",\r\n                            \"passengerRefIds\": [\r\n                                \"Passenger1\",\r\n                                \"Passenger2\"\r\n                            ]\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Offers Reshop Cancel /v1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"request\": {\r\n        \"orderId\": \"{{sabre_order_id}}\",\r\n        \"orderItemIds\": [\r\n            \"{{order_item_ref_id}}\"\r\n        ]\r\n    }\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/reshop/cancelOrder",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"reshop",
+								"cancelOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Offers Reshop Shop /v1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"request\": {\r\n        \"orderId\": \"{{sabre_order_id}}\",\r\n        \"originDestinations\": [\r\n            {\r\n                \"newOriginDestination\": {\r\n                    \"departureCode\": \"SYD\",\r\n                    \"departureDate\": \"2023-05-11T09:35:42\",\r\n                    \"arrivalCode\": \"MEL\"\r\n                }\r\n            }\r\n            ]\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/reshop/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"reshop",
+								"shop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Offers Reshop Shop /v1 retain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"request\": {\r\n        \"orderId\": \"{{sabre_order_id}}\",\r\n        \"originDestinations\": [\r\n            {\r\n                \"newOriginDestination\": {\r\n                    \"departureCode\": \"SYD\",\r\n                    \"departureDate\": \"2023-06-23T09:35:42\",\r\n                    \"arrivalCode\": \"MEL\"\r\n                }\r\n            },\r\n             {\r\n                \"retain\": {\r\n                    \"serviceId\": \"7A8DF7AD-9A05-46A4-9D40-72C605A05FA7\"\r\n                }\r\n            }\r\n            ]\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/offers/reshop/shop",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"offers",
+								"reshop",
+								"shop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9 Orders Cancel Void/Refund /v1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\" : \"{{sabre_order_id}}\",\r\n  \"reshopOfferItemId\" : \"{{resh_cxl_offerItemID}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/cancel",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Orders Change Exchange /v1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n\r\n{\r\n  \"orderId\": \"{{sabre_order_id}}\",\r\n  \"orderItemUpdates\": [\r\n    {\r\n      \"acceptOffers\": [\r\n        {\r\n          \"offerId\": \"cd6db9897bc5kmzzql9ooz4l88-1\",\r\n          \"selectedOfferItems\": [\r\n            {\r\n              \"id\": \"cd6db9897bc5kmzzql9ooz4l88-1-1\",\r\n              \"passengerRefIds\": [\r\n                \"Passenger1\"\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/change/exchange",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"change",
+								"exchange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. Orders View /v1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n        \"id\": \"{{sabre_order_id}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/orders/view",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"view"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12. Get Booking /v1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"confirmationId\": \"{{sabre_order_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"trip",
+								"orders",
+								"getBooking"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Resources](http://ltxl1478.sgdcelab.sabre.com/wp-content/uploads/docs/lightweight-traveler-service/)</b>\n\n\n[//]: # \"End\""
+					},
+					"response": []
+				},
+				{
+					"name": "13. SessionCloseRQ 1.0.0",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{header}}\n\n<SessionCloseRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n\n{{footer}}",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{soap_endpoint}}",
+							"host": [
+								"{{soap_endpoint}}"
+							]
+						},
+						"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session/legacy)</b>\n\n- [v1.0.1: Request Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.xsd)\n- [Request/Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQRS.xsd)\n- [Response Schema](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRS.xsd)\n- [WSDL](http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.wsdl)\n- [Current PROD Service Description/Notes](http://webservices.sabre.com/drc/servicedoc/SessionCloseRQ.htm)\n\n[//]: # \"End\""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Get the first string of the URI",
+					"const URI = request.url.split(\"/\")[0];",
+					"",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}",
+					"",
+					"",
+					"// Capture today's date",
+					"var moment = require('moment');",
+					"// Add 30 days to today's date and use this date in start_date",
+					"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('start_date', start_date);",
+					"// Add 37 days to today's date and use this date in end_date",
+					"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('end_date', end_date);",
+					"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)",
+					"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('short_end_date', short_end_date);",
+					"",
+					"// Analyze 'token' variable, if it starts with \"ATH:\" this text is removed as it's not accepted by Sabre's 2SG gateways ",
+					"var token = pm.variables.get('token');",
+					"pm.environment.set('token',token.replace(/^ATH:/, ''));",
+					"",
+					"",
+					"if ((URI) == ('{{soap_endpoint}}')) {",
+					"",
+					"//***SOAP Path***//",
+					"//This means that the temp URL is: {{soap_endpoint}}",
+					"",
+					"    // Get service action code from request name and ignore the following prefixes if present:",
+					"    // underscore (_)",
+					"    // number & dot (1.)",
+					"    // these variations are used in different examples across this collection",
+					"    const action = request.name.split(' ')[0].replace(/^_|[0-9]./, '');",
+					"    ",
+					"    // Add the token value into the token variable",
+					"    const token = pm.variables.get('token');",
+					"      ",
+					"    // Add the ApplicationId value into the AppId variable",
+					"    const AppId = pm.variables.get('AppId');",
+					"    ",
+					"    // All SOAP API calls require a header section, we have created this variable to remove it from the \"working\" message and ensure the user can focus on the payload section ",
+					"    const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.03.DevStudio_NDC</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"    ",
+					"",
+					"    ",
+					"    // Same as previous item, this footer variable is used to close the entire SOAP envelope",
+					"    const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';",
+					"    ",
+					"    // Add header & footer variables into the specific variables",
+					"    pm.variables.set('header', header);",
+					"    pm.variables.set('footer', footer);",
+					"    ",
+					"",
+					"} else if ((URI) == ('{{rest_endpoint}}')) {",
+					"",
+					"//***REST Path***//",
+					"//This means that the temp URL is: {{rest_endpoint}}/xx/yy/zz",
+					"",
+					"    // Capture URI element which identifies the API method",
+					"    const URI_ID = request.url.split(\"/\")[3];",
+					"",
+					"",
+					"",
+					"    switch (URI_ID) {",
+					"            ",
+					"        case 'token':",
+					"            // Capture username",
+					"            const username =  pm.variables.get('username');",
+					"            // Capture PCC",
+					"            const pcc =  pm.variables.get('pcc');",
+					"            // Construct raw client id (by appending V1:username:PCC:AA)",
+					"            const clientidRaw = `V1:${username}:${pcc}:AA`;",
+					"            // Base64 encode the previous string",
+					"            const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);",
+					"            const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);",
+					"            // Capture password",
+					"            const passwordRaw =  pm.variables.get('password');",
+					"            // Base64 enconde the password",
+					"            const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);",
+					"            const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);",
+					"            // Combine the two previous strings with a : in the middle",
+					"            const secretRaw = `${clientidBase64}:${passwordBase64}`;",
+					"            // Base64 enconde this last string",
+					"            const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);",
+					"            const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);",
+					"            // Set the secret variable with the latest encoded string",
+					"            pm.environment.set('secret', secretBase64);",
+					"            // Clear the token variable as it will be populated with a new token upon successful execution of this API call",
+					"            pm.environment.set('token',\"\"); ",
+					"            break;",
+					"            ",
+					"        case 'shop':",
+					"",
+					"            break;",
+					"        ",
+					"",
+					"    }",
+					"}",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.collectionVariables.set(\"variable_key\", \"variable_value\");",
+					"// Only execute the following code for SOAP APIs (based on the endpoint being used)",
+					"if ((request.url) == (pm.environment.get(\"soap_endpoint\"))) {",
+					"    ",
+					"    //***SOAP Path***//",
+					"",
+					"    const xml2js = require('xml2js');",
+					"",
+					"    // Get service action name from request name and ignore leading underscore if present",
+					"    const action = request.name.split(' ')[0].replace(/^_|[0-9]./, '');",
+					"",
+					"    // Parse response and remove namespaces (prefixes)",
+					"    // Solves problem when specific APIs return different namespaces randombly ie. ns8, ns9: TP APIs",
+					"    const parseString = xml2js.parseString;",
+					"    const parseOptions = { tagNameProcessors: [xml2js.processors.stripPrefix] };",
+					"    ",
+					"    switch (action) {",
+					"        case 'SessionCreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set('token', \"\");",
+					"                pm.environment.set('token', token);",
+					"            });",
+					"            break;",
+					"        case 'TokenCreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set(\"token\", token);",
+					"            });",
+					"            break;",
+					"        // Add new API here",
+					"    }",
+					"",
+					"",
+					"} else {",
+					"    ",
+					"    //***REST Path***//",
+					"",
+					"    // Get the Unique ID of the URI (token, shop, price, create, view, cancel, change, reshop) based on the \"5th\" string in order to identify the actual API",
+					"    const URI_ID = request.url.split(\"/\")[5];",
+					"",
+					"// Get the Unique ID of the URI (orderCancel) based on the \"6th\" string in order to identify the actual API",
+					"",
+					"    const URI_ID2 = request.url.split(\"/\")[6];",
+					"    ",
+					"    // Get the JSON response",
+					"    const jsonData = JSON.parse(responseBody);",
+					"",
+					"    switch (URI_ID) {",
+					"        ",
+					"        case 'token':",
+					"            pm.environment.set('token', jsonData.access_token);",
+					"            break;",
+					"",
+					"        case 'shop':",
+					"",
+					"            pm.environment.set('shop_offer_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].offer.offerId);",
+					"            console.log('shop_offer_id: '  + postman.getEnvironmentVariable(\"shop_offer_id\"))",
+					"",
+					"            pm.environment.set('shop_offer_item_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].fare.passengerInfoList[0].passengerInfo.offerItemId);",
+					"            console.log('shop_offer_item_id: '   + postman.getEnvironmentVariable(\"shop_offer_item_id\"))",
+					"            break;",
+					"",
+					"        case 'price':",
+					"",
+					"            pm.environment.set('price_offer_id', jsonData.response.offers[0].id);",
+					"            console.log('price_offer_id: ' + postman.getEnvironmentVariable(\"price_offer_id\"))",
+					"            ",
+					"            pm.environment.set('price_offer_item_id', jsonData.response.offers[0].offerItems[0].id);",
+					"            console.log('price_offer_item_id: ' + postman.getEnvironmentVariable(\"price_offer_item_id\"))",
+					"            ",
+					"            pm.environment.set('price_passenger_id', jsonData.response.offers[0].offerItems[0].passengers[0].id);",
+					"            console.log('price_passenger_id: '+ postman.getEnvironmentVariable(\"price_passenger_id\"))",
+					"",
+					"            //console.log('aca');",
+					"            break;",
+					"",
+					"        case 'create':",
+					"",
+					"            pm.environment.set('sabre_order_id', jsonData.order.id);",
+					"            console.log('sabre_order_id: ' + postman.getEnvironmentVariable(\"sabre_order_id\"))",
+					"",
+					"            pm.environment.set('pnr', jsonData.order.pnrLocator);",
+					"            console.log('pnr: '  + postman.getEnvironmentVariable(\"pnr\"))",
+					";           ",
+					"            pm.environment.set('total_amount', jsonData.order.orderItems[0].price.totalAmount.amount);",
+					"            console.log('total_amount: '  + postman.getEnvironmentVariable(\"total_amount\"))",
+					"",
+					"            pm.environment.set('currency_code', jsonData.order.orderItems[0].price.totalAmount.code);",
+					"            console.log('currency_code: '  + postman.getEnvironmentVariable(\"currency_code\"))            ",
+					"",
+					"            pm.environment.set('order_item_ref_id', jsonData.order.orderItems[0].id);",
+					"            console.log('order_item_ref_id: '  + postman.getEnvironmentVariable(\"order_item_ref_id\"))   ",
+					"            break;",
+					"",
+					"        case 'view':",
+					"            pm.environment.set('sabre_order_id', jsonData.order.id);",
+					"            console.log(\"sabre_order_id: \" + postman.getEnvironmentVariable(\"sabre_order_id\"))",
+					"",
+					"            pm.environment.set('order_item_ref_id', jsonData.order.orderItems[0].id);",
+					"            console.log(\"order_item_ref_id: \" + postman.getEnvironmentVariable(\"order_item_ref_id\"))",
+					"            break;",
+					"",
+					"        case 'getseats':",
+					"            ",
+					"            pm.environment.set('seat_offer_item_id', jsonData.response.seatMaps[0].cabinCompartments[0].seatRows[0].seats[0].offerItemRefIDs[0]);",
+					"            pm.environment.set('seat_offer_seg_ref', jsonData.response.seatMaps[0].paxSegmentRefID);",
+					"            pm.environment.set('seat_offer_pax_ref', jsonData.response.aLaCarteOffer.aLaCarteOfferItems[0].eligibility.paxRefIDs[0]);",
+					"            break;",
+					"",
+					"        case 'reshop':",
+					"            ",
+					"            switch (URI_ID2) {",
+					"            ",
+					"                case 'cancelOrder':",
+					"",
+					"                    pm.environment.set('resh_cxl_offerItemID', jsonData.response.reshopOffers[0].offerItems[0].offerItemId);",
+					"                    console.log('resh_cxl_offerItemID'+ postman.getEnvironmentVariable(\"resh_cxl_offerItemID\"))",
+					"                    break;",
+					"          ",
+					"                case 'shop':",
+					"                    pm.environment.set('reshop_offer_ID', jsonData.response.offers[0].offerId);",
+					"                    console.log('reshop_offer_ID: '+ postman.getEnvironmentVariable(\"reshop_offer_ID\"))",
+					"",
+					"                    pm.environment.set('reshop_offer_Item_ID', jsonData.response.offers[0].offerItems[0].offerItemId);",
+					"                     console.log('reshop_offer_Item_ID: '+ postman.getEnvironmentVariable(\"reshop_offer_Item_ID\"))                   ",
+					"                    break;",
+					"            }",
+					"",
+					"        case 'change':",
+					"            ",
+					"            switch (URI_ID2) {    ",
+					"                case 'exchange':",
+					"                    console.log('OrderType' , jsonData.order.type);",
+					"                    pm.environment.set('order_item_ref_id', jsonData.order.orderItems[0].id);",
+					"                    console.log('order_item_ref_id' + postman.getEnvironmentVariable(\"order_item_ref_id\"))                   ",
+					"                    break;",
+					"",
+					"            }",
+					"",
+					"",
+					"        // Add new API here",
+					"    } ",
+					"}",
+					"",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		}
+	]
+}
