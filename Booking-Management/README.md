@@ -43,7 +43,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
-| [2023.11](./Booking%20Management%20API%20v2023.11.postman_collection.json)| Version incorporates:</br>- a number of minor corrections for various scenarios.|
+| [2023.03](./Booking%20Management%20API%20v2023.03.postman_collection.json)| Version incorporates:</br>- a number of minor corrections for various scenarios.|
 | [2022.11](./Booking%20Management%20API%20v2022.11.postman_collection.json)| Version incorporates:</br>- a number of minor corrections for various scenarios.|
 | [2022.10](./Booking%20Management%20API%20v2022.10.postman_collection.json)| Version incorporates:</br>- modifyBooking service examples for ATPCO modifications. Each use case scenario is presented as a workflow. We hope that this would simplify tests and integration. On top of that, we added data preparation scenarios for createBooking service, which may help you build up flight/hotel/car flow|
 | [2022.06](./Booking%20Management%20API%20v2022.06.postman_collection.json)| Version incorporates:</br>- new modifyBooking service examples for changing CSL hotel bookings. Each use case scenario is presented as a workflow. We hope that this should simplify tests and integration. |
