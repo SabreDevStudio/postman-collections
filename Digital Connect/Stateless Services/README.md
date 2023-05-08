@@ -28,8 +28,8 @@ To get the collection up and running:
 Here are one-time steps for getting your test environment set up:
 
 1. Run the Postman app on your local development machine 
-2. Import the [environment file](https://github.com/SabreDevStudio/postman-collections/Digital%20Connect/Stateless%20Services/beta/DC_Stateless-DefaultEnv.postman_environment.json) into Postman using the File -> Import option
-3. Import the [latest collection file](https://github.com/SabreDevStudio/postman-collections/Digital%20Connect/Stateless%20Services/beta/DC_Stateless_Services_Beta.postman_collection.json) into Postman using the File -> Import option
+2. Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Digital%20Connect/Stateless%20Services/beta/DC_Stateless-DefaultEnv.postman_environment.json) into Postman using the File -> Import option
+3. Import the [latest collection file](https://github.com/SabreDevStudio/postman-collections/blob/master/Digital%20Connect/Stateless%20Services/beta/DC_Stateless_Services_Beta.postman_collection.json) into Postman using the File -> Import option
 4. Add your credentials and airline information to the environment file. This file has a list of key/value pairs. The following variables needs to be populated with your airline information: 
     * organization
     * domain
