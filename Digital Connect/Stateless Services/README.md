@@ -52,7 +52,7 @@ Steps to update the values with your official credentials:
 1. Authenticate. In the DC Stateless Services collection you'll find a folder named `Setup` and an item called `Create Auth Token`. Select it. Click the **Send** button. Look for a 200 Success result. If it failed review your environment credentials.
 2. Examples are available in the individual folders under `Sample Use Cases`. Simply open one of the folders, go to "Display PNR" request in the folder, then in "Pre-request Script" area update PNR infromation and finally click the **Send** button - look for a 200 Success result. After that you can proceed e execute subsequent requests in the folder.
 
-For more information regarding our DC Stateless offering please [read through its documentation.](https://LINK GOES HERE) 
+For more information regarding our DC Stateless offering please [read through its documentation.](https://developer.sabre.com/node/10077) 
 
 ### Running the Tests using the Collection Runner. 
 The Collection Runner allows you to run sets of requests in a specified sequence. The Collection Runner will log your request test results, and your scripts can pass data between requests as well as alter the request workflow. You can use the Runner for any of the folders under `Sample Use Cases` folder in the collection.
