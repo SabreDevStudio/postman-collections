@@ -119,7 +119,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"POS\": {\n        \"actual\": {\n            \"city\": \"HDQ\"\n        },\n        \"pcc\": \"HDQ\",\n        \"multiHost\": \"{{domain}}\",\n        \"company\": \"{{domain}}\"\n    },\n    \"segments\": [\n        {\n            \"departureLocation\": \"{{departureAirport}}\",\n            \"arrivalLocation\": \"{{arrivalAirport}}\",\n            \"departureDate\": \"{{departureDate}}\",\n            \"departureTime\": \"{{departureTime}}\",\n            \"arrivalDate\": \"{{arrivalDate}}\",\n            \"arrivalTime\": \"{{arrivalTime}}\",\n            \"flightNumber\": \"{{flightNumber}}\",\n            \"marketingAirline\": \"{{marketingAirline}}\",\n            \"operatingAirline\": \"{{operatingAirline}}\",\n            \"bookingClass\": \"{{classOfService}}\",\n            \"seatMapRequested\": true\n        }\n    ]\n}"
+									"raw": "{\n    \"POS\": {\n        \"actual\": {\n            \"city\": \"{{posAccountingCity}}\"\n        },\n        \"pcc\": \"{{posAccountingCity}}\",\n        \"multiHost\": \"{{domain}}\",\n        \"company\": \"{{domain}}\"\n    },\n    \"segments\": [\n        {\n            \"departureLocation\": \"{{departureAirport}}\",\n            \"arrivalLocation\": \"{{arrivalAirport}}\",\n            \"departureDate\": \"{{departureDate}}\",\n            \"departureTime\": \"{{departureTime}}\",\n            \"arrivalDate\": \"{{arrivalDate}}\",\n            \"arrivalTime\": \"{{arrivalTime}}\",\n            \"flightNumber\": \"{{flightNumber}}\",\n            \"marketingAirline\": \"{{marketingAirline}}\",\n            \"operatingAirline\": \"{{operatingAirline}}\",\n            \"bookingClass\": \"{{classOfService}}\",\n            \"seatMapRequested\": true\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/seat/stateless/shop",
@@ -1041,7 +1041,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"*ETKT*\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"HDQ\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/pay/authorizePayment",
@@ -1207,7 +1207,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"documentType\": \"{{documentType}}\",\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"US\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"{{X0Channel}}\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"documentType\": \"{{documentType}}\",\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/book/fulfill",
@@ -1423,7 +1423,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"const pnr = \"QVZXGJ\";\r",
+											"const pnr = \"QXECCW\";\r",
 											"postman.setEnvironmentVariable(\"reloc\", pnr)"
 										],
 										"type": "text/javascript"
@@ -1449,11 +1449,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{environment}}{{environmentPath}}/reservation/pnr/display",
+									"raw": "{{environment}}/v5/dcp/reservation/pnr/display",
 									"host": [
-										"{{environment}}{{environmentPath}}"
+										"{{environment}}"
 									],
 									"path": [
+										"v5",
+										"dcp",
 										"reservation",
 										"pnr",
 										"display"
@@ -1640,7 +1642,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"POS\": {\n        \"actual\": {\n            \"city\": \"HDQ\"\n        },\n        \"pcc\": \"HDQ\",\n        \"multiHost\": \"{{domain}}\",\n        \"company\": \"{{domain}}\"\n    },\n    \"segments\": [\n        {\n            \"departureLocation\": \"{{departureAirport}}\",\n            \"arrivalLocation\": \"{{arrivalAirport}}\",\n            \"departureDate\": \"{{departureDate}}\",\n            \"departureTime\": \"{{departureTime}}\",\n            \"arrivalDate\": \"{{arrivalDate}}\",\n            \"arrivalTime\": \"{{arrivalTime}}\",\n            \"flightNumber\": \"{{flightNumber}}\",\n            \"marketingAirline\": \"{{marketingAirline}}\",\n            \"operatingAirline\": \"{{operatingAirline}}\",\n            \"bookingClass\": \"{{classOfService}}\",\n            \"seatMapRequested\": true\n        }\n    ]\n}"
+									"raw": "{\n    \"POS\": {\n        \"actual\": {\n            \"city\": \"{{posAccountingCity}}\"\n        },\n        \"pcc\": \"{{posAccountingCity}}\",\n        \"multiHost\": \"{{domain}}\",\n        \"company\": \"{{domain}}\"\n    },\n    \"segments\": [\n        {\n            \"departureLocation\": \"{{departureAirport}}\",\n            \"arrivalLocation\": \"{{arrivalAirport}}\",\n            \"departureDate\": \"{{departureDate}}\",\n            \"departureTime\": \"{{departureTime}}\",\n            \"arrivalDate\": \"{{arrivalDate}}\",\n            \"arrivalTime\": \"{{arrivalTime}}\",\n            \"flightNumber\": \"{{flightNumber}}\",\n            \"marketingAirline\": \"{{marketingAirline}}\",\n            \"operatingAirline\": \"{{operatingAirline}}\",\n            \"bookingClass\": \"{{classOfService}}\",\n            \"seatMapRequested\": true\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/seat/stateless/shop",
@@ -2019,11 +2021,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{environment}}{{environmentPath}}/reservation/pnr/display",
+									"raw": "{{environment}}/v5/dcp/reservation/pnr/display",
 									"host": [
-										"{{environment}}{{environmentPath}}"
+										"{{environment}}"
 									],
 									"path": [
+										"v5",
+										"dcp",
 										"reservation",
 										"pnr",
 										"display"
@@ -2215,7 +2219,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"HDQ\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/pay/authorizePayment",
@@ -2376,7 +2380,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"documentType\": \"{{documentType}}\",\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"US\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"{{X0Channel}}\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/book/fulfill",
@@ -2611,11 +2615,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{environment}}{{environmentPath}}/reservation/pnr/display",
+									"raw": "{{environment}}/v5/dcp/reservation/pnr/display",
 									"host": [
-										"{{environment}}{{environmentPath}}"
+										"{{environment}}"
 									],
 									"path": [
+										"v5",
+										"dcp",
 										"reservation",
 										"pnr",
 										"display"
@@ -2798,13 +2804,11 @@
 									"raw": "{\n  \"ancillaryRequestType\": \"ByPnrlocator\",\n  \"pnrLocator\":\"{{recordLocator}}\"\n}"
 								},
 								"url": {
-									"raw": "{{environment}}/v1/dc/ancillaries/shop",
+									"raw": "{{environment}}{{environmentPath}}/ancillaries/shop",
 									"host": [
-										"{{environment}}"
+										"{{environment}}{{environmentPath}}"
 									],
 									"path": [
-										"v1",
-										"dc",
 										"ancillaries",
 										"shop"
 									]
@@ -2868,13 +2872,11 @@
 									"raw": "{\n    \"pnrLocator\": \"{{recordLocator}}\",\n    \"ancillaries\": [\n        {\n            \"ancillaryId\": \"{{ancillaryId}}\",\n            \"passengerId\": \"{{nameNumber}}\",\n            \"groupCode\": \"{{group}}\",\n            \"commercialName\": \"{{commercialName}}\",\n            \"rficCode\": \"{{rfic}}\",\n            \"subcode\": \"{{subCode}}\",\n            \"operatingAirlineCode\": \"{{marketingAirline}}\",\n            \"emdType\": \"Associated\",\n            \"segmentIds\": [\n                \"{{segmentNumber}}\"\n            ],\n            \"quantity\": 1\n        }\n    ]\n}"
 								},
 								"url": {
-									"raw": "{{environment}}/v1/dc/ancillaries/add",
+									"raw": "{{environment}}{{environmentPath}}/ancillaries/add",
 									"host": [
-										"{{environment}}"
+										"{{environment}}{{environmentPath}}"
 									],
 									"path": [
-										"v1",
-										"dc",
 										"ancillaries",
 										"add"
 									]
@@ -2993,11 +2995,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{environment}}{{environmentPath}}/reservation/pnr/display",
+									"raw": "{{environment}}/v5/dcp/reservation/pnr/display",
 									"host": [
-										"{{environment}}{{environmentPath}}"
+										"{{environment}}"
 									],
 									"path": [
+										"v5",
+										"dcp",
 										"reservation",
 										"pnr",
 										"display"
@@ -3189,7 +3193,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"HDQ\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"{{posOfficeCode}}\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\",\r\n            \"number\": \"{{posStation}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    },\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"amount\": {\r\n                \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n            },\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"holderName\": \"McDonnell Douglas\"\r\n        }\r\n    ],\r\n    \"billingData\": {\r\n        \"street1\": \"123 Main Street\",\r\n        \"street2\": \"Apartment A-12\",\r\n        \"city\": \"New York\",\r\n        \"zipcode\": \"12345\",\r\n        \"country\": \"US\",\r\n        \"phone\": [\r\n            {\r\n                \"phoneType\": \"HOME\",\r\n                \"countryCode\": \"91\",\r\n                \"areaCode\": \"469\",\r\n                \"number\": \"111111\",\r\n                \"extension\": \"123\"\r\n            }\r\n        ],\r\n        \"email\": [\r\n            \"accept@accept.com\"\r\n        ]\r\n    },\r\n    \"languageForBooking\": \"en_US\"\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/pay/authorizePayment",
@@ -3350,7 +3354,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"documentType\": \"{{documentType}}\",\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"US\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"{{X0Channel}}\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
+									"raw": "{\r\n    \"recordLocator\": \"{{recordLocator}}\",\r\n    \"payments\": [\r\n        {\r\n            \"paymentType\": \"{{paymentType}}\",\r\n            \"cardCode\": \"{{cardCode}}\",\r\n            \"cardNumber\": \"{{cardNumber}}\",\r\n            \"cardSecurityCode\": \"{{cardSecurityCode}}\",\r\n            \"expirationDate\": \"{{expirationDate}}\",\r\n            \"auth\": [\r\n                {\r\n                    \"approvalCode\": \"{{approvalCode}}\",\r\n                    \"sabreTransactionId\": \"{{sabreTransactionId}}\",\r\n                    \"supplierTransactionId\": \"{{supplierTransactionId}}\",\r\n                    \"amount\": {\r\n                        \"amount\": \"{{unfulfilledAirExtraTotalAmount}}\",\r\n                        \"currency\": \"{{unfulfilledAirExtraTotalCurrency}}\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"languageForBooking\": \"en_US\",\r\n     \"pos\": {\r\n        \"aaa\": {\r\n            \"country\": \"{{posCountry}}\",\r\n            \"officeCode\": \"IB\",\r\n            \"accountingCity\": \"{{posAccountingCity}}\"\r\n        },\r\n        \"airline\": \"{{domain}}\",\r\n        \"lniata\": \"{{lniata}}\",\r\n        \"sine\": \"SSW\",\r\n        \"dutyCode\": \"4\",\r\n        \"pseudoCityCode\": \"{{pseudoCityCode}}\",\r\n        \"channel\": \"WEB\",\r\n        \"localDateTime\": \"{{localDateTime}}\",\r\n        \"source\": \"A0A0\"\r\n    }\r\n}"
 								},
 								"url": {
 									"raw": "{{environment}}{{environmentPath}}/book/fulfill",

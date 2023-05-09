@@ -1,6 +1,8 @@
-# Sabre Digital Connect Stateless Services Postman files
+# Digital Connect Stateless Services
 
-Digital Connect (DC) Stateless Services are lightweight, flexible API that let you customize the flight booking experience. Travel ecosystem is complex and with our stateless services offering we offer a simple, straightforward solution that is needed to get a particular job done. By taking away the need for completing a big list of prerequisites to make a request, our APIs can now be seamlessly integrated into any flow, in the order you prefer to create the best experience for your users. 
+Digital Connect (DC) Stateless Services are lightweight, flexible API that let you customize the flight booking experience. Travel ecosystem is complex and with our stateless services offering we offer a simple, straightforward solution that is needed to get a particular job done. By taking away the need for completing a big list of prerequisites to make a request, our APIs can now be seamlessly integrated into any flow, in the order you prefer to create the best experience for your users.
+
+This source code repo contains all of the Postman files our teams have built demonstrating the use of our [Stateless services](https://developer.sabre.com/node/10077).
 
 ## Current Release 
 
