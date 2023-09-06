@@ -1,18 +1,25 @@
 # Digital Connect Stateless Services
 
-Digital Connect (DC) Stateless Services are lightweight, flexible API that let you customize the flight booking experience. Travel ecosystem is complex and with our stateless services offering we offer a simple, straightforward solution that is needed to get a particular job done. By taking away the need for completing a big list of prerequisites to make a request, our APIs can now be seamlessly integrated into any flow, in the order you prefer to create the best experience for your users.
+Digital Connect (DC) Stateless Services are lightweight, flexible API that let you customize the flight booking experience. 
+Travel ecosystem is complex and with our stateless services offering we offer a simple, straightforward solution that is needed 
+to get a particular job done. By taking away the need for completing a big list of prerequisites to make a request, our APIs 
+can now be seamlessly integrated into any flow, in the order you prefer to create the best experience for your users.
 
-This source code repo contains all of the Postman files our teams have built demonstrating the use of our [Stateless services](https://developer.sabre.com/node/10077).
+This source code repo contains all the Postman files our teams have built demonstrating the use of our [Stateless services](https://developer.sabre.com/node/10077).
 
 ## Current Release 
 
 The services available are listed below:
-1.	Seats Service
-2.	Ancillaries Service
-3.	Payment Service
-4.	Fulfillment Service
+1.	Air Exchange Search  
+2.	Ancillaries
+3.	Fulfillment 
+4.	Payments
+5.  Profiles
+6.  Seats
 
-> Note: This Postman collection was created to showcase Sabre DC Stateless Services and provide developers the ability to test them freely. Sabre APIs Test credentials are required to successfully test these services, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
+> Note: This Postman collection was created to showcase Sabre DC Stateless Services and provide developers the ability to test them freely. 
+> Sabre APIs Test credentials are required to successfully test these services, if you are an existing Sabre APIs customer and do not have your CERT credentials, 
+> please contact your Sabre account manager.
 
 ## Getting Started
 
@@ -20,7 +27,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To get the collection up and running:
+**To get the collection up and running:**
 
 * Please download the [Postman](https://www.postman.com/) app
 * Request for your [Sabre APIs CERT- environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
@@ -33,14 +40,14 @@ Here are one-time steps for getting your test environment set up:
 2. Import the [environment file](https://github.com/SabreDevStudio/postman-collections/blob/master/Digital%20Connect/Stateless%20Services/beta/DC_Stateless-DefaultEnv.postman_environment.json) into Postman using the File -> Import option
 3. Import the [latest collection file](https://github.com/SabreDevStudio/postman-collections/blob/master/Digital%20Connect/Stateless%20Services/beta/DC_Stateless_Services_Beta.postman_collection.json) into Postman using the File -> Import option
 4. Add your credentials and airline information to the environment file. This file has a list of key/value pairs. The following variables needs to be populated with your airline information: 
-    * organization
-    * domain
-    * posCountry
-    * posOfficeCode
-    * posAccountingCity
-    * posStation
-    * lniata
-    * pcc
+    * `organization`
+    * `domain`
+    * `posCountry`
+    * `posOfficeCode`
+    * `posAccountingCity`
+    * `posStation`
+    * `lniata`
+    * `pcc`
     * secret: The 'secret' variable needs to b e populated with you base64-encoded string that you got after checking instructions in [Sabre APIs CERT- environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
  
 Steps to update the values with your official credentials:
@@ -65,7 +72,7 @@ The Collection Runner allows you to run sets of requests in a specified sequence
 
 ## License
 
-Copyright (c) 2023 Sabre Corp Licensed under the MIT license.
+> Copyright (c) 2023 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
