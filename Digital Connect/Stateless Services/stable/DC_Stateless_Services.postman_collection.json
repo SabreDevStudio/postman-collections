@@ -1,11 +1,11 @@
 {
 	"info": {
 		"_postman_id": "f4be9c78-0fb1-46fd-a68b-7e8e0a75160a",
-		"name": "DC Stateless Services Beta",
+		"name": "DC Stateless Services",
 		"description": "## **Digital Connect**\n\nDigital Connect Stateless services are lightweight, flexible APIs that let's you customize the flight booking experience you wish to offer end-to-end.\n\nTravel ecosystem is complex. With our Stateless services, we have taken the step to detangle the complexity and offer a simple, straightforward solution that is needed to get a particular job done.\n\nBy taking away the need for completing a big list of prerequisites to make a request, our APIs can now be seamlessly integrated into any flow, in the order you prefer to create the best experience for your users.\n\n**How to use this collection?**\n\n1. Make sure you have also imported environment file.\n2. Once environment is added, update it with details and credentials for your airline. You can get more details in \"Create Auth Token\" documentation section which is available under \"Setup\" folder here in Postman.\n3. After that you're ready to run \"Create Auth Token\" under \"Setup\" folder. That will generate the token needed for any of the services in this collection.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22146533",
-		"_collection_link": "https://blue-crater-374706.postman.co/workspace/Temp---demo~ff56444c-3736-4d21-ae58-0a24cf318390/collection/22146533-f4be9c78-0fb1-46fd-a68b-7e8e0a75160a?action=share&source=collection_link&creator=22146533"
+		"_collection_link": "https://blue-crater-374706.postman.co/workspace/Digital-Connect~ff56444c-3736-4d21-ae58-0a24cf318390/collection/22146533-f4be9c78-0fb1-46fd-a68b-7e8e0a75160a?action=share&source=collection_link&creator=22146533"
 	},
 	"item": [
 		{
