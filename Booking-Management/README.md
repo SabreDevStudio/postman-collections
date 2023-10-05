@@ -43,6 +43,8 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2023.10](./Booking%20Management%20API%20v2023.10.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on modifying order elements via modifyBooking.
+| [2023.08](./Booking%20Management%20API%20v2023.08.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on checking ticket rules and refundability/exchangeability.
 | [2023.04](./Booking%20Management%20API%20v2023.04.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on NDC content.
 | [2023.03](./Booking%20Management%20API%20v2023.03.postman_collection.json)| Version incorporates:</br>- a number of minor corrections for various scenarios.|
 | [2022.11](./Booking%20Management%20API%20v2022.11.postman_collection.json)| Version incorporates:</br>- a number of minor corrections for various scenarios.|
