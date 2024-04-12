@@ -1,21 +1,27 @@
 
-# New Distribution Capability (NDC) APIs Postman files
+# Offer and Order APIs Postman files
 
-Sabre’s NDC-enabled, REST/JSON-based APIs support the shopping, booking and fulfillment of NDC content via a new Offer and Order model. NDC APIs features the ability to:
+Sabre’s Offer and Order, REST/JSON-based APIs support the shopping, booking, fulfillment and servicing of NDC content via a new Offer and Order model. The Offers and Orders APIs features the ability to:
 
-* Shop for Air Offers
-* Price an Air Offer
-* Create an Order
-* Cancel an Order (pre-fulfillment) 
-* Fulfill an Order
-* Update an Order
-* Display an Order
-* Get a Seat Map from an Order
+* Shop for Air Offers with various qulifiers
+* Obtain detailed pricing informatin for a specific offer
+* Create an order
+* Display an order
+* Cancel an order (pre-fulfillment) 
+* Fulfill an order
+* Determine cancellation information for a fulfiled order
+* Cancel a fulfilled order and void/refund the ticket
+* Update passenger information in an order
+* Display a seat map with pricing infomration and seat attributes based on an offer or a confirmed order
+* Reserve a seat
+* Fulfill a paid seat
+* Reshop a fulfilled order and complete a voluntary change (rebook the passenger and exchange the ticekt)
+* Synchronize an order with the airline's order
 
 
 This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
 
-> Note: Sabre APIs Test credentials are required to successfully test these APIs, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
+> Note: Sabre API test credentials are required to successfully test these APIs, if you are an existing Sabre API customer and do not have your CERT credentials, please contact your Sabre account manager.
 
 ## Getting Started
 
@@ -27,37 +33,30 @@ Things you need to install:
 
 * [Postman](https://www.postman.com/) app
 
-You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
+You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/) and for some APIs you will need an [Application ID](https://developer.sabre.com/guides/travel-agency/sabre-api-customer-application-ids)
 
 ### Installing
 
 Here are one-time steps for getting your test environment set up:
 
-* Run the Postman app on your local development machine 
+* Run the Postman application on your local development machine 
 * Import the [environment file](./NDC_Demo.postman_environment.json) into Postman using the File -> Import option
-* Import the latest NDC collection file(see below) into Postman using the File -> Import option 
+* Import the Offers and Orders collection file into Postman using the File -> Import option 
 
-
-| Collection version | Comments |
-| - | - | 
-| [2020.05](./NDC%20Demo%20v2020.05.postman_collection.json) | Version incorporates:</br>- Patch fix to ensure compatibility with Postman v7.25.0 as latest version caused a problem in the scripting logic | 
-| [2020.04](./NDC%20Demo%20v2020.04.postman_collection.json) | Version incorporates:</br>- Get Seat Map API examples</br>- Order Change Fulfill example with additional form of payment </br>- Order Change examples for Order updates </br>- Inclusion of normalized Get Booking & Cancel Booking services</br>- Additional workflows (incl. State Management examples) | 
-| [2019.10](./NDC%20Demo%20v2019.10.postman_collection.json) | Version incorporates scripting logic to seamlessly transition from shop -> price -> book |
-| [2019.06](./NDC%20Demo%20v2019.06.postman_collection.json) | Version published during Sabre's 2019 STX event which includes initial set of samples for Sabre's Offer & Order APIs supporting booking of NDC content | 
 
 ### Use Your Credentials
 
-The environment file you imported has a list of key/value pairs that you need to update with your SOAP API credentials. The following variables have been marked out with dummy values:
+The environment file you imported has a list of key/value pairs that you need to update with your SOAP API credentials. The following variables have been populated with dummy values:
  
   * `username` - also known as EPR (employee profile record)    
   * `password` - your Sabre provisioned password
-  * `pcc` - also known as pseudo city code (your agency's unique identifier)
+  * `pcc` - your pseudo city code (your agency's unique identifier)
 
-Update the dummy values with your official credentials. To do that follow these steps:
+Update these values with your credentials by following these steps:
 
-  * Click the gear icon to go to the manage environments pop-up dialog box.
-  * Click on the name of your imported environment file to see a list of all key/value pairs.
-  * Enter your credentials, and press the "Update" button.    
+  * Click on the "Environments" icon on the left hand side and then click on "Import", a pop-up dialog box is displayed and you can either drag and drop the environemnt file or navigate to it using the files or folders link
+  * Click on the name of your imported environment file to see a list of all key/value pairs
+  * Enter your credentials, and press the "Save" icon
 
 ![environment varaibles](./postman_environ_vars.jpg)
 
