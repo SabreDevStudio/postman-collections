@@ -1,5 +1,0 @@
-The October 2023 Postman Collection of the Sabre Offer and Order API's contains additional use cases for orders/change with passenger document types as well as new options for seats and ancillaries, also you will find the new orders/synch example and an orders/change requst that allows you to void a ticket whilst retaining the itinerary.  The exmaple messages contain real example values for many of the ID's (Sabre Order, Airline Order and offers), other examples use the Postman environment variables, this approach helps to demonstrate what the real values look like but also how variables can be reused between the messages.  There is also some updates to the Javascript to set environment variables and echo them in the console log.
-
-We hope you find this collection useful and informative and welcome your feedback.
-
-The NDC Product Management team 
