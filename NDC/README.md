@@ -35,6 +35,8 @@ Things you need to install:
 
 You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/) and for some APIs you will need an [Application ID](https://developer.sabre.com/guides/travel-agency/sabre-api-customer-application-ids)
 
+Note that as of 05 June 2024, the Postman version in use is: 11.1.14, the Javascript within the collection has been udpated to reflect changes where some functions have been deprecated.
+
 ### Installing
 
 Here are one-time steps for getting your test environment set up:
