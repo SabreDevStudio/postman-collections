@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0995f703-0995-41d8-99d2-3a38e70de5e5",
+		"_postman_id": "3f87ba1c-c63b-4d31-b1f4-8ace276fdb21",
 		"name": "VDB_20210302",
 		"description": "BFM collection with examples from Virtual Developer Bench session March 2nd",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "996613"
 	},
 	"item": [
 		{
@@ -17,7 +18,37 @@
 							"",
 							"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"require(\"btoa\");",
+							"",
+							"function getCredential(username, password){",
+							"    const base64Username = btoa(username);",
+							"    const base64Password = btoa(password);",
+							"    const concatenatedString = `${base64Username}:${base64Password}`;",
+							"",
+							"    const finalBase64String = btoa(concatenatedString);",
+							"",
+							"    return finalBase64String;",
+							"}",
+							"",
+							"const username = pm.environment.get(\"username\");",
+							"const password = pm.environment.get(\"password\");",
+							"",
+							"const encodedCredentials = getCredential(username, password);",
+							"",
+							"pm.environment.set(\"rest_credentials\", encodedCredentials);",
+							"",
+							"console.log(\"Encoded Credentials: \", encodedCredentials);"
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
