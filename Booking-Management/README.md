@@ -15,6 +15,7 @@ The services available in this API are listed below:
 |[Check Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Check Flight Tickets provides a single, unified service to verify exchangeability, voidability and refundablity for a list of electronic documents (ATPCO). The endpoint also lets you check if the NDC order may be voided or refunded. | /trip/orders/checkFlightTickets |RPC/JSON|
 |[Void Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Void Flight Tickets provides a single, unified service to void a list of electronic documents (ATPCO). This includes electronic tickets as well as electronic miscellaneous documents (EMD). | /trip/orders/voidFlightTickets |RPC/JSON|
 |[Refund Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Refund Flight Tickets provides a single, unified service to refund a list of electronic documents (ATPCO). The service allows to specify refund qualifiers. This is currently limited electronic tickets. | /trip/orders/refundFlightTickets |RPC/JSON|
+|[Fulfill Flight Tickets](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management)| Fulfill Flight Tickets provides a single, unified service to facilitate document issuance in a single, seamless API call. This includes electronic tickets, electronic miscellaneous documents (EMDs) as well as NDC orders. | /trip/orders/fulfillFlightTickets |RPC/JSON|
 
 
 This Postman collection was created to showcase Sabre APIs and provide developers the ability to test them freely.
@@ -43,6 +44,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2024.08](./Booking%20Management%20API%20v2024.08.postman_collection.json)| Version incorporates:</br>- New workflows and scenarios related to fulfillFlightTickets andpoint (dedicated section). Also includes a new workflow example related to ancillaries. 
 | [2023.12](./Booking%20Management%20API%20v2023.12.postman_collection.json)| Version incorporates:</br>- New workflow scenario for NDC order creation for multiple traveler types. Also, there are additional examples related to retention line (OTH segment) processing (createBooking, cancelBooking).
 | [2023.10](./Booking%20Management%20API%20v2023.10.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on modifying order elements via modifyBooking.
 | [2023.08](./Booking%20Management%20API%20v2023.08.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on checking ticket rules and refundability/exchangeability.
