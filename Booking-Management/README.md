@@ -44,6 +44,7 @@ Here are one-time steps for getting your test environment set up:
 
 | Collection version | Comments |
 | - | - | 
+| [2024.10](./Booking%20Management%20API%20v2024.10.postman_collection.json)| Version incorporates a number of new workflows : </br> - ModifyBooking/Flight_modification_flows/Seat_modifications -> add/delete/update seats for ATPCO flight content, </br> - ModifyBooking/NDC_modifications_flows/Modify_seats -> add/delete/update seats for NDC flight content, </br> - Workflows/20-LCC-Air_Shop_Ancillaries,_Book -> shop for ancillaries for low cost airline, book flights with ancillaries (check Pre-request scripts to modify airlines and airports).
 | [2024.08](./Booking%20Management%20API%20v2024.08.postman_collection.json)| Version incorporates:</br>- New workflows and scenarios related to fulfillFlightTickets andpoint (dedicated section). Also includes a new workflow example related to ancillaries. 
 | [2023.12](./Booking%20Management%20API%20v2023.12.postman_collection.json)| Version incorporates:</br>- New workflow scenario for NDC order creation for multiple traveler types. Also, there are additional examples related to retention line (OTH segment) processing (createBooking, cancelBooking).
 | [2023.10](./Booking%20Management%20API%20v2023.10.postman_collection.json)| Version incorporates:</br>- New workflow scenarios focused on modifying order elements via modifyBooking.
