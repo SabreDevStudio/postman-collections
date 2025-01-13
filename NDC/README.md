@@ -12,7 +12,7 @@ Sabre’s Offer and Order, REST/JSON-based APIs support the shopping, booking, f
 * Determine cancellation information for a fulfiled order
 * Cancel a fulfilled order and void/refund the ticket
 * Update passenger information in an order
-* Display a seat map with pricing infomration and seat attributes based on an offer or a confirmed order
+* Display a seat map with pricing information and seat attributes based on an offer or a confirmed order
 * Reserve a seat
 * Fulfill a paid seat
 * Reshop a fulfilled order and complete a voluntary change (rebook the passenger and exchange the ticekt)
@@ -35,7 +35,7 @@ Things you need to install:
 
 You'll also need your  [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/) and for some APIs you will need an [Application ID](https://developer.sabre.com/guides/travel-agency/sabre-api-customer-application-ids)
 
-Note that as of 05 June 2024, the Postman version in use is: 11.1.14, the Javascript within the collection has been udpated to reflect changes where some functions have been deprecated.
+Note that as of 13 January 2025, the Postman version in use is: 11.27.3, the Javascript within the collection has been udpated to reflect changes where some functions have been deprecated.
 
 ### Installing
 
