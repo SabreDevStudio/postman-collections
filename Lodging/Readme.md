@@ -41,7 +41,7 @@ Update these values with your credentials by following these steps:
   * Click on the name of your imported environment file to see a list of all key/value pairs
   * Enter your credentials, and press the "Save" icon
 
-![environment varaibles](./postman_environ_vars.jpg)
+![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Booking-Management/Credentials.png)
 
 For more information on Sabre's API portfolio access: [Sabre Dev Studio.](https://developer.sabre.com) 
 
