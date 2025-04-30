@@ -1,0 +1,2111 @@
+{
+	"info": {
+		"_postman_id": "be7bed4b-0038-4429-a47e-f2a9102082e5",
+		"name": "Lodging v2025.04",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42478182"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Other",
+					"item": [
+						{
+							"name": "OTA_PingRQ 1.0.0",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{header}}\n\n<OTA_PingRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2003/05\"/>\n\n{{footer}}",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								},
+								"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/refresh_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/refresh_session/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/session_management/refresh_session/legacy)</b>\n\n- [v1.0.0 Request Documentation](https://files.developer.sabre.com/drc/servicedoc/OTA_PingRQ_v1.0.0_Design.xml)\n- [v1.0.0 Request Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/OTA_PingRQ.xsd)\n- [v1.0.0 Request/Response Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/OTA_PingRQRS.xsd)\n- [v1.0.0 Response Documentation](https://files.developer.sabre.com/drc/servicedoc/OTA_PingRS_v1.0.0_Design.xml)\n- [v1.0.0 Response Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/OTA_PingRS.xsd)\n- [v1.0.0 Sample Payloads](https://files.developer.sabre.com/drc/servicedoc/OTA_PingRQ_v1.0.0_Sample_Payloads.xml)\n- [v1.0.0 WSDL](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/OTA_PingRQ.wsdl)\n- [OTA_CommonTypes.xsd](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/OTA_CommonTypes.xsd)\n\n[//]: # \"End\""
+							},
+							"response": [
+								{
+									"name": "OTA_PingRQ 1.0.0",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<OTA_PingRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2003/05\"/>\n\n{{footer}}",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1134"
+										},
+										{
+											"key": "SOAPAction",
+											"value": "\"\""
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin-when-cross-origin"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/xml; charset=utf-8"
+										},
+										{
+											"key": "date",
+											"value": "Thu, 27 Mar 2025 15:28:00 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 google"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">SWS</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>OTA_PingRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>76011556807751580</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:28:00</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <OTA_PingRS xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.0.0\">\n            <Success/>\n            <EchoData/>\n        </OTA_PingRS>\n    </soap-env:Body>\n</soap-env:Envelope>"
+								}
+							]
+						},
+						{
+							"name": "SessionCloseRQ 1.0.0",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{header}}\n\n<SessionCloseRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n\n{{footer}}",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								},
+								"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session/resources), [Legacy Versions](https://developer.sabre.com/docs/read/soap_apis/session_management/close_session/legacy)</b>\n\n- [v1.0.1: Request Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.xsd)\n- [Request/Response Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQRS.xsd)\n- [Response Schema](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRS.xsd)\n- [WSDL](https://files.developer.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.wsdl)\n- [Current PROD Service Description/Notes](https://files.developer.sabre.com/drc/servicedoc/SessionCloseRQ.htm)\n\n[//]: # \"End\""
+							},
+							"response": [
+								{
+									"name": "SessionCloseRQ 1.0.0",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{header}}\n\n<SessionCloseRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n\n{{footer}}",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1123"
+										},
+										{
+											"key": "SOAPAction",
+											"value": "\"\""
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin-when-cross-origin"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/xml; charset=utf-8"
+										},
+										{
+											"key": "date",
+											"value": "Thu, 27 Mar 2025 15:28:20 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 google"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">SWS</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>SessionCloseRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>76585557010701580</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:28:21</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <SessionCloseRS xmlns=\"http://www.opentravel.org/OTA/2002/11\" version=\"1\" status=\"Approved\"/>\n    </soap-env:Body>\n</soap-env:Envelope>"
+								}
+							]
+						},
+						{
+							"name": "SessionCreateRQ 1.0.0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.03.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ returnContextID=\"true\" Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/resources)</b>\n\n- SessionCreateRQ v1.0.0 is the traditional method for authentication & authorization of **Stateful Sabre SOAP APIs**. \n- v1.0.0 requires the standard authentication parameters: username, password, organization & domain (see [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management) if you need to reset your password).\n- SessionCreateRQ v2.0.0 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret (see [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids) for further references).\n- Be mindful of these differences when choosing which version to use.\n<br/><br/>\n*note:* The below example depicts a **v1.0.0** request where only the 4 standard security attributes are required. <br/>\nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.<br/><br/>\nThe general script logic in this collection will take the values you define in these variables and will use them in the execution of this service.\nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)\n\n[//]: # \"End\""
+							},
+							"response": [
+								{
+									"name": "SessionCreateRQ 1.0.0",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.01.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ returnContextID=\"true\" Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1203"
+										},
+										{
+											"key": "SOAPAction",
+											"value": "\"\""
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin-when-cross-origin"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/xml; charset=utf-8"
+										},
+										{
+											"key": "date",
+											"value": "Thu, 27 Mar 2025 15:24:31 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 google"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">Sabre_API</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>SessionCreateRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>70583554714520390</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:24:31</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <SessionCreateRS xmlns=\"http://www.opentravel.org/OTA/2002/11\" version=\"1.0.0\" status=\"Approved\">\n            <ConversationId>2025.03.DevStudio</ConversationId>\n        </SessionCreateRS>\n    </soap-env:Body>\n</soap-env:Envelope>"
+								}
+							]
+						},
+						{
+							"name": "TokenCreateRQ 1.0.0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.03.DevStudio</ConversationId>\n            <Action>TokenCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <TokenCreateRQ Version=\"1.0.0\" xmlns=\"http://webservices.sabre.com\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_access_token), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_access_token/resources), [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management), [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids)</b>\n\n- TokenCreateRQ v1.0.0 is the standard method for authentication & authorization of **Stateless Sabre SOAP APIs**.\n- v1.0.0 requires the standard authentication parameters: username, password, organization & domain\n- TokenCreateRQ v2.0.0 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret.\n- Be mindful of these differences when choosing which version to use.\n<br/><br/>\n*note:* The below example depicts a **v1.0.0** request where only the 4 standard security attributes are required. <br/>\nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.<br/><br/>\nThe general script logic in this collection will take the values you define in these variables and will use them in the execution of this service.\nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)\n\n[//]: # \"End\""
+							},
+							"response": [
+								{
+									"name": "TokenCreateRQ 1.0.0",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.01.DevStudio</ConversationId>\n            <Action>TokenCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <TokenCreateRQ Version=\"1.0.0\" xmlns=\"http://webservices.sabre.com\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1399"
+										},
+										{
+											"key": "SOAPAction",
+											"value": "\"\""
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=31536000"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin-when-cross-origin"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/xml; charset=utf-8"
+										},
+										{
+											"key": "date",
+											"value": "Thu, 27 Mar 2025 15:25:48 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 google"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">Sabre_API</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>TokenCreateRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>72687555486940390</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:25:48</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <sws:TokenCreateRS xmlns:sws=\"http://webservices.sabre.com\" Version=\"1.0.0\">\n            <sws:Success/>\n        </sws:TokenCreateRS>\n    </soap-env:Body>\n</soap-env:Envelope>"
+								}
+							]
+						},
+						{
+							"name": "REST OAuth Token Create /v2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{secret}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "grant_type=client_credentials"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v2/auth/token",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v2",
+										"auth",
+										"token"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/session_management/token_create_api/v2), [Resources](https://developer.sabre.com/docs/rest_apis/session_management/token_create_api/v2/reference-documentation), [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management), [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids)</b>\n\n- OAuth Token Create /v2 is the standard method for authentication & authorization of **Stateless Sabre REST APIs**.\n- /v2 requires the standard authentication parameters: username, password, organization & domain\n- OAuth Token Create /v3 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret.\n- Be mindful of these differences when choosing which version to use.\n<br/><br/>\n*note:* The below example depicts a **/v2** request where only the 4 standard security attributes are required. <br/>\nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.<br/><br/>\n\nThe general script logic in this collection will take the values you define in these variables, encode them following the encryption guidelines defined [here](https://developer.sabre.com/guides/travel-agency/developer-guides/rest-apis-token-credentials) and will use them in the execution of this service.<br/> \nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)\n\n[//]: # \"End\""
+							},
+							"response": [
+								{
+									"name": "REST OAuth Token Create /v2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{secret}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "grant_type=client_credentials"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v2/auth/token",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v2",
+												"auth",
+												"token"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "vary",
+											"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-store"
+										},
+										{
+											"key": "pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "content-encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "date",
+											"value": "Thu, 27 Mar 2025 15:26:30 GMT"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "content-security-policy",
+											"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+										},
+										{
+											"key": "referrer-policy",
+											"value": "origin-when-cross-origin"
+										},
+										{
+											"key": "x-xss-protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=31536000"
+										},
+										{
+											"key": "content-type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "x-envoy-upstream-service-time",
+											"value": "15"
+										},
+										{
+											"key": "server",
+											"value": "Sabre Gateway"
+										},
+										{
+											"key": "via",
+											"value": "1.1 google"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "X-CDN",
+											"value": "Imperva"
+										},
+										{
+											"key": "X-Iinfo",
+											"value": "58-98094684-98094689 NNNN CT(4 7 0) RT(1743089189700 19) q(0 0 0 -1) r(0 0) U24"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"access_token\": \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 604800\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "SessionCreateRQ 2.0.0 ClientID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.03.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n                <ClientId>{{client_id}}</ClientId>\n                <ClientSecret>{{client_secret}}</ClientSecret>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ returnContextID=\"true\" Version=\"2.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{soap_endpoint}}",
+							"host": [
+								"{{soap_endpoint}}"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session), [Resources](https://developer.sabre.com/docs/read/soap_apis/session_management/create_session/resources), [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management), [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids)</b>\n\n- SessionCreateRQ v1.0.0 is the traditional method for authentication & authorization of **Stateful Sabre SOAP APIs**.  \n- v1.0.0 requires the standard authentication parameters: username, password, organization & domain\n- SessionCreateRQ v2.0.0 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret.\n- Be mindful of these differences when choosing which version to use.\n<br/><br/>\n*note:* The example below depicts a **v2.0.0** request with all 6 required security attributes. <br/>\nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.<br/><br/>\nThe general script logic in this collection will take the values you define in these variables and will use them in the execution of this service.\nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)\n\n[//]: # \"End\""
+					},
+					"response": [
+						{
+							"name": "SessionCreateRQ 2.0.0 ClientID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.01.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n                <ClientId>{{client_id}}</ClientId>\n                <ClientSecret>{{client_secret}}</ClientSecret>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <SessionCreateRQ returnContextID=\"true\" Version=\"2.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1203"
+								},
+								{
+									"key": "SOAPAction",
+									"value": "\"\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "origin-when-cross-origin"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/xml; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 27 Mar 2025 15:27:28 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+								}
+							],
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">Sabre_API</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>SessionCreateRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>75118556483681580</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:27:28</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <SessionCreateRS xmlns=\"http://www.opentravel.org/OTA/2002/11\" version=\"2.0.0\" status=\"Approved\">\n            <ConversationId>2025.03.DevStudio</ConversationId>\n        </SessionCreateRS>\n    </soap-env:Body>\n</soap-env:Envelope>"
+						}
+					]
+				},
+				{
+					"name": "TokenCreateRQ 2.0.0 ClientID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.03.DevStudio</ConversationId>\n            <Action>TokenCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n                <ClientId>{{client_id}}</ClientId>\n                <ClientSecret>{{client_secret}}</ClientSecret>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <TokenCreateRQ Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+						},
+						"url": {
+							"raw": "{{soap_endpoint}}",
+							"host": [
+								"{{soap_endpoint}}"
+							]
+						},
+						"description": "[<b>Description</b>](https://developer.sabre.com/docs/read/soap_apis/session_management/create_access_token)**,** [<b>Resources</b>](https://developer.sabre.com/docs/read/soap_apis/session_management/create_access_token/resources)**,** [<b>Password Management</b>](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management)**,** [<b>Client IDs</b>](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids)\n\n- TokenCreateRQ v1.0.0 is the standard method for authentication & authorization of **Stateless Sabre SOAP APIs**.\n    \n- v1.0.0 requires the standard authentication parameters: username, password, organization & domain\n    \n- TokenCreateRQ v2.0.0 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret.\n    \n- Be mindful of these differences when choosing which version to use.  \n      \n      \n    \n\n_note:_ The example below depicts a **v2.0.0** request with all 6 required security attributes.  \n  \nIf you have successfully imported the environment file associated with this collection, you will have the following variables available for you to add your credentials: _{{username}}_, _{{password}}_, _{{pcc}}_, _{{client_id}}_ & _{{client_secret}}_.  \n  \n  \nThe general script logic in this collection will take the values you define in these variables and will use them in the execution of this service.  \nUpon successfull execution, the corresponding token will be stored in a _{{token}}_ variable and will be automatically used in subsequent API calls. With the goal of making your life easier :)"
+					},
+					"response": [
+						{
+							"name": "TokenCreateRQ 2.0.0 ClientID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2025.03.DevStudio</ConversationId>\n            <Action>TokenCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n                <ClientId>{{client_id}}</ClientId>\n                <ClientSecret>{{client_secret}}</ClientSecret>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <TokenCreateRQ Version=\"2.0.0\" xmlns=\"http://webservices.sabre.com\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+								},
+								"url": {
+									"raw": "{{soap_endpoint}}",
+									"host": [
+										"{{soap_endpoint}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1419"
+								},
+								{
+									"key": "SOAPAction",
+									"value": "\"\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "origin-when-cross-origin"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/xml; charset=utf-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 27 Mar 2025 15:35:13 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+								}
+							],
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <soap-env:Header>\n        <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" eb:version=\"1.0\" soap-env:mustUnderstand=\"1\">\n            <eb:From>\n                <eb:PartyId eb:type=\"URI\">Sabre_API</eb:PartyId>\n            </eb:From>\n            <eb:To>\n                <eb:PartyId eb:type=\"URI\">Agency</eb:PartyId>\n            </eb:To>\n            <eb:ConversationId>2025.03.DevStudio</eb:ConversationId>\n            <eb:Service eb:type=\"sabreXML\">Session</eb:Service>\n            <eb:Action>TokenCreateRS</eb:Action>\n            <eb:MessageData>\n                <eb:MessageId>88503561141371580</eb:MessageId>\n                <eb:Timestamp>2025-03-27T15:35:14</eb:Timestamp>\n            </eb:MessageData>\n        </eb:MessageHeader>\n        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</wsse:BinarySecurityToken>\n        </wsse:Security>\n    </soap-env:Header>\n    <soap-env:Body>\n        <sws:TokenCreateRS xmlns:sws=\"http://webservices.sabre.com\" Version=\"2.0.0\">\n            <sws:Success/>\n        </sws:TokenCreateRS>\n    </soap-env:Body>\n</soap-env:Envelope>"
+						}
+					]
+				},
+				{
+					"name": "REST OAuth Token Create /v3 ClientID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{auth_secret}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "grant_type=password&username={{username}}-{{pcc}}-AA&password={{password}}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v3/auth/token",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v3",
+								"auth",
+								"token"
+							]
+						},
+						"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/session_management/token_create_api/v3), [Resources](https://developer.sabre.com/docs/rest_apis/session_management/token_create_api/v3/reference-documentation), [Password Management](https://developer.sabre.com/guides/travel-agency/developer-guides/password-management), [Client IDs](https://developer.sabre.com/guides/travel-agency/developer-guides/sabre-api-client-ids)</b>\n\n- OAuth Token Create /v2 is the standard method for authentication & authorization of **Stateless Sabre REST APIs**.\n- /v2 requires the standard authentication parameters: username, password, organization & domain\n- OAuth Token Create /v3 has been enhanced to provide better logging/tracking by requiring 2 additional parameters: clientId + clientSecret.\n- Be mindful of these differences when choosing which version to use.\n*note:* The example below depicts a **/v3** request where all 6 security attributes are required.\n\n[//]: # \"End\""
+					},
+					"response": [
+						{
+							"name": "REST OAuth Token Create /v3 ClientID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{auth_secret}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "grant_type=password&username={{username}}-{{pcc}}-AA&password={{password}}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v3/auth/token",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v3",
+										"auth",
+										"token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "cache-control",
+									"value": "no-store"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "content-encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "date",
+									"value": "Thu, 27 Mar 2025 15:36:16 GMT"
+								},
+								{
+									"key": "x-request-id",
+									"value": "e7b76549-7af1-4569-b949-814bebbad7bc"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "84"
+								},
+								{
+									"key": "server",
+									"value": "Sabre Gateway"
+								},
+								{
+									"key": "via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000"
+								},
+								{
+									"key": "X-CDN",
+									"value": "Imperva"
+								},
+								{
+									"key": "X-Iinfo",
+									"value": "62-161306969-161306975 NNNN CT(2 14 0) RT(1743089775778 12) q(0 0 1 -1) r(2 2) U24"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 604800\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Lodging Retailer Preferencing",
+			"item": [
+				{
+					"name": "Update Preference /v1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"programId\": 10438,\r\n\t\"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Agency Label 1 preference 13\",\r\n\t\t\t\t\"number\": 12,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/hotels/preferences/updatePreferences",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"hotels",
+								"preferences",
+								"updatePreferences"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Preference Basic",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"programId\": 10438,\r\n\t\"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Agency Label 1 preference 13\",\r\n\t\t\t\t\"number\": 12,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/hotels/preferences/updatePreferences",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"hotels",
+										"preferences",
+										"updatePreferences"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "cache-control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 22 Apr 2025 13:46:46 GMT"
+								},
+								{
+									"key": "expires",
+									"value": "0"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "vary",
+									"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+								},
+								{
+									"key": "x-api-version",
+									"value": "1.0"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "DENY"
+								},
+								{
+									"key": "x-implementation-version",
+									"value": "25.04-01.00"
+								},
+								{
+									"key": "x-request-id",
+									"value": "fea249cf-82b3-44d8-b542-ec05c69c11cf"
+								},
+								{
+									"key": "x-request-sabre-id",
+									"value": "daca77eb-6c16-4942-9a1b-2b1d00fe26d1"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "content-encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "342"
+								},
+								{
+									"key": "server",
+									"value": "Sabre Gateway"
+								},
+								{
+									"key": "via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-04-22T08:46:46.628877104-05:00\",\n    \"request\": {\n        \"programId\": 10438,\n        \"targetPcc\": \"TM61\",\n        \"agencyPreference\": {\n            \"labels\": [\n                {\n                    \"name\": \"Agency Label 1 preference 13\",\n                    \"number\": 12,\n                    \"isVisible\": true,\n                    \"showAsPromotion\": true\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Preference /v1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"programId\": 10438,\r\n\t\"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Corp Label 1 preference 1\",\r\n\t\t\t\t\"number\": 12,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/hotels/preferences/createPreferences",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"hotels",
+								"preferences",
+								"createPreferences"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Preference Basic",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"programId\": 10438,\r\n\t\"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Agency Label 1 preference 1\",\r\n\t\t\t\t\"number\": 12,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/hotels/preferences/createPreferences",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"hotels",
+										"preferences",
+										"createPreferences"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "cache-control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 22 Apr 2025 13:43:20 GMT"
+								},
+								{
+									"key": "expires",
+									"value": "0"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "vary",
+									"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+								},
+								{
+									"key": "x-api-version",
+									"value": "1.0"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "DENY"
+								},
+								{
+									"key": "x-implementation-version",
+									"value": "25.04-01.00"
+								},
+								{
+									"key": "x-request-id",
+									"value": "496f45e9-4b11-400b-bc85-fd7d5a8cbf43"
+								},
+								{
+									"key": "x-request-sabre-id",
+									"value": "b92d08d0-f4b4-4892-9d0b-2f9807d00add"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "content-encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "270"
+								},
+								{
+									"key": "server",
+									"value": "Sabre Gateway"
+								},
+								{
+									"key": "via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-04-22T08:43:20.344866795-05:00\",\n    \"request\": {\n        \"programId\": 10438,\n        \"targetPcc\": \"TM61\",\n        \"agencyPreference\": {\n            \"labels\": [\n                {\n                    \"name\": \"Agency Label 1 preference 1\",\n                    \"number\": 12,\n                    \"isVisible\": true,\n                    \"showAsPromotion\": true\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Preference /v1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"programId\": 10438,\r\n    \"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Agency Label 1 preference 1\",\r\n\t\t\t\t\"number\": 11,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/hotels/preferences/deletePreferences",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"hotels",
+								"preferences",
+								"deletePreferences"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Preference",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"programId\": 10438,\r\n    \"targetPcc\": \"TM61\",\r\n\t\"agencyPreference\": {\r\n\t\t\"labels\": [\r\n\t\t\t{\r\n\t\t\t\t\"name\": \"Agency Label 1 preference 1\",\r\n\t\t\t\t\"number\": 11,\r\n\t\t\t\t\"isVisible\": true,\r\n\t\t\t\t\"showAsPromotion\": true\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/hotels/preferences/deletePreferences",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"hotels",
+										"preferences",
+										"deletePreferences"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "cache-control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 22 Apr 2025 15:35:17 GMT"
+								},
+								{
+									"key": "expires",
+									"value": "0"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "vary",
+									"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+								},
+								{
+									"key": "x-api-version",
+									"value": "1.0"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "DENY"
+								},
+								{
+									"key": "x-implementation-version",
+									"value": "25.04-01.00"
+								},
+								{
+									"key": "x-request-id",
+									"value": "f922c2a8-19d4-46b0-99d6-6a6a9e7f91a9"
+								},
+								{
+									"key": "x-request-sabre-id",
+									"value": "94175dc5-f403-4c96-b3bf-9576010efd25"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "content-encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "197"
+								},
+								{
+									"key": "server",
+									"value": "Sabre Gateway"
+								},
+								{
+									"key": "via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-04-22T10:35:17.426266613-05:00\",\n    \"request\": {\n        \"programId\": 10438,\n        \"targetPcc\": \"TM61\",\n        \"agencyPreference\": {\n            \"labels\": [\n                {\n                    \"name\": \"Agency Label 1 preference 1\",\n                    \"number\": 11,\n                    \"isVisible\": true,\n                    \"showAsPromotion\": true\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Program /v1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"programId\": 10438,\r\n    \"targetPcc\": \"TM61\",\r\n    \"isActive\": true,\r\n    \"name\": \"Corporate Preferencing Program\",\r\n    \"description\": \"Corporate Preferencing Program\",\r\n    \"preferencingOption\": \"PCC\",\r\n    \"travelStartDate\": \"2025-12-01\",\r\n    \"travelEndDate\": \"2025-12-31\",\r\n    \"lengthOfStay\": 5,\r\n    \"applicableDaysOfWeek\": [\r\n        \"Sunday\"\r\n    ],\r\n    \"requestStartDate\": \"2025-12-01\",\r\n    \"requestEndDate\": \"2025-12-31\"\r\n}"
+						},
+						"url": {
+							"raw": "{{rest_endpoint}}/v1/hotels/preferences/updateProgram",
+							"host": [
+								"{{rest_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"hotels",
+								"preferences",
+								"updateProgram"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Program",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"programId\": 10438,\r\n    \"targetPcc\": \"TM61\",\r\n    \"isActive\": true,\r\n    \"name\": \"Corporate Preferencing Program\",\r\n    \"description\": \"Corporate Preferencing Program\",\r\n    \"preferencingOption\": \"PCC\",\r\n    \"travelStartDate\": \"2025-12-01\",\r\n    \"travelEndDate\": \"2025-12-31\",\r\n    \"lengthOfStay\": 5,\r\n    \"applicableDaysOfWeek\": [\r\n        \"Sunday\"\r\n    ],\r\n    \"requestStartDate\": \"2025-12-01\",\r\n    \"requestEndDate\": \"2025-12-31\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/hotels/preferences/updateProgram",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"hotels",
+										"preferences",
+										"updateProgram"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "cache-control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 22 Apr 2025 15:36:57 GMT"
+								},
+								{
+									"key": "expires",
+									"value": "0"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "vary",
+									"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+								},
+								{
+									"key": "x-api-version",
+									"value": "1.0"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "DENY"
+								},
+								{
+									"key": "x-implementation-version",
+									"value": "25.04-01.00"
+								},
+								{
+									"key": "x-request-id",
+									"value": "52fd83a8-b065-4e78-8e6a-22c00bb58104"
+								},
+								{
+									"key": "x-request-sabre-id",
+									"value": "a7e53372-10fb-464c-a7af-89d78d8dfb79"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "content-encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "x-envoy-upstream-service-time",
+									"value": "208"
+								},
+								{
+									"key": "server",
+									"value": "Sabre Gateway"
+								},
+								{
+									"key": "via",
+									"value": "1.1 google"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-04-22T10:36:57.859670133-05:00\",\n    \"request\": {\n        \"programId\": 10438,\n        \"targetPcc\": \"TM61\",\n        \"isActive\": true,\n        \"name\": \"Corporate Preferencing Program\",\n        \"description\": \"Corporate Preferencing Program\",\n        \"preferencingOption\": \"PCC\",\n        \"travelStartDate\": \"2025-12-01\",\n        \"travelEndDate\": \"2025-12-31\",\n        \"lengthOfStay\": 5,\n        \"applicableDaysOfWeek\": [\n            \"Sunday\"\n        ],\n        \"requestStartDate\": \"2025-12-01\",\n        \"requestEndDate\": \"2025-12-31\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Analyze 'token' variable, if it starts with \"ATH:\" this text is removed as it's not accepted by Sabre's 2SG gateways \r",
+					"var token = pm.variables.get('token');\r",
+					"// Evaluate if token is defined or not null, and only then attempt to remove the ATH prefix\r",
+					"if (token) {\r",
+					"    pm.environment.set('token', token.replace(/^ATH:/, ''));\r",
+					"}\r",
+					"\r",
+					"// capture general date info to streamline script that shop/book in future dates\r",
+					"// Capture today's date\r",
+					"var moment = require('moment');\r",
+					"// Add 30 days to today's date and use this date in start_date\r",
+					"const today = moment().format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('today', today);\r",
+					"// Add 30 days to today's date and use this date in start_date\r",
+					"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('start_date', start_date);\r",
+					"// Add 37 days to today's date and use this date in end_date\r",
+					"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('end_date', end_date);\r",
+					"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)\r",
+					"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('short_end_date', short_end_date);\r",
+					"\r",
+					"pm.environment.set('conv_id', \"2025.03.DevStudio\");\r",
+					"\r",
+					"\r",
+					"\r",
+					"// Get the first string of the URI (server host)\r",
+					"const URI = pm.request.url.getHost();\r",
+					"\r",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:\r",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}\r",
+					"if ((URI) == ('{{soap_endpoint}}')) {\r",
+					"\r",
+					"    //***SOAP Path***//\r",
+					"    //This means that the temp URL is: {{soap_endpoint}}\r",
+					"\r",
+					"    // Get service action code from request name and ignore the following prefixes if present:\r",
+					"    // underscore (_)\r",
+					"    // number & dot (1.)\r",
+					"    // these variations are used in different examples across this collection\r",
+					"    // **old code with obsolete function** const action = request.name.split(' ')[0].replace(/^_|[0-9]./, '');\r",
+					"    const action = pm.info.requestName.split(' ')[0].replace(/^_|[0-9]./, '');\r",
+					"\r",
+					"    // Add the token value into the token variable\r",
+					"    const token = pm.variables.get('token');\r",
+					"\r",
+					"    // Add the ApplicationId value into the AppId variable\r",
+					"    const AppId = pm.variables.get('AppId');\r",
+					"\r",
+					"    // All SOAP API calls require a header section, we have created this variable to remove it from the \"working\" message and ensure the user can focus on the payload section \r",
+					"\r",
+					"    const header_appid = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2025.03.DevStudio</ConversationId><Action>${action}</Action><CustomerAppId xmlns:ns10=\"http://webservices.sabre.com/\">${AppId}</CustomerAppId></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"\r",
+					"    const header_diag = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2025.03.DevStudio</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security><Diagnostics xmlns=\"http://webservices.sabre.com\"/></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"\r",
+					"    const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2025.03.DevStudio</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"\r",
+					"\r",
+					"\r",
+					"    // Same as previous item, this footer variable is used to close the entire SOAP envelope\r",
+					"    const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';\r",
+					"\r",
+					"    // Add header & footer variables into the specific variables\r",
+					"    pm.variables.set('header_appid', header_appid);\r",
+					"    pm.variables.set('header', header);\r",
+					"    pm.variables.set('header_diag', header_diag);\r",
+					"    pm.variables.set('footer', footer);\r",
+					"\r",
+					"\r",
+					"} else if ((URI) == ('{{rest_endpoint}}')) {\r",
+					"\r",
+					"    //***REST Path***//\r",
+					"    //This means that the temp URL is: {{rest_endpoint}}/xx/yy/zz\r",
+					"\r",
+					"    // Capture URI element which identifies the API method (eg. /v3/offers/getseats/byReservationPayload -> geseats, position 3 -> [2] as array starts on [0])\r",
+					"    const URI_ID = pm.request.url.path[2];\r",
+					"\r",
+					"\r",
+					"\r",
+					"\r",
+					"    switch (URI_ID) {\r",
+					"\r",
+					"        case 'token':\r",
+					"            // Capture username\r",
+					"            const username = pm.variables.get('username');\r",
+					"            // Capture PCC\r",
+					"            const pcc = pm.variables.get('pcc');\r",
+					"\r",
+					"            const CryptoJS = require('crypto-js');\r",
+					"\r",
+					"            // v2 token flow, takes version from position [0]\r",
+					"            const URI_Version = pm.request.url.path[0];\r",
+					"            if ((URI_Version) == ('v2')) {\r",
+					"                // Construct raw client id (by appending V1:username:PCC:AA)\r",
+					"                const clientidRaw = `V1:${username}:${pcc}:AA`;\r",
+					"                // Base64 encode the previous string\r",
+					"                const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);                \r",
+					"                const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);\r",
+					"                // Capture password\r",
+					"                const passwordRaw = pm.variables.get('password');\r",
+					"                // Base64 enconde the password\r",
+					"                const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);\r",
+					"                const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);\r",
+					"                // Combine the two previous strings with a : in the middle\r",
+					"                const secretRaw = `${clientidBase64}:${passwordBase64}`;\r",
+					"                // Base64 enconde this last string\r",
+					"                const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);\r",
+					"                const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);\r",
+					"                // Set the secret variable with the latest encoded string\r",
+					"                pm.environment.set('secret', secretBase64);\r",
+					"                pm.environment.set('token', \"\");\r",
+					"\r",
+					"            } else {\r",
+					"                // Assumption is that this is /v3/auth/token or higher version\r",
+					"                // Catpure client ID\r",
+					"                const client_id = pm.variables.get('client_id');\r",
+					"                // Capture client secret\r",
+					"                const client_secret = pm.variables.get('client_secret');\r",
+					"                // Combine client_id + client_secret (by appending client_id:client_secret)\r",
+					"                const clientIDClientSecret = `${client_id}:${client_secret}`;\r",
+					"                // Base64 encode the previous string\r",
+					"                const clientIDClientSecretArray = CryptoJS.enc.Utf8.parse(clientIDClientSecret);\r",
+					"                const clientIDClientSecretBase64 = CryptoJS.enc.Base64.stringify(clientIDClientSecretArray);\r",
+					"                // Set the secret variable with the latest encoded string\r",
+					"                pm.environment.set('auth_secret', clientIDClientSecretBase64);\r",
+					"                pm.environment.set('token', \"\");   \r",
+					"            }\r",
+					"\r",
+					"            break;\r",
+					"\r",
+					"        case 'shop':\r",
+					"\r",
+					"            break;\r",
+					"    }\r",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"\r",
+					"// Logic to ensure that any potential / at the end of the request url would not impact the matching logic to determine if a request is being sent to Sabre's REST or SOAP endpoint.\r",
+					"// Some Postman versions automatically append a / at the end of the request url, so if identified it gets removed\r",
+					"\r",
+					"// Get request URL object as a string\r",
+					"let requestURL = pm.request.url.toString();\r",
+					"\r",
+					"// Check if the URL ends with a trailing slash and remove it if found\r",
+					"if (requestURL.endsWith(\"/\")) {\r",
+					"    requestURL = requestURL.slice(0, -1);\r",
+					"}\r",
+					"\r",
+					"\r",
+					"// Only execute the following code for SOAP APIs (based on the endpoint being used)\r",
+					"if ((requestURL) == (pm.environment.get(\"soap_endpoint\"))){\r",
+					"\r",
+					"    //***SOAP Path***//\r",
+					"\r",
+					"    const xml2js = require('xml2js');\r",
+					"\r",
+					"    // Get service Action name from request name and ignore leading underscore if present\r",
+					"    const action = pm.info.requestName.split(' ')[0].replace(/^_|[0-9]./, '');\r",
+					"\r",
+					"    // Parse response and remove namespaces (prefixes)\r",
+					"    // Solves problem when specific APIs return different namespaces randombly ie. ns8, ns9: TP APIs\r",
+					"    const parseString = xml2js.parseString;\r",
+					"    const parseOptions = { tagNameProcessors: [xml2js.processors.stripPrefix] };\r",
+					"    // Capture XML response payload\r",
+					"    const responseBody = pm.response.text();\r",
+					"\r",
+					"    switch (action) {\r",
+					"        case 'SessionCreateRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;\r",
+					"                pm.environment.set('token', \"\");\r",
+					"                pm.environment.set('token', token);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'TokenCreateRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;\r",
+					"                pm.environment.set('token', \"\");\r",
+					"                pm.environment.set('token', token);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'ContextChangeLLSRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const token = result.Envelope.Body[0].ContextChangeRS[0].SecurityToken[0];\r",
+					"                if ((token.$.Updated) == ('true')) {\r",
+					"                    pm.environment.set('token', \"\");\r",
+					"                    pm.environment.set('token', token._);\r",
+					"                }\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'CreatePassengerNameRecordRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const pnr = result.Envelope.Body[0].CreatePassengerNameRecordRS[0].ItineraryRef[0].$.ID;\r",
+					"                pm.environment.set('pnr', pnr);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'EnhancedEndTransactionRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const pnr = result.Envelope.Body[0].EnhancedEndTransactionRS[0].ItineraryRef[0].$.ID;\r",
+					"                pm.environment.set('pnr', pnr);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'AirTicketRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const summary = result.Envelope.Body[0].AirTicketRS[0].Summary;\r",
+					"                summary.forEach((tktDoc, i) => {\r",
+					"                    const tktNum = 'tkt' + (i === 0 ? '' : i + 1);\r",
+					"                    const tktDateTime = tktDoc.LocalIssueDateTime[0];\r",
+					"                    const tktDate = tktDateTime.substring(tktDateTime, tktDateTime.indexOf('T'));\r",
+					"                    pm.environment.set(tktNum, tktDoc.DocumentNumber[0]);\r",
+					"                    pm.environment.set(tktNum + '_date', tktDate);\r",
+					"                });\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'TP_CreateRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const proposalID = result.Envelope.Body[0].TP_CreateRS[0].$.proposalID;\r",
+					"                pm.environment.set('proposal_id', proposalID);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'TP_ReadRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const proposalVersion = result.Envelope.Body[0].TP_ReadRS[0].TripProposal[0].$.proposalVersion;\r",
+					"                pm.environment.set('proposal_version', proposalVersion);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'TP_RefreshRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const proposalVersion = result.Envelope.Body[0].TP_RefreshRS[0].TripProposal[0].$.proposalVersion;\r",
+					"                pm.environment.set('proposal_version', proposalVersion);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'GetHotelAvailRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const hotelCode = result.Envelope.Body[0].GetHotelAvailRS[0].HotelAvailInfos[0].HotelAvailInfo[0].HotelInfo[0].$.HotelCode;\r",
+					"                pm.environment.set('hotel_code', hotelCode);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'GetHotelDetailsRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const rateKey = result.Envelope.Body[0].GetHotelDetailsRS[0].HotelDetailsInfo[0].HotelRateInfo[0].RateInfos[0].RateInfo[0].$.RateKey;\r",
+					"                pm.environment.set('rate_key', rateKey);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'HotelPriceCheckRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const bookingKey = result.Envelope.Body[0].HotelPriceCheckRS[0].PriceCheckInfo[0].$.BookingKey;\r",
+					"                pm.environment.set('booking_key', bookingKey);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'GetVehAvailRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const rateKey = result.Envelope.Body[0].GetVehAvailRS[0].VehAvailInfos[0].VehAvailInfo[0].VehRentalRate[0].$.RateKey;\r",
+					"                pm.environment.set('car_rate_key', rateKey);\r",
+					"            });\r",
+					"            break;\r",
+					"        case 'VehPriceCheckRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const bookingKey = result.Envelope.Body[0].VehPriceCheckRS[0].PriceCheckInfo[0].$.BookingKey;\r",
+					"                pm.environment.set('car_bookingKey', bookingKey);\r",
+					"            });\r",
+					"            break;            \r",
+					"        case 'GetVehRateDetailsRQ':\r",
+					"            parseString(responseBody, parseOptions, (err, result) => {\r",
+					"                const carPickUpDate = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].$.PickUpDate;\r",
+					"                const carPickUpTime = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].$.PickUpTime;\r",
+					"                const carPickUpLocation = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].PickUpLocation[0].$.LocationCode;\r",
+					"                const carReturnDate = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].$.ReturnDate;\r",
+					"                const carReturnTime = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].$.ReturnTime;\r",
+					"                const carReturnLocation = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].ReturnLocation[0].$.LocationCode;\r",
+					"                const carVehicleType = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].Vehicle[0].$.VehType;\r",
+					"                const carRateCode = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].$.RateCode;\r",
+					"                const carVendorCode = result.Envelope.Body[0].GetVehRateDetailsRS[0].RateDetailsInfo[0].VehRateInfo[0].Vendor[0].$.Code;\r",
+					"                pm.environment.set('car_pick_up_date', carPickUpDate);\r",
+					"                pm.environment.set('car_pick_up_time', carPickUpTime);\r",
+					"                pm.environment.set('car_pick_up_location', carPickUpLocation);\r",
+					"                pm.environment.set('car_return_date', carReturnDate);\r",
+					"                pm.environment.set('car_return_time', carReturnTime);\r",
+					"                pm.environment.set('car_return_location', carReturnLocation);\r",
+					"                pm.environment.set('car_vehicle_type', carVehicleType);\r",
+					"                pm.environment.set('car_rate_code', carRateCode);\r",
+					"                pm.environment.set('car_vendor_code', carVendorCode);\r",
+					"            });\r",
+					"            break;\r",
+					"        // Add new API here\r",
+					"    }\r",
+					"\r",
+					"\r",
+					"} else {\r",
+					"\r",
+					"    //***REST Path***//\r",
+					"\r",
+					"    // Capture URI element which identifies the API method (eg. /v3/offers/getseats/byReservationPayload -> geseats, position 3 -> [2] as array starts on [0])\r",
+					"    const URI_ID = pm.request.url.path[2];\r",
+					"\r",
+					"    // Get the JSON response\r",
+					"    //const jsonData = JSON.parse(responseBody);\r",
+					"    const jsonData = JSON.parse(pm.response.text());\r",
+					"\r",
+					"    switch (URI_ID) {\r",
+					"\r",
+					"        case 'token':\r",
+					"            pm.environment.set('token', jsonData.access_token);\r",
+					"            break;\r",
+					"        case 'shop':\r",
+					"            pm.environment.set('shop_offer_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].offer.offerId);\r",
+					"            pm.environment.set('shop_offer_item_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].fare.passengerInfoList[0].passengerInfo.offerItemId);\r",
+					"            break;\r",
+					"        case 'price':\r",
+					"            pm.environment.set('price_offer_id', jsonData.response.offers[0].id);\r",
+					"            pm.environment.set('price_offer_item_id', jsonData.response.offers[0].offerItems[0].id);\r",
+					"            pm.environment.set('price_passenger_id', jsonData.response.offers[0].offerItems[0].passengers[0].id);\r",
+					"            break;\r",
+					"        case 'create':\r",
+					"            pm.environment.set('sabre_order_id', jsonData.order.id);\r",
+					"            pm.environment.set('pnr', jsonData.order.pnrLocator);\r",
+					"            pm.environment.set('fullfill_order_id', jsonData.order.orderItems[0].id);\r",
+					"            break;\r",
+					"        case 'ticket':\r",
+					"            pm.environment.set('tkt', jsonData.AirTicketRS.Summary[0].DocumentNumber);\r",
+					"            pm.environment.set('tkt2', jsonData.AirTicketRS.Summary[1].DocumentNumber);\r",
+					"            break;\r",
+					"        case 'hotelavail':\r",
+					"            pm.environment.set('hotel_code', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelInfo.HotelCode);\r",
+					"            pm.environment.set('rate_key', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelRateInfo.RateInfos.RateInfo[0].RateKey);\r",
+					"            break;\r",
+					"        case 'hoteldetails':\r",
+					"            pm.environment.set('rate_key', jsonData.GetHotelDetailsRS.HotelDetailsInfo.HotelRateInfo.RateInfos.RateInfo[0].RateKey);\r",
+					"            break;\r",
+					"        case 'pricecheck':\r",
+					"            pm.environment.set('booking_key', jsonData.HotelPriceCheckRS.PriceCheckInfo.BookingKey);\r",
+					"            break;\r",
+					"        case 'records':\r",
+					"            const URI_Query = pm.request.url.getQueryString();\r",
+					"            switch (URI_Query) {\r",
+					"                case 'mode=create':\r",
+					"                pm.environment.set('pnr', jsonData.CreatePassengerNameRecordRS.ItineraryRef.ID);\r",
+					"                break;\r",
+					"                case 'mode=update':\r",
+					"                // TBD\r",
+					"                break;\r",
+					"            }\r",
+					"            break;\r",
+					"        // Booking Management API URL is: /v1/trip/orders/xyz (where xyz defines the endpoint)\r",
+					"        case 'orders':\r",
+					"            // CreateBooking URL is: /v1/trip/orders/createBooking\r",
+					"            if ((pm.request.url.path[3]) == ('createBooking')) {\r",
+					"                pm.environment.set('pnr', jsonData.confirmationId);\r",
+					"            };\r",
+					"\r",
+					"            break;\r",
+					"    }\r",
+					"}"
+				]
+			}
+		}
+	]
+}
