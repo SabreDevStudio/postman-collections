@@ -103,7 +103,7 @@ The Collection Runner allows you to run sets of requests in a specified sequence
 
 ## License
 
-Copyright (c) 2023 Sabre Corp Licensed under the MIT license.
+Copyright (c) 2025 Sabre Corp Licensed under the MIT license.
 
 ## Disclaimer of Warranty and Limitation of Liability
 
