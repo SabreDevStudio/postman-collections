@@ -101,24 +101,6 @@ Update the dummy values with your official credentials. To do that follow these 
 
 ![environment variables](https://github.com/SabreDevStudio/postman-collections/blob/master/Booking-Management/Credentials.png)
 
-## Running the Tests
-
-1. Authenticate. In the Booking Management API collection you'll find a folder named `Authentication` and an item called `REST Authorize`. Select it. Click the **Send** button. Look for a 200 Success result. If it failed review your environment credentials.
-2. Both the GetBooking and CancelBooking services require a confirmation id (PNR locator) in order to properly function, make sure you have one available in order to test. Examples are available in the individual folders: `Get Booking` and `Cancel Booking`. Simply open one of these folders, select an example to test, click the **Send** button, and look for a 200 Success result. 
-
-For more information regarding our Booking Management API offering please [read through its documentation.](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management) 
-
-## Running the Tests using the Collection Runner. 
-
-The Collection Runner allows you to run sets of requests in a specified sequence. The Collection Runner will log your request test results, and your scripts can pass data between requests as well as alter the request workflow. You can use the Runner for the `Deep Dive into E2E NDC Reservation Management with the Booking Management` API collection.
-
-1.	Click on the root folder of the project. 
-2.	Click on “run” icon.
-3.	Choose desired requests from the run order list. 
-4.	Click on the blue “run” button in order to start execution. 
-
-![1](https://user-images.githubusercontent.com/83339794/130613211-a4ff734c-65f4-46da-b4c0-807c8fc93c83.png)
-![2](https://user-images.githubusercontent.com/83339794/130613217-697810e2-ff1d-44a5-b623-ce1f8d1df769.png)
 
 ## License
 
