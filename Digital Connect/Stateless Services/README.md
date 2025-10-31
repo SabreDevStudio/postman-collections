@@ -18,6 +18,7 @@ The services available are listed below:
 9.  Exchange Fulfillment
 10. Payments
 11. Profiles
+12. Cancel and Refund
 
 
 > Note: This Postman collection was created to showcase Sabre DC Stateless Services and provide developers the ability to test them freely. Sabre APIs Test credentials are required to successfully test these services, if you are an existing Sabre APIs customer and do not have your CERT credentials, please contact your Sabre account manager.
