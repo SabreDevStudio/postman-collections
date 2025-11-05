@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stl19:GetReservationRS xmlns:stl19="http://webservices.sabre.com/pnrbuilder/v1_19" xmlns:ns6="http://services.sabre.com/res/orr/v0" xmlns:or114="http://services.sabre.com/res/or/v1_14" xmlns:raw="http://tds.sabre.com/itinerary" xmlns:ns4="http://webservices.sabre.com/pnrconn/ReaccSearch" Version="1.19.18">
+	<stl19:Reservation numberInParty="1" numberOfInfants="0" NumberInSegment="1">
+		<stl19:BookingDetails>
+			<stl19:RecordLocator>TWXOWS</stl19:RecordLocator>
+			<stl19:CreationTimestamp>2025-11-04T08:26:00</stl19:CreationTimestamp>
+			<stl19:SystemCreationTimestamp>2025-11-04T08:26:00</stl19:SystemCreationTimestamp>
+			<stl19:CreationAgentID>AWS</stl19:CreationAgentID>
+			<stl19:UpdateTimestamp>2025-11-04T08:26:51</stl19:UpdateTimestamp>
+			<stl19:PNRSequence>3</stl19:PNRSequence>
+			<stl19:FlightsRange Start="2025-12-04T08:10:00" End="2025-12-04T09:16:00"/>
+			<stl19:DivideSplitDetails/>
+			<stl19:EstimatedPurgeTimestamp>2025-12-19T00:00:00</stl19:EstimatedPurgeTimestamp>
+			<stl19:UpdateToken>bVeAjlHD0Gzgy8//xe6OY2bN37vUtu2+yHMFrJbIrJ84J/+V7U1vZw==</stl19:UpdateToken>
+			<stl19:ACSIssuedBagTags>false</stl19:ACSIssuedBagTags>
+			<stl19:VeryImportantTraveler>false</stl19:VeryImportantTraveler>
+		</stl19:BookingDetails>
+		<stl19:POS AirExtras="false" InhibitCode="U">
+			<stl19:Source BookingSource="U9PK" AgentSine="AWS" PseudoCityCode="U9PK" ISOCountry="PL" AgentDutyCode="*" AirlineVendorID="AA" HomePseudoCityCode="U9PK" PrimeHostID="1S"/>
+		</stl19:POS>
+		<stl19:PassengerReservation>
+			<stl19:Passengers>
+				<stl19:Passenger id="3" nameType="S" passengerType="ADT" nameId="01.01" nameAssocId="1" elementId="pnr-3.1">
+					<stl19:LastName>SMITH</stl19:LastName>
+					<stl19:FirstName>JOHN</stl19:FirstName>
+					<stl19:SpecialRequests>
+						<stl19:APISRequest>
+							<stl19:DOCSEntry id="19" type="G">
+								<stl19:DocumentType>P</stl19:DocumentType>
+								<stl19:CountryOfIssue>US</stl19:CountryOfIssue>
+								<stl19:DocumentNumber>0123456789</stl19:DocumentNumber>
+								<stl19:DocumentNationalityCountry>US</stl19:DocumentNationalityCountry>
+								<stl19:DateOfBirth>1980-12-02</stl19:DateOfBirth>
+								<stl19:Gender>M</stl19:Gender>
+								<stl19:DocumentExpirationDate>2024-07-09</stl19:DocumentExpirationDate>
+								<stl19:Surname>SMITH</stl19:Surname>
+								<stl19:Forename>JOHN</stl19:Forename>
+								<stl19:MiddleName>JACK</stl19:MiddleName>
+								<stl19:PrimaryHolder>false</stl19:PrimaryHolder>
+								<stl19:FreeText/>
+								<stl19:ActionCode>HK</stl19:ActionCode>
+								<stl19:NumberInParty>1</stl19:NumberInParty>
+								<stl19:VendorCode>AA</stl19:VendorCode>
+							</stl19:DOCSEntry>
+						</stl19:APISRequest>
+						<stl19:TicketingRequest>
+							<stl19:TicketType>G</stl19:TicketType>
+							<stl19:ValidatingCarrier>AA</stl19:ValidatingCarrier>
+							<stl19:ActionCode>HK</stl19:ActionCode>
+							<stl19:NumberInParty>1</stl19:NumberInParty>
+							<stl19:BoardPoint>DFW</stl19:BoardPoint>
+							<stl19:OffPoint>TUL</stl19:OffPoint>
+							<stl19:ClassOfService>Y</stl19:ClassOfService>
+							<stl19:DateOfTravel>2025-12-04T00:00:00</stl19:DateOfTravel>
+							<stl19:TicketNumber>0012972100945C1</stl19:TicketNumber>
+						</stl19:TicketingRequest>
+					</stl19:SpecialRequests>
+					<stl19:Seats/>
+					<stl19:AccountingLines>
+						<stl19:AccountingLine id="26" index="1" elementId="pnr-26">
+							<stl19:FareApplication>ONE</stl19:FareApplication>
+							<stl19:FormOfPaymentCode>CC</stl19:FormOfPaymentCode>
+							<stl19:AirlineDesignator>AA</stl19:AirlineDesignator>
+							<stl19:DocumentNumber>2972100945</stl19:DocumentNumber>
+							<stl19:CommissionAmount>0.00</stl19:CommissionAmount>
+							<stl19:Fare>3566.00</stl19:Fare>
+							<stl19:BaseFare>3566.00</stl19:BaseFare>
+							<stl19:TaxAmount>323.95</stl19:TaxAmount>
+							<stl19:CreditCardNumber>3XXXXXXXXXX8431</stl19:CreditCardNumber>
+							<stl19:CreditCardCode>AX</stl19:CreditCardCode>
+							<stl19:PassengerName nameId="1.1">SMITH JOHN</stl19:PassengerName>
+							<stl19:NumberOfConjunctedDocuments>1</stl19:NumberOfConjunctedDocuments>
+							<stl19:TarriffBasis>F</stl19:TarriffBasis>
+							<stl19:TransactionInd>E</stl19:TransactionInd>
+						</stl19:AccountingLine>
+					</stl19:AccountingLines>
+					<stl19:Remarks/>
+					<stl19:PhoneNumbers/>
+					<stl19:TicketingInfo>
+						<stl19:ETicketNumber id="27" index="2" elementId="pnr-27">TE 0012972100945-AT SMITH/J U9PK*AWS 1526/04NOV I</stl19:ETicketNumber>
+						<stl19:TicketDetails id="27" index="2" elementId="pnr-27">
+							<stl19:OriginalTicketDetails>TE 0012972100945-AT SMITH/J U9PK*AWS 1526/04NOV I</stl19:OriginalTicketDetails>
+							<stl19:TransactionIndicator>TE</stl19:TransactionIndicator>
+							<stl19:TicketNumber>0012972100945</stl19:TicketNumber>
+							<stl19:PassengerName nameId="01.01">SMITH/J</stl19:PassengerName>
+							<stl19:AgencyLocation>U9PK</stl19:AgencyLocation>
+							<stl19:DutyCode>*</stl19:DutyCode>
+							<stl19:AgentSine>AWS</stl19:AgentSine>
+							<stl19:Timestamp>2025-11-04T15:26:00</stl19:Timestamp>
+							<stl19:PaymentType/>
+						</stl19:TicketDetails>
+					</stl19:TicketingInfo>
+				</stl19:Passenger>
+			</stl19:Passengers>
+			<stl19:Segments>
+				<stl19:Poc>
+					<stl19:Airport>DFW</stl19:Airport>
+					<stl19:Departure>2025-12-04T08:10:00</stl19:Departure>
+				</stl19:Poc>
+				<stl19:Segment sequence="1" id="18">
+					<stl19:Air id="18" sequence="1" segmentAssociationId="2" isPast="false" DayOfWeekInd="4" ArrivalDayOfWeekInd="4" CodeShare="false" SpecialMeal="false" StopQuantity="00" SmokingAllowed="false" ResBookDesigCode="Y" Code="AA" isIgnored="false">
+						<stl19:DepartureAirport>DFW</stl19:DepartureAirport>
+						<stl19:DepartureAirportCodeContext>IATA</stl19:DepartureAirportCodeContext>
+						<stl19:ArrivalAirport>TUL</stl19:ArrivalAirport>
+						<stl19:ArrivalAirportCodeContext>IATA</stl19:ArrivalAirportCodeContext>
+						<stl19:OperatingAirlineCode>AA</stl19:OperatingAirlineCode>
+						<stl19:OperatingAirlineShortName>AMERICAN AIRLINES</stl19:OperatingAirlineShortName>
+						<stl19:OperatingFlightNumber>1664</stl19:OperatingFlightNumber>
+						<stl19:EquipmentType>738</stl19:EquipmentType>
+						<stl19:MarketingAirlineCode>AA</stl19:MarketingAirlineCode>
+						<stl19:MarketingFlightNumber>1664</stl19:MarketingFlightNumber>
+						<stl19:OperatingClassOfService>Y</stl19:OperatingClassOfService>
+						<stl19:MarketingClassOfService>Y</stl19:MarketingClassOfService>
+						<stl19:MarriageGrp>
+							<stl19:Ind>0</stl19:Ind>
+							<stl19:Group>0</stl19:Group>
+							<stl19:Sequence>0</stl19:Sequence>
+						</stl19:MarriageGrp>
+						<stl19:Seats/>
+						<stl19:AirlineRefId>DCAA*PJHCHU</stl19:AirlineRefId>
+						<stl19:Eticket>true</stl19:Eticket>
+						<stl19:DepartureDateTime>2025-12-04T08:10:00</stl19:DepartureDateTime>
+						<stl19:ArrivalDateTime>2025-12-04T09:16:00</stl19:ArrivalDateTime>
+						<stl19:FlightNumber>1664</stl19:FlightNumber>
+						<stl19:ClassOfService>Y</stl19:ClassOfService>
+						<stl19:ActionCode>HK</stl19:ActionCode>
+						<stl19:PreviousActionCode>NN</stl19:PreviousActionCode>
+						<stl19:NumberInParty>1</stl19:NumberInParty>
+						<stl19:SegmentSpecialRequests>
+							<stl19:GenericSpecialRequest id="30" type="G" msgType="S">
+								<stl19:Code>TKNE</stl19:Code>
+								<stl19:FreeText>AA HK1 DFWTUL1664Y04DEC/0012972100945C1</stl19:FreeText>
+								<stl19:ActionCode>HK</stl19:ActionCode>
+								<stl19:NumberInParty>1</stl19:NumberInParty>
+								<stl19:AirlineCode>AA</stl19:AirlineCode>
+								<stl19:TicketNumber>0012972100945</stl19:TicketNumber>
+								<stl19:FullText>TKNE AA HK1 DFWTUL1664Y04DEC/0012972100945C1</stl19:FullText>
+							</stl19:GenericSpecialRequest>
+						</stl19:SegmentSpecialRequests>
+						<stl19:inboundConnection>false</stl19:inboundConnection>
+						<stl19:outboundConnection>false</stl19:outboundConnection>
+						<stl19:ScheduleChangeIndicator>false</stl19:ScheduleChangeIndicator>
+						<stl19:SegmentBookedDate>2025-11-04T08:26:00</stl19:SegmentBookedDate>
+						<stl19:ElapsedTime>01.06</stl19:ElapsedTime>
+						<stl19:AirMilesFlown>0237</stl19:AirMilesFlown>
+						<stl19:FunnelFlight>false</stl19:FunnelFlight>
+						<stl19:ChangeOfGauge>false</stl19:ChangeOfGauge>
+						<stl19:Cabin Code="Y" SabreCode="Y" Name="ECONOMY" ShortName="ECONOMY" Lang="EN"/>
+						<stl19:Banner>MARKETED BY AMERICAN AIRLINES</stl19:Banner>
+						<stl19:Informational>false</stl19:Informational>
+						<stl19:TimeSinceBooked>0h1m</stl19:TimeSinceBooked>
+						<stl19:AlliancePartnerGroup>
+							<stl19:Code>OW</stl19:Code>
+							<stl19:Name>ONEWORLD</stl19:Name>
+						</stl19:AlliancePartnerGroup>
+					</stl19:Air>
+					<stl19:Product id="18">
+						<or114:ProductDetails productCategory="AIR">
+							<or114:ProductName type="AIR"/>
+							<or114:Air sequence="1" segmentAssociationId="2">
+								<or114:DepartureAirport>DFW</or114:DepartureAirport>
+								<or114:ArrivalAirport>TUL</or114:ArrivalAirport>
+								<or114:EquipmentType>738</or114:EquipmentType>
+								<or114:MarketingAirlineCode>AA</or114:MarketingAirlineCode>
+								<or114:MarketingFlightNumber>1664</or114:MarketingFlightNumber>
+								<or114:MarketingClassOfService>Y</or114:MarketingClassOfService>
+								<or114:MarriageGrp/>
+								<or114:Cabin code="Y" sabreCode="Y" name="ECONOMY" shortName="ECONOMY" lang="EN"/>
+								<or114:ElapsedTime>66</or114:ElapsedTime>
+								<or114:AirMilesFlown>237</or114:AirMilesFlown>
+								<or114:FunnelFlight>false</or114:FunnelFlight>
+								<or114:ChangeOfGauge>false</or114:ChangeOfGauge>
+								<or114:SecureFlight>true</or114:SecureFlight>
+								<or114:DisclosureCarrier Code="AA" DOT="false">
+									<or114:Banner>AMERICAN AIRLINES</or114:Banner>
+								</or114:DisclosureCarrier>
+								<or114:AirlineRefId>DCAA*PJHCHU</or114:AirlineRefId>
+								<or114:Eticket>true</or114:Eticket>
+								<or114:DepartureDateTime>2025-12-04T08:10:00</or114:DepartureDateTime>
+								<or114:ArrivalDateTime>2025-12-04T09:16:00</or114:ArrivalDateTime>
+								<or114:FlightNumber>1664</or114:FlightNumber>
+								<or114:ClassOfService>Y</or114:ClassOfService>
+								<or114:ActionCode>HK</or114:ActionCode>
+								<or114:NumberInParty>1</or114:NumberInParty>
+								<or114:inboundConnection>false</or114:inboundConnection>
+								<or114:outboundConnection>false</or114:outboundConnection>
+								<or114:ScheduleChangeIndicator>false</or114:ScheduleChangeIndicator>
+								<or114:SegmentBookedDate>2025-11-04T08:26:00</or114:SegmentBookedDate>
+							</or114:Air>
+						</or114:ProductDetails>
+					</stl19:Product>
+				</stl19:Segment>
+			</stl19:Segments>
+			<stl19:FormsOfPayment>
+				<stl19:CreditCardPayment ShortText="CREDIT CARD DATA EXISTS *CC TO DISPLAY">
+					<stl19:CardHolderInfo Name="JOHN SMITH" PreferredCustomer="false">
+						<stl19:AddressLines>
+							<stl19:AddressLine>
+								<stl19:Text>1230 ELLEN AVE, APT 10</stl19:Text>
+							</stl19:AddressLine>
+							<stl19:AddressLine>
+								<stl19:Text>DALLAS, TX</stl19:Text>
+							</stl19:AddressLine>
+							<stl19:AddressLine>
+								<stl19:Text>75063</stl19:Text>
+							</stl19:AddressLine>
+						</stl19:AddressLines>
+					</stl19:CardHolderInfo>
+				</stl19:CreditCardPayment>
+			</stl19:FormsOfPayment>
+			<stl19:TicketingInfo>
+				<stl19:AlreadyTicketed id="29" index="1" elementId="pnr-29">
+					<stl19:Code>T-04NOV-U9PK*AWS</stl19:Code>
+				</stl19:AlreadyTicketed>
+				<stl19:ETicketNumber id="27" index="2" elementId="pnr-27">TE 0012972100945-AT SMITH/J U9PK*AWS 1526/04NOV I</stl19:ETicketNumber>
+				<stl19:TicketDetails id="27" index="2" elementId="pnr-27">
+					<stl19:OriginalTicketDetails>TE 0012972100945-AT SMITH/J U9PK*AWS 1526/04NOV I</stl19:OriginalTicketDetails>
+					<stl19:TransactionIndicator>TE</stl19:TransactionIndicator>
+					<stl19:TicketNumber>0012972100945</stl19:TicketNumber>
+					<stl19:PassengerName nameId="01.01">SMITH/J</stl19:PassengerName>
+					<stl19:AgencyLocation>U9PK</stl19:AgencyLocation>
+					<stl19:DutyCode>*</stl19:DutyCode>
+					<stl19:AgentSine>AWS</stl19:AgentSine>
+					<stl19:Timestamp>2025-11-04T15:26:00</stl19:Timestamp>
+					<stl19:PaymentType/>
+				</stl19:TicketDetails>
+			</stl19:TicketingInfo>
+			<stl19:ItineraryPricing/>
+		</stl19:PassengerReservation>
+		<stl19:DKNumbers>
+			<stl19:DKNumber>1234567</stl19:DKNumber>
+		</stl19:DKNumbers>
+		<stl19:ReceivedFrom>
+			<stl19:Name>CREATE BOOKING</stl19:Name>
+		</stl19:ReceivedFrom>
+		<stl19:Addresses>
+			<stl19:Address>
+				<stl19:AddressLines>
+					<stl19:AddressLine id="5" type="O">
+						<stl19:Text>JOHN SMITH</stl19:Text>
+					</stl19:AddressLine>
+					<stl19:AddressLine id="6" type="O">
+						<stl19:Text>1230 ELLEN AVE, APT 10</stl19:Text>
+					</stl19:AddressLine>
+					<stl19:AddressLine id="7" type="O">
+						<stl19:Text>DALLAS, TX US</stl19:Text>
+					</stl19:AddressLine>
+					<stl19:AddressLine id="8" type="O">
+						<stl19:Text>75063</stl19:Text>
+					</stl19:AddressLine>
+				</stl19:AddressLines>
+			</stl19:Address>
+		</stl19:Addresses>
+		<stl19:PhoneNumbers>
+			<stl19:PhoneNumber id="11" index="1" elementId="pnr-11">
+				<stl19:CityCode>KRK</stl19:CityCode>
+				<stl19:Number>123456</stl19:Number>
+			</stl19:PhoneNumber>
+		</stl19:PhoneNumbers>
+		<stl19:Remarks>
+			<stl19:Remark index="1" id="21" type="HS" elementId="pnr-21">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>AUTH-AMEX/AX8431/04NOV/01411762266406726796       </stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+			<stl19:Remark index="2" id="22" type="HS" elementId="pnr-22">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>  AUTH-APV/Y85235/000/PLN3889.95                  </stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+			<stl19:Remark index="3" id="23" type="HS" elementId="pnr-23">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>  AUTH-CSC MATCHED/Y                              </stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+			<stl19:Remark index="4" id="24" type="HS" elementId="pnr-24">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>  AUTH-AVS BILLING ADDRESS AND ZIP POSTAL ARE MATC</stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+			<stl19:Remark index="5" id="25" type="HS" elementId="pnr-25">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>XXAUTH/Y85235/AX3XXXXXXXXXX8431/AA/PLN3889.95/04NOV/S</stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+			<stl19:Remark index="6" id="28" type="REG" elementId="pnr-28">
+				<stl19:RemarkLines>
+					<stl19:RemarkLine>
+						<stl19:Text>XXTAW/</stl19:Text>
+					</stl19:RemarkLine>
+				</stl19:RemarkLines>
+			</stl19:Remark>
+		</stl19:Remarks>
+		<stl19:EmailAddresses>
+			<stl19:EmailAddress id="10">
+				<stl19:Address>TRAVEL2@SABRE.COM</stl19:Address>
+				<stl19:Comment/>
+			</stl19:EmailAddress>
+			<stl19:EmailAddress id="9">
+				<stl19:Address>TRAVEL@SABRE.COM</stl19:Address>
+				<stl19:Comment/>
+			</stl19:EmailAddress>
+		</stl19:EmailAddresses>
+		<stl19:AccountingLines>
+			<stl19:AccountingLine id="26" index="1" elementId="pnr-26">
+				<stl19:FareApplication>ONE</stl19:FareApplication>
+				<stl19:FormOfPaymentCode>CC</stl19:FormOfPaymentCode>
+				<stl19:AirlineDesignator>AA</stl19:AirlineDesignator>
+				<stl19:DocumentNumber>2972100945</stl19:DocumentNumber>
+				<stl19:CommissionAmount>0.00</stl19:CommissionAmount>
+				<stl19:Fare>3566.00</stl19:Fare>
+				<stl19:BaseFare>3566.00</stl19:BaseFare>
+				<stl19:TaxAmount>323.95</stl19:TaxAmount>
+				<stl19:CreditCardNumber>3XXXXXXXXXX8431</stl19:CreditCardNumber>
+				<stl19:CreditCardCode>AX</stl19:CreditCardCode>
+				<stl19:PassengerName nameId="1.1">SMITH JOHN</stl19:PassengerName>
+				<stl19:NumberOfConjunctedDocuments>1</stl19:NumberOfConjunctedDocuments>
+				<stl19:TarriffBasis>F</stl19:TarriffBasis>
+				<stl19:TransactionInd>E</stl19:TransactionInd>
+				<stl19:AccountingLineText>  AA$2972100945/   0.00/    3566.00/ 323.95/ONE/CCAX3XXXXXXXXXX8431 1.1SMITH JOHN/1/F/E</stl19:AccountingLineText>
+			</stl19:AccountingLine>
+		</stl19:AccountingLines>
+		<stl19:AssociationMatrices>
+			<stl19:AssociationMatrix>
+				<stl19:Name>PersonIDType</stl19:Name>
+				<stl19:Parent ref="pnr-3.1"/>
+				<stl19:Child ref="pnr-26">
+					<stl19:AssociationRule name="MoveOnDivide" value="ON"/>
+				</stl19:Child>
+				<stl19:Child ref="pnr-27">
+					<stl19:AssociationRule name="MoveOnDivide" value="ON"/>
+				</stl19:Child>
+			</stl19:AssociationMatrix>
+		</stl19:AssociationMatrices>
+		<stl19:OpenReservationElements>
+			<or114:OpenReservationElement id="19" type="SRVC" elementId="pnr-19">
+				<or114:ServiceRequest actionCode="HK" airlineCode="AA" code="DOCS" serviceCount="1" serviceType="SSR" ssrType="GFX">
+					<or114:FreeText>/P/US/0123456789/US/02DEC1980/M/09JUL2024/SMITH/JOHN/JACK</or114:FreeText>
+					<or114:FullText>DOCS AA HK1/P/US/0123456789/US/02DEC1980/M/09JUL2024/SMITH/JOHN/JACK</or114:FullText>
+					<or114:TravelDocument>
+						<or114:Type>P</or114:Type>
+						<or114:DocumentIssueCountry>US</or114:DocumentIssueCountry>
+						<or114:DocumentNumber>0123456789</or114:DocumentNumber>
+						<or114:DocumentNationalityCountry>US</or114:DocumentNationalityCountry>
+						<or114:DocumentExpirationDate>09JUL2024</or114:DocumentExpirationDate>
+						<or114:DateOfBirth>02DEC1980</or114:DateOfBirth>
+						<or114:Gender>M</or114:Gender>
+						<or114:LastName>SMITH</or114:LastName>
+						<or114:FirstName>JOHN</or114:FirstName>
+						<or114:MiddleName>JACK</or114:MiddleName>
+						<or114:Infant>false</or114:Infant>
+						<or114:PrimaryDocHolderInd>false</or114:PrimaryDocHolderInd>
+						<or114:HasDocumentData>true</or114:HasDocumentData>
+					</or114:TravelDocument>
+				</or114:ServiceRequest>
+				<or114:NameAssociation>
+					<or114:LastName>SMITH</or114:LastName>
+					<or114:FirstName>JOHN</or114:FirstName>
+					<or114:NameRefNumber>01.01</or114:NameRefNumber>
+					<or114:ReferenceId>1</or114:ReferenceId>
+				</or114:NameAssociation>
+			</or114:OpenReservationElement>
+			<or114:OpenReservationElement id="30" type="SRVC" elementId="pnr-30">
+				<or114:ServiceRequest actionCode="HK" airlineCode="AA" code="TKNE" serviceCount="1" serviceType="SSR" ssrType="GFX">
+					<or114:FreeText>/0012972100945C1</or114:FreeText>
+					<or114:FullText>TKNE AA HK1 DFWTUL1664Y04DEC/0012972100945C1</or114:FullText>
+				</or114:ServiceRequest>
+				<or114:SegmentAssociation Id="18" SegmentAssociationId="2">
+					<or114:AirSegment>
+						<or114:CarrierCode>AA</or114:CarrierCode>
+						<or114:FlightNumber>1664</or114:FlightNumber>
+						<or114:DepartureDate>2025-12-04</or114:DepartureDate>
+						<or114:BoardPoint>DFW</or114:BoardPoint>
+						<or114:OffPoint>TUL</or114:OffPoint>
+						<or114:ClassOfService>Y</or114:ClassOfService>
+						<or114:BookingStatus>HK</or114:BookingStatus>
+					</or114:AirSegment>
+				</or114:SegmentAssociation>
+				<or114:NameAssociation>
+					<or114:LastName>SMITH</or114:LastName>
+					<or114:FirstName>JOHN</or114:FirstName>
+					<or114:NameRefNumber>01.01</or114:NameRefNumber>
+					<or114:ReferenceId>1</or114:ReferenceId>
+				</or114:NameAssociation>
+			</or114:OpenReservationElement>
+			<or114:OpenReservationElement id="10" type="PSG_DETAILS_MAIL" elementId="pnr-10">
+				<or114:Email comment="">
+					<or114:Address>TRAVEL2@SABRE.COM</or114:Address>
+				</or114:Email>
+			</or114:OpenReservationElement>
+			<or114:OpenReservationElement id="9" type="PSG_DETAILS_MAIL" elementId="pnr-9">
+				<or114:Email comment="">
+					<or114:Address>TRAVEL@SABRE.COM</or114:Address>
+				</or114:Email>
+			</or114:OpenReservationElement>
+		</stl19:OpenReservationElements>
+	</stl19:Reservation>
+</stl19:GetReservationRS>
