@@ -1,0 +1,1081 @@
+{
+	"info": {
+		"_postman_id": "aadde684-756c-44b2-b09a-31ebab257540",
+		"name": "Sabre LCC - Volaris",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8751084"
+	},
+	"item": [
+		{
+			"name": "Shop, Price, Book Segment & Ancillary, Fulfillment",
+			"item": [
+				{
+					"name": "1. Authenticate",
+					"item": [
+						{
+							"name": "CreateSession",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns=\"http://www.opentravel.org/OTA/2002/11\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>{{username}}</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>{{password}}</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>{{pcc}}</Organization>\r\n            <!--Optional:-->\r\n            <Domain>DEFAULT</Domain>\r\n         </sec:UsernameToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"1.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">999999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">123123</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>Test</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">SessionCreateRQ</mes:Service>\r\n         <mes:Action>SessionCreateRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-2T00:00:00Z</mes:Timestamp>\r\n            <!--Optional:-->\r\n            <mes:RefToMessageId>?</mes:RefToMessageId>\r\n            <!--Optional:-->\r\n            <mes:TimeToLive>?</mes:TimeToLive>\r\n            \r\n         </mes:MessageData>\r\n         <!--Optional:-->\r\n         <mes:DuplicateElimination>?</mes:DuplicateElimination>\r\n         <!--Zero or more repetitions:-->\r\n         <mes:Description xml:lang=\"?\">?</mes:Description>\r\n         <!--You may enter ANY elements at this point-->\r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <ns:SessionCreateRQ returnContextID=\"true\">\r\n         <ns:POS>\r\n            <ns:Source PseudoCityCode=\"{{pcc}}\"/>\r\n         </ns:POS>\r\n      </ns:SessionCreateRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								},
+								"description": "Sample request to create session"
+							},
+							"response": []
+						},
+						{
+							"name": "REST Authorize",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{secret}}",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "grant_type=client_credentials"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v2/auth/token",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v2",
+										"auth",
+										"token"
+									]
+								},
+								"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+							},
+							"response": []
+						},
+						{
+							"name": "ContextChange",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username></sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password></sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization></Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      \r\n             \r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.9.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">ContextChangeService</mes:Service>\r\n         <mes:Action>ContextChangeLLSRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n\r\n   </soapenv:Header>\r\n\r\n   <soapenv:Body>\r\n      <ns:ContextChangeRQ Version=\"2.0.3\">\r\n         <!--Optional:-->\r\n         <ns:ChangeAAA PseudoCityCode=\"{{pcc}}\"/>\r\n      </ns:ContextChangeRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2. Shopping",
+					"item": [
+						{
+							"name": "BargainFinderMax",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OTA_AirLowFareSearchRQ\": {\r\n    \"Version\": \"6.8.0\",\r\n    \"POS\": {\r\n      \"Source\": [\r\n        {\r\n          \"PseudoCityCode\": \"{{pcc}}\",\r\n          \"RequestorID\": {\r\n            \"Type\": \"0.AAA.X\",\r\n            \"ID\": \"REQ.ID\",\r\n            \"CompanyName\": {\r\n              \"Code\": \"TN\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"OriginDestinationInformation\": [\r\n            {\r\n                \"RPH\": \"1\",\r\n                \"DepartureDateTime\": \"{{travel_date}}\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"{{from_airport_code}}\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"{{to_airport_code}}\"\r\n                }\r\n            }\r\n        ],\r\n    \"TravelPreferences\": {\r\n      \"TPA_Extensions\": {\r\n        \"DataSources\": {\r\n          \"NDC\": \"Disable\",\r\n          \"ATPCO\": \"Disable\",\r\n          \"LCC\": \"Enable\"\r\n        }\r\n      }\r\n    },\r\n    \"TravelerInfoSummary\": {\r\n      \"SeatsRequested\": [\r\n        1\r\n      ],\r\n      \"AirTravelerAvail\": [\r\n        {\r\n          \"PassengerTypeQuantity\": [\r\n            {\r\n              \"Code\": \"ADT\",\r\n              \"Quantity\": 1,\r\n              \"TPA_Extensions\":{\r\n                    \"VoluntaryChanges\":{\r\n                        \"Match\": \"Info\"\r\n                    }\r\n                }\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"PriceRequestInformation\": {\r\n        \"TPA_Extensions\": {\r\n          \"BrandedFareIndicators\": {\r\n            \"MultipleBrandedFares\": true,\r\n            \"ReturnBrandAncillaries\": true\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"TPA_Extensions\": {\r\n      \"IntelliSellTransaction\": {\r\n        \"RequestType\": {\r\n          \"Name\": \"50ITINS\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v5/offers/shop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v5",
+										"offers",
+										"shop"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3. Create Booking",
+					"item": [
+						{
+							"name": "CreatePassengerNameRecord",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">CreatePassengerNameRecordService</mes:Service>\r\n         <mes:Action>CreatePassengerNameRecordRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <!-- <sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/> -->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n   <CreatePassengerNameRecordRQ\r\n\txmlns=\"http://services.sabre.com/sp/reservation/v2_5\"\r\n\txmlns:ns2=\"http://services.sabre.com/STL_Payload/v02_01\"\r\n\txmlns:ns3=\"http://services.sabre.com/sp/exchange/booking/v1_0_1\" haltOnAirPriceError=\"true\" version=\"2.5.0\" targetCity=\"{{pcc}}\">\r\n        <TravelItineraryAddInfo>\r\n\t\t\t\t<AgencyInfo>\r\n                    <Address>\r\n                        <AddressLine>SABRE TRAVEL</AddressLine>\r\n                        <CityName>SOUTHLAKE</CityName>\r\n                        <CountryCode>US</CountryCode>\r\n                        <PostalCode>76092</PostalCode>\r\n                        <StateCountyProv StateCode=\"TX\"/>\r\n                        <StreetNmbr>3150 SABRE DRIVE</StreetNmbr>\r\n       \t\t\t    </Address>\r\n\t\t\t\t\t<Ticketing TicketType=\"7TAW\"/>\r\n\t\t\t\t</AgencyInfo>\r\n\t\t\t\t<CustomerInfo>\r\n\t\t\t\t\t<ContactNumbers>\r\n\t\t\t\t\t\t<ContactNumber NameNumber=\"1.1\" Phone=\"9876543210\" PhoneUseType=\"H\" />\r\n\t\t\t\t\t</ContactNumbers>\r\n\t\t\t\t\t<CreditCardData>\r\n\t\t\t\t\t\t<BillingInformation cardHolderName=\"JOHN RAMBO\" streetAddress=\"123 1ST AVE\" city=\"NEW YORK\" stateOrProvince=\"NY,US\">\r\n\t\t\t\t\t\t\t<Zip>12345</Zip>\r\n\t\t\t\t\t\t</BillingInformation>\r\n\t\t\t\t\t</CreditCardData>\r\n\t\t\t\t\t<CustomerIdentifier>1412345678</CustomerIdentifier>\r\n\t\t\t\t\t<Email Address=\"John.Rambo@test.com\" NameNumber=\"1.1\" />\r\n\t\t\t\t\t<PersonName NameNumber=\"1.1\" NameReference=\"ADT\" PassengerType=\"ADT\">\r\n\t\t\t\t\t\t<GivenName>JOHN</GivenName>\r\n\t\t\t\t\t\t<Surname>RAMBO</Surname>\r\n\t\t\t\t\t</PersonName>\r\n\t\t\t\t</CustomerInfo>\r\n\t\t\t</TravelItineraryAddInfo>\r\n\t\t\t<AirBook>\r\n\t\t\t\t<HaltOnStatus Code=\"NONE\"/>\r\n\t\t\t\t<OriginDestinationInformation>\r\n\t\t\t\t\t<FlightSegment FlightNumber=\"713\" ArrivalDateTime=\"2026-03-23T00:05:00\" DepartureDateTime=\"2026-03-2219:31:00\" NumberInParty=\"1\" Status=\"NN\" ResBookDesigCode=\"Y\" InstantPurchase=\"true\">\r\n\t\t\t\t\t\t<DestinationLocation LocationCode=\"MEX\"/>\r\n\t\t\t\t\t\t<MarketingAirline Code=\"Y4\" FlightNumber=\"713\"/>\r\n\t\t\t\t\t\t<OriginLocation LocationCode=\"LAX\"/>\r\n\t\t\t\t\t</FlightSegment>\r\n\t\t\t\t</OriginDestinationInformation>\r\n\t\t\t</AirBook>\r\n\t\t\t<AirPrice>\r\n\t\t\t\t<PriceRequestInformation Retain=\"true\">\r\n\t\t\t\t\t<OptionalQualifiers>\r\n\t\t\t\t\t\t<PricingQualifiers>\r\n\t\t\t\t\t\t\t<NameSelect NameNumber=\"1.1\"/>\r\n\t\t\t\t\t\t\t<PassengerType Code=\"ADT\" Quantity=\"1\"/>\r\n\t\t\t\t\t\t</PricingQualifiers>\r\n\t\t\t\t\t</OptionalQualifiers>\r\n\t\t\t\t</PriceRequestInformation>\r\n\t\t\t</AirPrice>\r\n\t\t\t<SpecialReqDetails>\r\n\t\t\t\t<AddRemark>\r\n\t\t\t\t\t<RemarkInfo>\r\n\t\t\t\t\t\t<FOP_Remark Type=\"CC\" >\r\n\t\t\t\t\t\t\t<CC_Info>\r\n\t\t\t\t\t\t\t\t<PaymentCard Code=\"VI\" ExpireDate=\"2026-02\" Number=\"4XXXXXXXXXXX9299\" SuppressApprovalCode=\"true\" GenerateApprovalAtTicketing=\"true\"/>\r\n\t\t\t\t\t\t\t</CC_Info>\r\n\t\t\t\t\t\t</FOP_Remark>\r\n\t\t\t\t\t</RemarkInfo>\r\n\t\t\t\t</AddRemark>\r\n\t\t\t\t<SpecialService>\r\n\t\t\t\t\t<SpecialServiceInfo>\r\n\t\t\t\t\t\t<AdvancePassenger SegmentNumber=\"A\">\r\n\t\t\t\t\t\t\t<Document ExpirationDate=\"2030-11-20\" Number=\"1234567890\" Type=\"P\">\r\n                                <IssueCountry>US</IssueCountry>\r\n                                <NationalityCountry>US</NationalityCountry>\r\n                            </Document>\r\n\t\t\t\t\t\t\t<PersonName DateOfBirth=\"1987-03-03\" Gender=\"M\" NameNumber=\"1.1\">\r\n\t\t\t\t\t\t\t\t<GivenName>John</GivenName>\r\n\t\t\t\t\t\t\t\t<MiddleName>Michael</MiddleName>\r\n\t\t\t\t\t\t\t\t<Surname>Rambo</Surname>\r\n\t\t\t\t\t\t\t</PersonName>\r\n\t\t\t\t\t\t</AdvancePassenger>\r\n\t\t\t\t\t</SpecialServiceInfo>\r\n\t\t\t\t</SpecialService>\r\n\t\t\t</SpecialReqDetails>\r\n\t\t\t<PostProcessing>\r\n\t\t\t\t<EndTransaction>\r\n\t\t\t\t\t<Source ReceivedFrom=\"LCC TEST\"/>\r\n\t\t\t\t</EndTransaction>\r\n\t\t\t\t<RedisplayReservation waitInterval=\"1000\"/>\r\n\t\t\t</PostProcessing>\r\n\t\t</CreatePassengerNameRecordRQ>\r\n   </soapenv:Body>\r\n   </soapenv:Envelope>\r\n"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4. Retrieve Booking",
+					"item": [
+						{
+							"name": "GetReservationRQ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns6=\"http://services.sabre.com/sp/eab/v3_9\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.9.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetReservationService</mes:Service>\r\n         <mes:Action>GetReservationRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n       <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n<GetReservationRQ\r\n\txmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\"\r\n\txmlns:ns2=\"http://services.sabre.com/res/or/v1_14\" Version=\"1.19.0\">\r\n\t<Locator>{{pnr}}</Locator>\r\n\t<RequestType>Stateful</RequestType>\r\n\t<ReturnOptions PriceQuoteServiceVersion=\"4.3.0\">\r\n\t\t<SubjectAreas>\r\n\t\t\t<SubjectArea>REMARKS</SubjectArea>\r\n\t\t\t<SubjectArea>PRICE_QUOTE</SubjectArea>\r\n\t\t</SubjectAreas>\r\n\t\t<ViewName>Full</ViewName>\r\n\t\t<ResponseFormat>STL</ResponseFormat>\r\n\t</ReturnOptions>\r\n</GetReservationRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "5. Search Ancillary",
+					"item": [
+						{
+							"name": "GetAncillaryOffers",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetAncillaryOffersService</mes:Service>\r\n         <mes:Action>GetAncillaryOffersRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <v03:GetAncillaryOffersRQ version='3.1.0' xmlns:v03='http://services.sabre.com/merch/ancillary/offer/v03' xmlns:v031='http://services.sabre.com/merch/itinerary/v03' xmlns:v032='http://services.sabre.com/merch/flight/v03' xmlns:v035='http://services.sabre.com/merch/itinerary/v03' xmlns:v037='http://services.sabre.com/merch/flight/v03' xmlns:n2='http://services.sabre.com/merch/itinerary/v03'>\r\n\t\t\t<v03:RequestType>stateful</v03:RequestType>\r\n\t\t\t<v03:RequestMode>booking</v03:RequestMode>\r\n\t\t\t<v03:AncillaryRequestOptions xmlns='http://services.sabre.com/merch/ancillary/offer/v03'>\r\n\t\t\t\t<Group xmlns='http://services.sabre.com/merch/ancillary/v03'>BG</Group>\r\n\t\t\t</v03:AncillaryRequestOptions>\r\n\t\t\t<v03:QueryByPassenger xmlns=\"http://services.sabre.com/merch/ancillary/offer/v03\">\r\n                <v03:PriceQuote number=\"1\"/>\r\n            </v03:QueryByPassenger>\r\n\t\t</v03:GetAncillaryOffersRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAncillaryOffers _Payload",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetAncillaryOffersService</mes:Service>\r\n         <mes:Action>GetAncillaryOffersRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <gao:GetAncillaryOffersRQ xmlns:anc=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:flt=\"http://services.sabre.com/merch/flight/v03\" xmlns:gao=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:itin=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:pax=\"http://services.sabre.com/merch/passenger/v03\" version=\"3.1.0\">\r\n            <gao:RequestType>payload</gao:RequestType>\r\n            <gao:RequestMode>booking</gao:RequestMode>\r\n            <gao:QueryByItinerary>\r\n                <gao:QueryPassengerItinerary>\r\n                <gao:Passenger id=\"pax_1\" type=\"ADT\"/>\r\n                <gao:PassengerItinerary>\r\n                    <gao:PassengerSegment segmentRef=\"seg_1\">\r\n                        <itin:FareBreakAssociation FareInfoRef=\"fare_1\"/>\r\n                    </gao:PassengerSegment>\r\n                </gao:PassengerItinerary>\r\n                </gao:QueryPassengerItinerary>\r\n                <gao:Segment id=\"seg_1\">\r\n                    <itin:FlightDetail id=\"flight_1\">\r\n                        <flt:Airline>Y4</flt:Airline>\r\n                        <flt:OperatingAirline>Y4</flt:OperatingAirline>\r\n                        <flt:FlightNumber>713</flt:FlightNumber>\r\n                        <flt:OperatingFlightNumber>713</flt:OperatingFlightNumber>\r\n                        <flt:DepartureAirport>LAX</flt:DepartureAirport>\r\n                        <flt:DepartureDate>{{travel_date}}</flt:DepartureDate>\r\n                        <flt:DepartureTime>{{departure_time}}</flt:DepartureTime>\r\n                        <flt:ArrivalAirport>MEX</flt:ArrivalAirport>\r\n                        <flt:ClassOfService>Y</flt:ClassOfService>\r\n                    </itin:FlightDetail>\r\n                </gao:Segment>\r\n                <gao:FareInfo id=\"fare_1\">\r\n                    <FareComponentID>1</FareComponentID>\r\n                    <GoverningCarrier>Y4</GoverningCarrier>\r\n                    <FareBasisCode>Y</FareBasisCode>\r\n                </gao:FareInfo>\r\n            </gao:QueryByItinerary>\r\n        </gao:GetAncillaryOffersRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "6. Add Ancillary to Booking",
+					"item": [
+						{
+							"name": "UpdateReservation_Sell",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>{{pcc}}</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">UpdateReservationService</mes:Service>\r\n         <mes:Action>UpdateReservationRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n    <UpdateReservationRQ Version=\"1.19.16\" EchoToken=\"Echo\" xmlns='http://webservices.sabre.com/pnrbuilder/v1_19'>\r\n        <RequestType xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\" commitTransaction=\"true\">Stateful</RequestType>\r\n        <ReturnOptions IncludeUpdateDetails=\"true\" xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\" />\r\n        <ReservationUpdateList xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\">\r\n            <Locator>{{pnr}}</Locator>\r\n            <ReservationUpdateItem UpdateId=\"1\">\r\n                <AncillaryServicesUpdate op=\"C\">\r\n                    <NameAssociationList>\r\n                    <NameAssociationTag>\r\n                        <LastName>RAMBO</LastName>\r\n                        <FirstName>JOHN</FirstName>\r\n                        <NameRefNumber>01.01</NameRefNumber>\r\n                    </NameAssociationTag>\r\n                    </NameAssociationList>\r\n                    <SegmentAssociationList>\r\n                    <SegmentAssociationTag>\r\n                        <CarrierCode>Y4</CarrierCode>\r\n                        <FlightNumber>713</FlightNumber>\r\n                        <DepartureDate>{{travel_date}}</DepartureDate>\r\n                        <BoardPoint>{{from_airport_code}}</BoardPoint>\r\n                        <OffPoint>{{to_airport_code}}</OffPoint>\r\n                        <ClassOfService>Y</ClassOfService>\r\n                        <BookingStatus>PN</BookingStatus>\r\n                    </SegmentAssociationTag>\r\n                    </SegmentAssociationList>\r\n                    <CommercialName>MX FOREIGN ENTRY TAX DNI</CommercialName>\r\n                    <RficCode>C</RficCode>\r\n                    <RficSubcode>0LV</RficSubcode>\r\n                    <SSRCode>TAXA</SSRCode>\r\n                    <OwningCarrierCode>Y4</OwningCarrierCode>\r\n                    <BookingIndicator>01</BookingIndicator>\r\n                    <Vendor>Y4</Vendor>\r\n                    <EMDType>4</EMDType>\r\n                    <TTLPrice>\r\n                    <Price>861.00</Price>\r\n                    <Currency>MXN</Currency>\r\n                    </TTLPrice>\r\n                    <OriginalBasePrice>\r\n                    <Price>861.00</Price>\r\n                    <Currency>MXN</Currency>\r\n                    </OriginalBasePrice>\r\n                    <NumberOfItems>1</NumberOfItems>\r\n                    <SegmentIndicator>S</SegmentIndicator>\r\n                    <FirstTravelDate>201125</FirstTravelDate>\r\n                    <LastTravelDate>211125</LastTravelDate>\r\n                    <PurchaseTimestamp>2026-01-23T04:30:23.4972626-04:00</PurchaseTimestamp>\r\n                    <GroupCode>BG</GroupCode>\r\n                </AncillaryServicesUpdate>\r\n            </ReservationUpdateItem>\r\n            <ReceivedFrom>\r\n                <AgentName>VOLARIS TEST</AgentName>\r\n            </ReceivedFrom>\r\n        </ReservationUpdateList>\r\n  </UpdateReservationRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "7. Reprice the PQ",
+					"item": [
+						{
+							"name": "UpdatePassengerNameRecord_Reprice_Ancillary",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns=\"http://webservices.sabre.com/sabreXML/2003/07\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"1.0.4\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>3QEI</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">UpdatePassengerNameRecordService</mes:Service>\r\n         <mes:Action>UpdatePassengerNameRecordRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n    <UpdatePassengerNameRecordRQ xmlns=\"http://services.sabre.com/sp/updatereservation/v1\" version=\"1.0.0\">\r\n        <Itinerary id=\"{{pnr}}\"/>\r\n        <AirPrice>\r\n            <PriceRequestInformation Retain=\"true\">\r\n                <OptionalQualifiers>\r\n                    <PricingQualifiers>\r\n                        <ItineraryOptions>\r\n                            <SegmentSelect Number=\"1\" />\r\n                        </ItineraryOptions>\r\n                        <PassengerType Code=\"ADT\" Quantity=\"1\"/>\r\n                    </PricingQualifiers>\r\n                </OptionalQualifiers>\r\n            </PriceRequestInformation>\r\n        </AirPrice>\r\n        <PostProcessing>\r\n            <EndTransaction>\r\n                <Source ReceivedFrom=\"PRICE AFTER ANCILLARY\"/>\r\n            </EndTransaction>\r\n        </PostProcessing>\r\n    </UpdatePassengerNameRecordRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "8. Ticketing",
+					"item": [
+						{
+							"name": "EnhancedAirTicket",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>83CB</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">AirTicketService</mes:Service>\r\n         <mes:Action>AirTicketRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <!-- <sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/> -->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n        <AirTicketRQ xmlns=\"http://services.sabre.com/sp/air/ticket/v1_3\" version=\"1.3.0\" healthCheck=\"false\" haltOnInvalidMCT=\"false\" targetCity=\"{{pcc}}\">\r\n            <Itinerary ID=\"{{pnr}}\"/>\r\n            <Ticketing>\r\n                <FOP_Qualifiers>\r\n                    <BasicFOP>\r\n                        <CC_Info Suppress=\"false\">\r\n                            <PaymentCard CardSecurityCode=\"XXX\"/>\r\n                        </CC_Info>\r\n                    </BasicFOP>\r\n                </FOP_Qualifiers>\r\n                <MiscQualifiers>\r\n                    <Invoice Ind=\"true\" />\r\n                </MiscQualifiers>\r\n                <PricingQualifiers>\r\n                    <PriceQuote>\r\n                        <Record Number=\"2\" Reissue=\"false\"/>\r\n                    </PriceQuote>\r\n                </PricingQualifiers>\r\n            </Ticketing>\r\n            <PostProcessing>\r\n                <EndTransaction>\r\n                    <Source ReceivedFrom=\"LCC TESTING\"/>\r\n                    <InvoiceOption Ind=\"true\"/>\r\n                </EndTransaction>\r\n            </PostProcessing>\r\n        </AirTicketRQ>\r\n\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Shop, Price, Book Segment (EAB), Ancillary, Fulfillment",
+			"item": [
+				{
+					"name": "1. Authenticate",
+					"item": [
+						{
+							"name": "CreateSession",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns=\"http://www.opentravel.org/OTA/2002/11\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>{{username}}</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>{{password}}</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>{{pcc}}</Organization>\r\n            <!--Optional:-->\r\n            <Domain>DEFAULT</Domain>\r\n         </sec:UsernameToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"1.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">999999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">123123</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>Test</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">SessionCreateRQ</mes:Service>\r\n         <mes:Action>SessionCreateRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-2T00:00:00Z</mes:Timestamp>\r\n            <!--Optional:-->\r\n            <mes:RefToMessageId>?</mes:RefToMessageId>\r\n            <!--Optional:-->\r\n            <mes:TimeToLive>?</mes:TimeToLive>\r\n            \r\n         </mes:MessageData>\r\n         <!--Optional:-->\r\n         <mes:DuplicateElimination>?</mes:DuplicateElimination>\r\n         <!--Zero or more repetitions:-->\r\n         <mes:Description xml:lang=\"?\">?</mes:Description>\r\n         <!--You may enter ANY elements at this point-->\r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <ns:SessionCreateRQ returnContextID=\"true\">\r\n         <ns:POS>\r\n            <ns:Source PseudoCityCode=\"{{pcc}}\"/>\r\n         </ns:POS>\r\n      </ns:SessionCreateRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								},
+								"description": "Sample request to create session"
+							},
+							"response": []
+						},
+						{
+							"name": "REST Authorize",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{secret}}",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "grant_type=client_credentials"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v2/auth/token",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v2",
+										"auth",
+										"token"
+									]
+								},
+								"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+							},
+							"response": []
+						},
+						{
+							"name": "ContextChange",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns=\"http://webservices.sabre.com/sabreXML/2011/10\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username></sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password></sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization></Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      \r\n             \r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.9.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">ContextChangeService</mes:Service>\r\n         <mes:Action>ContextChangeLLSRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n\r\n   </soapenv:Header>\r\n\r\n   <soapenv:Body>\r\n      <ns:ContextChangeRQ Version=\"2.0.3\">\r\n         <!--Optional:-->\r\n         <ns:ChangeAAA PseudoCityCode=\"{{pcc}}\"/>\r\n      </ns:ContextChangeRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2. Shopping",
+					"item": [
+						{
+							"name": "BargainFinderMax",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OTA_AirLowFareSearchRQ\": {\r\n    \"Version\": \"6.8.0\",\r\n    \"POS\": {\r\n      \"Source\": [\r\n        {\r\n          \"PseudoCityCode\": \"{{pcc}}\",\r\n          \"RequestorID\": {\r\n            \"Type\": \"0.AAA.X\",\r\n            \"ID\": \"REQ.ID\",\r\n            \"CompanyName\": {\r\n              \"Code\": \"TN\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"OriginDestinationInformation\": [\r\n            {\r\n                \"RPH\": \"1\",\r\n                \"DepartureDateTime\": \"{{travel_date}}\",\r\n                \"OriginLocation\": {\r\n                    \"LocationCode\": \"{{from_airport_code}}\"\r\n                },\r\n                \"DestinationLocation\": {\r\n                    \"LocationCode\": \"{{to_airport_code}}\"\r\n                }\r\n            }\r\n        ],\r\n    \"TravelPreferences\": {\r\n      \"TPA_Extensions\": {\r\n        \"DataSources\": {\r\n          \"NDC\": \"Disable\",\r\n          \"ATPCO\": \"Disable\",\r\n          \"LCC\": \"Enable\"\r\n        }\r\n      }\r\n    },\r\n    \"TravelerInfoSummary\": {\r\n      \"SeatsRequested\": [\r\n        1\r\n      ],\r\n      \"AirTravelerAvail\": [\r\n        {\r\n          \"PassengerTypeQuantity\": [\r\n            {\r\n              \"Code\": \"ADT\",\r\n              \"Quantity\": 1,\r\n              \"TPA_Extensions\":{\r\n                    \"VoluntaryChanges\":{\r\n                        \"Match\": \"Info\"\r\n                    }\r\n                }\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"PriceRequestInformation\": {\r\n        \"TPA_Extensions\": {\r\n          \"BrandedFareIndicators\": {\r\n            \"MultipleBrandedFares\": true,\r\n            \"ReturnBrandAncillaries\": true\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"TPA_Extensions\": {\r\n      \"IntelliSellTransaction\": {\r\n        \"RequestType\": {\r\n          \"Name\": \"50ITINS\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v5/offers/shop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v5",
+										"offers",
+										"shop"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4. Create Booking",
+					"item": [
+						{
+							"name": "EnhancedAirBook v3.10",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>YS89</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">EnhancedAirBookService</mes:Service>\r\n         <mes:Action>EnhancedAirBookRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n       <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <EnhancedAirBookRQ xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" version=\"3.10.0\" IgnoreOnError=\"true\">\r\n        <OTA_AirBookRQ xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n            <HaltOnStatus Code=\"NONE\"/>\r\n            <OriginDestinationInformation>\r\n                <FlightSegment FlightNumber=\"713\" ArrivalDateTime=\"2026-03-23T00:05:00\" DepartureDateTime=\"2026-03-2219:31:00\" NumberInParty=\"1\" Status=\"NN\" ResBookDesigCode=\"Y\" InstantPurchase=\"true\">\r\n\t\t\t\t\t\t<DestinationLocation LocationCode=\"MEX\"/>\r\n\t\t\t\t\t\t<MarketingAirline Code=\"Y4\" FlightNumber=\"713\"/>\r\n\t\t\t\t\t\t<OriginLocation LocationCode=\"LAX\"/>\r\n\t\t\t\t\t</FlightSegment>\r\n            </OriginDestinationInformation>\r\n        </OTA_AirBookRQ>\r\n        <OTA_AirPriceRQ xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n            <PriceRequestInformation Retain=\"true\" />\r\n        </OTA_AirPriceRQ>\r\n        <PostProcessing xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n            <RedisplayReservation WaitInterval=\"1000\"/>\r\n        </PostProcessing>\r\n    </EnhancedAirBookRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PassengerDetails",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>L4VI</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">PassengerDetailsService</mes:Service>\r\n         <mes:Action>PassengerDetailsRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n    <PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_5\" version=\"3.5.0\" xmlns:ns2=\"http://services.sabre.com/STL_Payload/v02_01\">\r\n        <PostProcessing>\r\n            <EndTransactionRQ>\r\n                <EndTransaction Ind=\"true\"/>\r\n                <Source ReceivedFrom=\"VOLARIS TESTING\"/>\r\n            </EndTransactionRQ>\r\n        </PostProcessing>\r\n        <PriceQuoteInfo>\r\n        <Link nameNumber=\"1.1\" record=\"1\"/>\r\n      </PriceQuoteInfo>\r\n      <SpecialReqDetails>\r\n        <AddRemarkRQ>\r\n          <RemarkInfo>\r\n            <FOP_Remark>\r\n                <CC_Info Suppress=\"true\">\r\n                    <PaymentCard Code=\"VI\" ExpireDate=\"2026-02\" Number=\"4XXXXXXXXXXX9299\" />\r\n                </CC_Info>\r\n            </FOP_Remark>\r\n          </RemarkInfo>\r\n        </AddRemarkRQ>\r\n        <SpecialServiceRQ>\r\n          <SpecialServiceInfo>\r\n                <AdvancePassenger SegmentNumber=\"A\">\r\n                    <Document ExpirationDate=\"2034-10-20\" Number=\"123456\" Type=\"P\">\r\n                        <IssueCountry>US</IssueCountry>\r\n                        <NationalityCountry>US</NationalityCountry>\r\n                    </Document>\r\n                    <PersonName DateOfBirth=\"1987-03-03\" Gender=\"M\" NameNumber=\"1.1\">\r\n                        <GivenName>Jake</GivenName>\r\n                        <MiddleName>Michael</MiddleName>\r\n                        <Surname>Rambo</Surname>\r\n                    </PersonName>\r\n                </AdvancePassenger>\r\n            </SpecialServiceInfo>\r\n        </SpecialServiceRQ>\r\n      </SpecialReqDetails>\r\n      <TravelItineraryAddInfoRQ>\r\n        <AgencyInfo>\r\n            <Address>\r\n                <AddressLine>SABRE TRAVEL</AddressLine>\r\n                <CityName>SOUTHLAKE</CityName>\r\n                <CountryCode>US</CountryCode>\r\n                <PostalCode>76092</PostalCode>\r\n                <StateCountyProv StateCode=\"TX\"/>\r\n                <StreetNmbr>3150 SABRE DRIVE</StreetNmbr>\r\n            </Address>\r\n          <Ticketing TicketType=\"7TAW\"/>\r\n        </AgencyInfo>\r\n        <CustomerInfo>\r\n          <ContactNumbers>\r\n            <ContactNumber NameNumber=\"1.1\" Phone=\"9876543210\" PhoneUseType=\"M\" />\r\n          </ContactNumbers>\r\n          <CreditCardData>\r\n                <BillingInformation cardHolderName=\"JAKE RAMBO\" streetAddress=\"123 1ST AVE\" city=\"NEW YORK\" stateOrProvince=\"NY,US\">\r\n                    <PostalCode>12345</PostalCode>\r\n                </BillingInformation>\r\n          </CreditCardData>\r\n          <CustomerIdentifier>1412345678</CustomerIdentifier>\r\n          <Email Address=\"jake.rambo@test.com\" NameNumber=\"1.1\" />\r\n          <PersonName NameNumber=\"1.1\" NameReference=\"ADT\" PassengerType=\"ADT\">\r\n            <GivenName>Jake</GivenName>\r\n            <Surname>Rambo</Surname>\r\n          </PersonName>\r\n        </CustomerInfo>\r\n      </TravelItineraryAddInfoRQ>\r\n    </PassengerDetailsRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "5. Retrieve Booking",
+					"item": [
+						{
+							"name": "GetReservationRQ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns6=\"http://services.sabre.com/sp/eab/v3_9\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.9.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetReservationService</mes:Service>\r\n         <mes:Action>GetReservationRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n       <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n<GetReservationRQ\r\n\txmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\"\r\n\txmlns:ns2=\"http://services.sabre.com/res/or/v1_14\" Version=\"1.19.0\">\r\n\t<Locator>{{pnr}}</Locator>\r\n\t<RequestType>Stateful</RequestType>\r\n\t<ReturnOptions PriceQuoteServiceVersion=\"4.3.0\">\r\n\t\t<SubjectAreas>\r\n\t\t\t<SubjectArea>REMARKS</SubjectArea>\r\n\t\t\t<SubjectArea>PRICE_QUOTE</SubjectArea>\r\n\t\t</SubjectAreas>\r\n\t\t<ViewName>Full</ViewName>\r\n\t\t<ResponseFormat>STL</ResponseFormat>\r\n\t</ReturnOptions>\r\n</GetReservationRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "6. Search Ancillary",
+					"item": [
+						{
+							"name": "GetAncillaryOffers",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetAncillaryOffersService</mes:Service>\r\n         <mes:Action>GetAncillaryOffersRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <v03:GetAncillaryOffersRQ version='3.1.0' xmlns:v03='http://services.sabre.com/merch/ancillary/offer/v03' xmlns:v031='http://services.sabre.com/merch/itinerary/v03' xmlns:v032='http://services.sabre.com/merch/flight/v03' xmlns:v035='http://services.sabre.com/merch/itinerary/v03' xmlns:v037='http://services.sabre.com/merch/flight/v03' xmlns:n2='http://services.sabre.com/merch/itinerary/v03'>\r\n\t\t\t<v03:RequestType>stateful</v03:RequestType>\r\n\t\t\t<v03:RequestMode>booking</v03:RequestMode>\r\n\t\t\t<v03:AncillaryRequestOptions xmlns='http://services.sabre.com/merch/ancillary/offer/v03'>\r\n\t\t\t\t<Group xmlns='http://services.sabre.com/merch/ancillary/v03'>BG</Group>\r\n\t\t\t</v03:AncillaryRequestOptions>\r\n\t\t\t<v03:QueryByPassenger xmlns=\"http://services.sabre.com/merch/ancillary/offer/v03\">\r\n                <v03:PriceQuote number=\"1\"/>\r\n            </v03:QueryByPassenger>\r\n\t\t</v03:GetAncillaryOffersRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAncillaryOffers _Payload",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetAncillaryOffersService</mes:Service>\r\n         <mes:Action>GetAncillaryOffersRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <gao:GetAncillaryOffersRQ xmlns:anc=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:flt=\"http://services.sabre.com/merch/flight/v03\" xmlns:gao=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:itin=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:pax=\"http://services.sabre.com/merch/passenger/v03\" version=\"3.1.0\">\r\n            <gao:RequestType>payload</gao:RequestType>\r\n            <gao:RequestMode>booking</gao:RequestMode>\r\n            <gao:QueryByItinerary>\r\n                <gao:QueryPassengerItinerary>\r\n                <gao:Passenger id=\"pax_1\" type=\"ADT\"/>\r\n                <gao:PassengerItinerary>\r\n                    <gao:PassengerSegment segmentRef=\"seg_1\">\r\n                        <itin:FareBreakAssociation FareInfoRef=\"fare_1\"/>\r\n                    </gao:PassengerSegment>\r\n                </gao:PassengerItinerary>\r\n                </gao:QueryPassengerItinerary>\r\n                <gao:Segment id=\"seg_1\">\r\n                    <itin:FlightDetail id=\"flight_1\">\r\n                        <flt:Airline>Y4</flt:Airline>\r\n                        <flt:OperatingAirline>Y4</flt:OperatingAirline>\r\n                        <flt:FlightNumber>713</flt:FlightNumber>\r\n                        <flt:OperatingFlightNumber>713</flt:OperatingFlightNumber>\r\n                        <flt:DepartureAirport>LAX</flt:DepartureAirport>\r\n                        <flt:DepartureDate>{{travel_date}}</flt:DepartureDate>\r\n                        <flt:DepartureTime>{{departure_time}}</flt:DepartureTime>\r\n                        <flt:ArrivalAirport>MEX</flt:ArrivalAirport>\r\n                        <flt:ClassOfService>Y</flt:ClassOfService>\r\n                    </itin:FlightDetail>\r\n                </gao:Segment>\r\n                <gao:FareInfo id=\"fare_1\">\r\n                    <FareComponentID>1</FareComponentID>\r\n                    <GoverningCarrier>Y4</GoverningCarrier>\r\n                    <FareBasisCode>Y</FareBasisCode>\r\n                </gao:FareInfo>\r\n            </gao:QueryByItinerary>\r\n        </gao:GetAncillaryOffersRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "7. Add Ancillary to Booking",
+					"item": [
+						{
+							"name": "UpdateReservation_Sell",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>{{pcc}}</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">UpdateReservationService</mes:Service>\r\n         <mes:Action>UpdateReservationRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n    <UpdateReservationRQ Version=\"1.19.16\" EchoToken=\"Echo\" xmlns='http://webservices.sabre.com/pnrbuilder/v1_19'>\r\n        <RequestType xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\" commitTransaction=\"true\">Stateful</RequestType>\r\n        <ReturnOptions IncludeUpdateDetails=\"true\" xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\" />\r\n        <ReservationUpdateList xmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\">\r\n            <Locator>{{pnr}}</Locator>\r\n            <ReservationUpdateItem UpdateId=\"1\">\r\n                <AncillaryServicesUpdate op=\"C\">\r\n                    <NameAssociationList>\r\n                    <NameAssociationTag>\r\n                        <LastName>RAMBO</LastName>\r\n                        <FirstName>JOHN</FirstName>\r\n                        <NameRefNumber>01.01</NameRefNumber>\r\n                    </NameAssociationTag>\r\n                    </NameAssociationList>\r\n                    <SegmentAssociationList>\r\n                    <SegmentAssociationTag>\r\n                        <CarrierCode>Y4</CarrierCode>\r\n                        <FlightNumber>713</FlightNumber>\r\n                        <DepartureDate>{{travel_date}}</DepartureDate>\r\n                        <BoardPoint>{{from_airport_code}}</BoardPoint>\r\n                        <OffPoint>{{to_airport_code}}</OffPoint>\r\n                        <ClassOfService>Y</ClassOfService>\r\n                        <BookingStatus>PN</BookingStatus>\r\n                    </SegmentAssociationTag>\r\n                    </SegmentAssociationList>\r\n                    <CommercialName>MX FOREIGN ENTRY TAX DNI</CommercialName>\r\n                    <RficCode>C</RficCode>\r\n                    <RficSubcode>0LV</RficSubcode>\r\n                    <SSRCode>TAXA</SSRCode>\r\n                    <OwningCarrierCode>Y4</OwningCarrierCode>\r\n                    <BookingIndicator>01</BookingIndicator>\r\n                    <Vendor>Y4</Vendor>\r\n                    <EMDType>4</EMDType>\r\n                    <TTLPrice>\r\n                    <Price>861.00</Price>\r\n                    <Currency>MXN</Currency>\r\n                    </TTLPrice>\r\n                    <OriginalBasePrice>\r\n                    <Price>861.00</Price>\r\n                    <Currency>MXN</Currency>\r\n                    </OriginalBasePrice>\r\n                    <NumberOfItems>1</NumberOfItems>\r\n                    <SegmentIndicator>S</SegmentIndicator>\r\n                    <FirstTravelDate>201125</FirstTravelDate>\r\n                    <LastTravelDate>211125</LastTravelDate>\r\n                    <PurchaseTimestamp>2026-01-23T04:30:23.4972626-04:00</PurchaseTimestamp>\r\n                    <GroupCode>BG</GroupCode>\r\n                </AncillaryServicesUpdate>\r\n            </ReservationUpdateItem>\r\n            <ReceivedFrom>\r\n                <AgentName>VOLARIS TEST</AgentName>\r\n            </ReceivedFrom>\r\n        </ReservationUpdateList>\r\n  </UpdateReservationRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "8. Reprice the PQ",
+					"item": [
+						{
+							"name": "GetReservationRQ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:ns6=\"http://services.sabre.com/sp/eab/v3_9\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.9.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">GetReservationService</mes:Service>\r\n         <mes:Action>GetReservationRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n       <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n<GetReservationRQ\r\n\txmlns=\"http://webservices.sabre.com/pnrbuilder/v1_19\"\r\n\txmlns:ns2=\"http://services.sabre.com/res/or/v1_14\" Version=\"1.19.0\">\r\n\t<Locator>{{pnr}}</Locator>\r\n\t<RequestType>Stateful</RequestType>\r\n\t<ReturnOptions PriceQuoteServiceVersion=\"4.3.0\">\r\n\t\t<SubjectAreas>\r\n\t\t\t<SubjectArea>REMARKS</SubjectArea>\r\n\t\t\t<SubjectArea>PRICE_QUOTE</SubjectArea>\r\n\t\t</SubjectAreas>\r\n\t\t<ViewName>Full</ViewName>\r\n\t\t<ResponseFormat>STL</ResponseFormat>\r\n\t</ReturnOptions>\r\n</GetReservationRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EnhancedAirBook v3.10 Reprice Ancillary",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>YS89</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">EnhancedAirBookService</mes:Service>\r\n         <mes:Action>EnhancedAirBookRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n       <!--sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/-->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n      <EnhancedAirBookRQ xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" version=\"3.10.0\" IgnoreOnError=\"true\">        \r\n        <OTA_AirPriceRQ xmlns=\"http://services.sabre.com/sp/eab/v3_10\">\r\n            <PriceRequestInformation Retain=\"true\">\r\n                <OptionalQualifiers>\r\n                    <PricingQualifiers>\r\n                        <ItineraryOptions>\r\n                            <SegmentSelect Number=\"1\" />\r\n                        </ItineraryOptions>\r\n                        <PassengerType Code=\"ADT\" Quantity=\"1\"/>\r\n                    </PricingQualifiers>\r\n                </OptionalQualifiers>\r\n            </PriceRequestInformation>\r\n        </OTA_AirPriceRQ>\r\n        <PostProcessing IgnoreAfter=\"false\">\r\n            <RedisplayReservation WaitInterval=\"100\" />\r\n        </PostProcessing>\r\n    </EnhancedAirBookRQ>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EnhancedEndTransaction",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>5MWA</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">EnhancedEndTransactionService</mes:Service>\r\n         <mes:Action>EnhancedEndTransactionRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n    <EnhancedEndTransactionRQ xmlns=\"http://services.sabre.com/sp/eet/v1\" version=\"1.0.0\">\r\n    <EndTransaction Ind=\"true\"/>\r\n    <Source ReceivedFrom=\"VOLARIS TESTING\"/>\r\n    </EnhancedEndTransactionRQ>\r\n</soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "9. Ticketing",
+					"item": [
+						{
+							"name": "EnhancedAirTicket",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:sec=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:mes=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:v03=\"http://services.sabre.com/merch/ancillary/offer/v03\" xmlns:v031=\"http://services.sabre.com/merch/request/v03\" xmlns:v032=\"http://services.sabre.com/merch/ancillary/v03\" xmlns:v033=\"http://services.sabre.com/merch/passenger/v03\" xmlns:v034=\"http://services.sabre.com/merch/common/v03\" xmlns:v035=\"http://services.sabre.com/merch/itinerary/v03\" xmlns:v036=\"http://services.sabre.com/merch/ticket/v03\" xmlns:v037=\"http://services.sabre.com/merch/flight/v03\">\r\n   <soapenv:Header>\r\n      <sec:Security>\r\n         <!--Optional:-->\r\n         <sec:UsernameToken>\r\n            <!--Optional:-->\r\n            <sec:Username>?</sec:Username>\r\n            <!--Optional:-->\r\n            <sec:Password>?</sec:Password>\r\n            <!--0 to 2 repetitions:-->\r\n            <sec:NewPassword>?</sec:NewPassword>\r\n            <!--Optional:-->\r\n            <Organization>?</Organization>\r\n            <!--Optional:-->\r\n            <Domain>?</Domain>\r\n         </sec:UsernameToken>\r\n         <!--Optional:-->\r\n         <sec:SabreAth>?</sec:SabreAth>\r\n         <!--Optional:-->\r\n         <sec:BinarySecurityToken>{{auth_token}}</sec:BinarySecurityToken>\r\n      </sec:Security>\r\n      <mes:MessageHeader mes:id=\"?\" mes:version=\"3.10.0\">\r\n         <mes:From>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">99999</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:From>\r\n         <mes:To>\r\n            <!--1 or more repetitions:-->\r\n            <mes:PartyId mes:type=\"?\">1231231</mes:PartyId>\r\n            <!--Optional:-->\r\n            <mes:Role>?</mes:Role>\r\n         </mes:To>\r\n         <mes:CPAId>83CB</mes:CPAId>\r\n         <mes:ConversationId>TEST</mes:ConversationId>\r\n         <mes:Service mes:type=\"?\">AirTicketService</mes:Service>\r\n         <mes:Action>AirTicketRQ</mes:Action>\r\n         <mes:MessageData>\r\n            <mes:MessageId>1000</mes:MessageId>\r\n            <mes:Timestamp>2019-09-20T12:00:00</mes:Timestamp>\r\n         </mes:MessageData>\r\n         \r\n      </mes:MessageHeader>\r\n      <!-- <sws:Diagnostics xmlns:sws=\"http://webservices.sabre.com\"/> -->\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n        <AirTicketRQ xmlns=\"http://services.sabre.com/sp/air/ticket/v1_3\" version=\"1.3.0\" healthCheck=\"false\" haltOnInvalidMCT=\"false\" targetCity=\"{{pcc}}\">\r\n            <Itinerary ID=\"{{pnr}}\"/>\r\n            <Ticketing>\r\n                <FOP_Qualifiers>\r\n                    <BasicFOP>\r\n                        <CC_Info Suppress=\"false\">\r\n                            <PaymentCard CardSecurityCode=\"XXX\"/>\r\n                        </CC_Info>\r\n                    </BasicFOP>\r\n                </FOP_Qualifiers>\r\n                <MiscQualifiers>\r\n                    <Invoice Ind=\"true\" />\r\n                </MiscQualifiers>\r\n                <PricingQualifiers>\r\n                    <PriceQuote>\r\n                        <Record Number=\"2\" Reissue=\"false\"/>\r\n                    </PriceQuote>\r\n                </PricingQualifiers>\r\n            </Ticketing>\r\n            <PostProcessing>\r\n                <EndTransaction>\r\n                    <Source ReceivedFrom=\"SAC TESTING\"/>\r\n                    <InvoiceOption Ind=\"true\"/>\r\n                </EndTransaction>\r\n            </PostProcessing>\r\n        </AirTicketRQ>\r\n\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+								},
+								"url": {
+									"raw": "{{endpoint}}",
+									"host": [
+										"{{endpoint}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"\r",
+					"\r",
+					"// Get the first string of the URI\r",
+					"const URI = request.url.split(\"/\")[0];\r",
+					"\r",
+					"// Postman doesn't define a variable until the request is sent, therefore the URI is either:\r",
+					"// {{rest_endpoint}}/xx/yy/zz or {{soap_endpoint}}\r",
+					"\r",
+					"\r",
+					"// Capture today's date\r",
+					"var moment = require('moment');\r",
+					"// Add 30 days to today's date and use this date in start_date\r",
+					"const start_date = moment().add(30, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('start_date', start_date);\r",
+					"// Add 37 days to today's date and use this date in end_date\r",
+					"const end_date = moment().add(37, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('end_date', end_date);\r",
+					"// Add 33 days to today's date and use this date in short_end_date (primarily for hotel search)\r",
+					"const short_end_date = moment().add(33, 'day').format(\"YYYY-MM-DD\");\r",
+					"pm.environment.set('short_end_date', short_end_date);\r",
+					"\r",
+					"\r",
+					"if ((URI) == ('{{soap_endpoint}}')) {\r",
+					"\r",
+					"//***SOAP Path***//\r",
+					"//This means that the temp URL is: {{soap_endpoint}}\r",
+					"\r",
+					"    // Get service action name from request name and ignore leading underscore if present\r",
+					"    const action = request.name.split(' ')[0].replace(/^_/, '');\r",
+					"    \r",
+					"    // Add the token value into the token variable\r",
+					"    const token = pm.variables.get('token');\r",
+					"    \r",
+					"    // Add the ApplicationId value into the AppId variable\r",
+					"    const AppId = pm.variables.get('AppId');\r",
+					"    \r",
+					"    // All SOAP API calls require a header section, we have created this variable to remove it from the \"working\" message and ensure the user can focus on the payload section \r",
+					"    \r",
+					"    const header_appid = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action><CustomerAppId xmlns:ns10=\"http://webservices.sabre.com/\">${AppId}</CustomerAppId></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"    \r",
+					"    const header_diag = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken>${token}</BinarySecurityToken></Security><Diagnostics xmlns=\"http://webservices.sabre.com\"/></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"    \r",
+					"    const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>2020.04.DevStudio_Booking_Management</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;\r",
+					"    \r",
+					"\r",
+					"    \r",
+					"    // Same as previous item, this footer variable is used to close the entire SOAP envelope\r",
+					"    const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';\r",
+					"    \r",
+					"    // Add header & footer variables into the specific variables\r",
+					"    pm.variables.set('header_appid', header_appid);\r",
+					"    pm.variables.set('header', header);\r",
+					"    pm.variables.set('header_diag', header_diag);\r",
+					"    pm.variables.set('footer', footer);\r",
+					"    \r",
+					"\r",
+					"} else if ((URI) == ('{{rest_endpoint}}')) {\r",
+					"\r",
+					"//***REST Path***//\r",
+					"//This means that the temp URL is: {{rest_endpoint}}/xx/yy/zz\r",
+					"\r",
+					"    // Capture URI element which identifies the API method\r",
+					"    const URI_ID = request.url.split(\"/\")[3];\r",
+					"    const version = request.url.split(\"/\")[1];\r",
+					"    console.log(version);\r",
+					"\r",
+					"\r",
+					"\r",
+					"    switch (URI_ID) {\r",
+					"            \r",
+					"        case 'token':\r",
+					"            if(version == \"v3\")\r",
+					"            {\r",
+					"                const clientId = pm.variables.get('clientID');\r",
+					"                const clientSecret = pm.variables.get('clientSecret');\r",
+					"\r",
+					"                const clientCredRaw = `${clientId}:${clientSecret}`;\r",
+					"\r",
+					"                const clientCredArray = CryptoJS.enc.Utf8.parse(clientCredRaw);\r",
+					"                const clientCredBase64 = CryptoJS.enc.Base64.stringify(clientCredArray);\r",
+					"\r",
+					"                pm.environment.set('secret', clientCredBase64);\r",
+					"            }\r",
+					"            else\r",
+					"            {\r",
+					"                // Capture username\r",
+					"                const username =  pm.variables.get('username');\r",
+					"                // Capture PCC\r",
+					"                const pcc =  pm.variables.get('pcc');\r",
+					"                // Construct raw client id (by appending V1:username:PCC:AA)\r",
+					"                const clientidRaw = `V1:${username}:${pcc}:AA`;\r",
+					"                // Base64 encode the previous string\r",
+					"                const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);\r",
+					"                const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);\r",
+					"                // Capture password\r",
+					"                const passwordRaw =  pm.variables.get('password');\r",
+					"                // Base64 enconde the password\r",
+					"                const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);\r",
+					"                const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);\r",
+					"                // Combine the two previous strings with a : in the middle\r",
+					"                const secretRaw = `${clientidBase64}:${passwordBase64}`;\r",
+					"                // Base64 enconde this last string\r",
+					"                const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);\r",
+					"                const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);\r",
+					"                // Set the secret variable with the latest encoded string\r",
+					"                pm.environment.set('secret', secretBase64);\r",
+					"            }\r",
+					"            pm.environment.set('token',\"\"); \r",
+					"            break;\r",
+					"            \r",
+					"        case 'shop':\r",
+					"\r",
+					"            break;\r",
+					"    }\r",
+					"}\r",
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Only execute the following code for SOAP APIs (based on the endpoint being used)",
+					"console.log((request.url) == (pm.environment.get(\"endpoint\")));",
+					"if ((request.url) == (pm.environment.get(\"endpoint\"))) {",
+					"    ",
+					"    //***SOAP Path***//",
+					"    const xml2js = require('xml2js');",
+					"",
+					"    // Get service action name from request name and ignore leading underscore if present",
+					"    const action = request.name.split(' ')[0].replace(/^_/, '');",
+					"    console.log(action);",
+					"",
+					"    // Parse response and remove namespaces (prefixes)",
+					"    // Solves problem when specific APIs return different namespaces randombly ie. ns8, ns9: TP APIs",
+					"    const parseString = xml2js.parseString;",
+					"    const parseOptions = { tagNameProcessors: [xml2js.processors.stripPrefix] };",
+					"    console.log(\"action: \" + action);",
+					"    ",
+					"    switch (action) {",
+					"        case 'CreateSession':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set('auth_token', token);",
+					"                pm.environment.set('token', token);",
+					"            });",
+					"            break;",
+					"        case 'SessionCreateRQ':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set('auth_token', token);",
+					"                pm.environment.set('token', token);",
+					"            });",
+					"            break;",
+					"        case 'TokenCreate':",
+					"            parseString(responseBody, parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set(\"token\", token);",
+					"            });",
+					"            ",
+					"    } ",
+					"}else {",
+					"    ",
+					"    //***REST Path***//",
+					"",
+					"    // Get the Unique ID of the URI (token, shop, price, create, view, cancel, change) based on the \"5th\" string in order to identify the actual API",
+					"    const URI_ID = request.url.split(\"/\")[5];",
+					"    // Get the JSON response",
+					"    const jsonData = JSON.parse(responseBody);",
+					"",
+					"    switch (URI_ID) {",
+					"        ",
+					"        case 'token':",
+					"            pm.environment.set('token', jsonData.access_token);",
+					"            break;",
+					"        // case 'shop':",
+					"        //     pm.environment.set('shop_offer_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].offer.offerId);",
+					"        //     pm.environment.set('shop_offer_item_id', jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0].fare.offerItemId);",
+					"        //     break;",
+					"        case 'price':",
+					"            pm.environment.set('price_offer_id', jsonData.response.offers[0].id);",
+					"            pm.environment.set('price_offer_item_id', jsonData.response.offers[0].offerItems[0].id);",
+					"            break;",
+					"        case 'create':",
+					"            pm.environment.set('sabre_order_id', jsonData.order.id);",
+					"            pm.environment.set('pnr', jsonData.order.pnrLocator);",
+					"            break;",
+					"        case 'hotelavail':",
+					"            pm.environment.set('hotel_code', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelInfo.HotelCode);",
+					"            pm.environment.set('rate_key', jsonData.GetHotelAvailRS.HotelAvailInfos.HotelAvailInfo[0].HotelRateInfo.RateInfos.RateInfo[0].RateKey);",
+					"            break;",
+					"        case 'hoteldetails':",
+					"            pm.environment.set('rate_key', jsonData.GetHotelDetailsRS.HotelDetailsInfo.HotelRateInfo.RateInfos.RateInfo[0].RateKey);",
+					"            break;",
+					"        case 'pricecheck':",
+					"            pm.environment.set('booking_key', jsonData.HotelPriceCheckRS.PriceCheckInfo.BookingKey);",
+					"            break;",
+					"        case 'records?mode=create':",
+					"            pm.environment.set('pnr', jsonData.CreatePassengerNameRecordRS.ItineraryRef.ID);",
+					"            break;",
+					"            ",
+					"    }",
+					"}",
+					"",
+					""
+				]
+			}
+		}
+	]
+}
