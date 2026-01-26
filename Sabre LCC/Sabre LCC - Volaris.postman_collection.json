@@ -847,6 +847,161 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Cancel & Refund",
+			"item": [
+				{
+					"name": "1. Authentication",
+					"item": [
+						{
+							"name": "REST Authorize",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{secret}}",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "grant_type=client_credentials"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v2/auth/token",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v2",
+										"auth",
+										"token"
+									]
+								},
+								"description": "\n\n[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/resources/getting_started_with_sabre_apis/how_to_get_a_token#3sub3)\n\n[//]: # \"End\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Refund Quote",
+					"item": [
+						{
+							"name": "Check Flight Tickets for a confirmationId",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"confirmationId\": \"{{pnr}}\"\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/trip/orders/checkFlightTickets",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"trip",
+										"orders",
+										"checkFlightTickets"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cancel & Refund",
+					"item": [
+						{
+							"name": "Cancel Booking /v1 Refund",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Conversation-ID",
+										"value": "{{conv_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"flightTicketOperation\": \"REFUND\",\n    \"cancelAll\": true,\n    \"errorHandlingPolicy\": \"HALT_ON_ERROR\"\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/trip/orders/cancelBooking",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"trip",
+										"orders",
+										"cancelBooking"
+									]
+								},
+								"description": "[//]: # \"Start\"\n\n<b>[Description](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management), [Resources](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/reference-documentation), [Help](https://developer.sabre.com/docs/rest_apis/trip/orders/booking_management/help)</b>\n\n[//]: # \"End\""
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {
