@@ -1,0 +1,2457 @@
+{
+	"info": {
+		"_postman_id": "36d37221-c752-4c48-bb66-1917085c2bd7",
+		"name": "SabreFlightReshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33927129"
+	},
+	"item": [
+		{
+			"name": "ATPCO",
+			"item": [
+				{
+					"name": "Workflows",
+					"item": [
+						{
+							"name": "One way - single traveler",
+							"item": [
+								{
+									"name": "TokenCreateRQ 1.0.0",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "text/xml"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>STX_2019_Postman</ConversationId>\n            <Action>TokenCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n        <TokenCreateRQ Version=\"1.0.0\" xmlns=\"http://webservices.sabre.com\"/>\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+										},
+										"url": {
+											"raw": "{{soap_endpoint}}",
+											"host": [
+												"{{soap_endpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Bargain Finder Max",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"if (!pm.environment.get(\"collection_tries\")) {\r",
+													"    pm.environment.set(\"collection_tries\", 0);\r",
+													"}\r",
+													"\r",
+													"var tries = parseInt(pm.environment.get(\"collection_tries\"), 10);\r",
+													"\r",
+													"let moment = require('moment')\r",
+													"var temp_first_flight_date = moment(pm.environment.get(\"start_date\"),\"YYYY-MM-DD\").add(tries, 'day').format(\"YYYY-MM-DD\");\r",
+													"console.log(\"Set temp_first_flight_date to: \" + temp_first_flight_date);\r",
+													"pm.environment.set(\"temp_first_flight_date\", temp_first_flight_date);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"0\",\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"{{airline_code}}\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 10\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Disable\",\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": false\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 2\n                        },\n                        {\n                            \"Code\": \"CNN\",\n                            \"Quantity\": 1\n                        },\n                        {\n                            \"Code\": \"INF\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v3/offers/shop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v3",
+												"offers",
+												"shop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"agency\": {\n        \"address\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n        },\n        \"agencyCustomerNumber\": \"1234567\",\n        \"ticketingPolicy\": \"TODAY\"\n    },\n    \"travelers\": [\n        {\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1970-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"0123456789\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"John\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1970-01-23\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\",\n            \"travel2@sabre.com\"\n        ],\n        \"phones\": [\n            \"+123456\"\n        ]\n    },\n    \"flightDetails\": {\n        \"flights\": [\n            {\n                \"flightNumber\": {{journey1_flight1_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey1_flight1_marketing}}\",\n                \"fromAirportCode\": \"{{journey1_flight1_departureAirport}}\",\n                \"toAirportCode\": \"{{journey1_flight1_arrivalAirport}}\",\n                \"departureDate\": \"{{journey1_departureDate}}\",\n                \"departureTime\": \"{{journey1_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            }\n        ],\n        \"flightPricing\": []\n    },\n    \"payment\": {\n        \"billingAddress\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\"\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"createBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "FulfillFlightTickets",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"fulfillments\": [\n        {\n            \"payment\": {\n                \"primaryFormOfPayment\": 1\n            }\n        }\n    ],\n    \"designatePrinters\": [\n        {\n            \"hardcopy\": {\n                \"address\": \"498BF1\"\n            }\n        },\n        {\n            \"ticket\": {\n                \"countryCode\": \"AT\"\n            }\n        }\n    ],\n    \"formsOfPayment\": [\n        {\n            \"type\": \"CASH\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/fulfillFlightTickets",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"fulfillFlightTickets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();\r",
+													"const flights = response.flights;\r",
+													"\r",
+													"pm.environment.set(\"bookingId\", response.bookingId);\r",
+													"\r",
+													"for (let i = 0; i < flights.length; i++) {\r",
+													"    const flight = flights[i];\r",
+													"    const index = i + 1;\r",
+													"    pm.environment.set(`flight${index}_fromAirportCode`, flight.fromAirportCode);\r",
+													"    pm.environment.set(`flight${index}_toAirportCode`, flight.toAirportCode);\r",
+													"    pm.environment.set(`flight${index}_departureDate`, flight.departureDate);\r",
+													"    pm.environment.set(`flight${index}_departureTime`, flight.departureTime.slice(0, -3));\r",
+													"    pm.environment.set(`flight${index}_itemId`, flight.itemId);\r",
+													"\r",
+													"    const departureDate = new Date(flight.departureDate);\r",
+													"    departureDate.setDate(departureDate.getDate() + 5);\r",
+													"    const futureDate = departureDate.toISOString().split('T')[0];\r",
+													"\r",
+													"    pm.environment.set(`flight${index}_departureDatePlus5`, futureDate);\r",
+													"\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight1_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        }\n    ],\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Round trip - Multi travelers 2xADT + CNN + INF",
+							"item": [
+								{
+									"name": "Bargain Finder Max",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"if (!pm.environment.get(\"collection_tries\")) {\r",
+													"    pm.environment.set(\"collection_tries\", 0);\r",
+													"}\r",
+													"\r",
+													"var tries = parseInt(pm.environment.get(\"collection_tries\"), 10);\r",
+													"\r",
+													"let moment = require('moment')\r",
+													"var temp_first_flight_date = moment(pm.environment.get(\"start_date\"),\"YYYY-MM-DD\").add(tries, 'day').format(\"YYYY-MM-DD\");\r",
+													"console.log(\"Set temp_first_flight_date to: \" + temp_first_flight_date);\r",
+													"pm.environment.set(\"temp_first_flight_date\", temp_first_flight_date);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"0\",\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                }\n            },\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"{{airline_code}}\"\n                }\n            ],\n            \"MaxStopsQuantity\": 0,\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 2\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Disable\",\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": false\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 2\n                        },\n                        {\n                            \"Code\": \"CNN\",\n                            \"Quantity\": 1\n                        },\n                        {\n                            \"Code\": \"INF\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v3/offers/shop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v3",
+												"offers",
+												"shop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreaterBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"agency\": {\n        \"address\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n        },\n        \"agencyCustomerNumber\": \"1234567\",\n        \"ticketingPolicy\": \"TODAY\"\n    },\n    \"travelers\": [\n        {\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1970-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"0123456789\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"John\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1970-01-23\",\n                    \"gender\": \"FEMALE\"\n                },\n                {\n                    \"documentNumber\": \"0123456781\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"All\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"{{infantBirthDate}}\",\n                    \"gender\": \"INFANT_FEMALE\"\n                }\n            ],\n            \"specialServices\": [\n                {\n                    \"code\": \"INFT\",\n                    \"message\": \"Smith/All/{{infantSsrBirthDate}}\",\n                    \"flightIndices\": [\n                        1\n                    ]\n                }\n            ]\n        },\n        {\n            \"givenName\": \"Marry\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1980-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"{{$randomBankAccount}}\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"Marry\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1980-01-23\",\n                    \"gender\": \"FEMALE\"\n                }\n            ]\n        },\n        {\n            \"givenName\": \"Jerry\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"{{childBirthDate}}\",\n            \"passengerCode\": \"CNN\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"{{$randomBankAccount}}\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"Jerry\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"{{childBirthDate}}\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        },\n        {\n            \"givenName\": \"All\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"{{infantBirthDate}}\",\n            \"passengerCode\": \"INF\"\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\",\n            \"travel2@sabre.com\"\n        ],\n        \"phones\": [\n            \"+123456\"\n        ]\n    },\n    \"flightDetails\": {\n        \"flights\": [\n            {\n                \"flightNumber\": {{journey1_flight1_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey1_flight1_marketing}}\",\n                \"fromAirportCode\": \"{{journey1_flight1_departureAirport}}\",\n                \"toAirportCode\": \"{{journey1_flight1_arrivalAirport}}\",\n                \"departureDate\": \"{{journey1_departureDate}}\",\n                \"departureTime\": \"{{journey1_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": {{journey2_flight1_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey2_flight1_marketing}}\",\n                \"fromAirportCode\": \"{{journey2_flight1_departureAirport}}\",\n                \"toAirportCode\": \"{{journey2_flight1_arrivalAirport}}\",\n                \"departureDate\": \"{{journey2_departureDate}}\",\n                \"departureTime\": \"{{journey2_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            }\n        ],\n        \"flightPricing\": [\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        1,\n                        2\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"ADT\",\n                            \"numberOfpassengers\": 2\n                        }\n                    ]\n                }\n            },\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        3\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"CNN\",\n                            \"numberOfpassengers\": 1\n                        }\n                    ]\n                }\n            },\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        4\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"INF\",\n                            \"numberOfpassengers\": 1\n                        }\n                    ]\n                }\n            }\n        ]\n    },\n    \"payment\": {\n        \"billingAddress\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\"\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"createBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "FulfillFlightTickets",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"fulfillments\": [\n        {\n            \"payment\": {\n                \"primaryFormOfPayment\": 1\n            },\n            \"ticketingQualifiers\": {\n                \"priceQuoteRecordIds\": [\n                    \"1\",\n                    \"2\",\n                    \"3\"\n                ]\n            }\n        }\n    ],\n    \"designatePrinters\": [\n        {\n            \"hardcopy\": {\n                \"address\": \"498BF1\"\n            }\n        },\n        {\n            \"ticket\": {\n                \"countryCode\": \"AT\"\n            }\n        }\n    ],\n    \"formsOfPayment\": [\n        {\n            \"type\": \"CASH\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/fulfillFlightTickets",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"fulfillFlightTickets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();\r",
+													"const flights = response.flights;\r",
+													"\r",
+													"pm.environment.set(\"bookingId\", response.bookingId);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Validate reservation flight count\", function () {\r",
+													"    if (flights.length !== 2) {\r",
+													"        console.error(\"Reservation must contain 2 flights (round trip)\");\r",
+													"        throw new Error(\"Reservation must contain 2 flights (round trip)\");\r",
+													"    }\r",
+													"});\r",
+													"\r",
+													"\r",
+													"for (let i = 0; i < flights.length; i++) {\r",
+													"    const flight = flights[i];\r",
+													"    const index = i + 1;\r",
+													"    pm.environment.set(`flight${index}_fromAirportCode`, flight.fromAirportCode);\r",
+													"    pm.environment.set(`flight${index}_toAirportCode`, flight.toAirportCode);\r",
+													"    pm.environment.set(`flight${index}_departureDate`, flight.departureDate);\r",
+													"    pm.environment.set(`flight${index}_departureTime`, flight.departureTime.slice(0, -3));\r",
+													"    pm.environment.set(`flight${index}_itemId`, flight.itemId);\r",
+													"\r",
+													"    const departureDate = new Date(flight.departureDate);\r",
+													"    departureDate.setDate(departureDate.getDate() + 5);\r",
+													"    const futureDate = departureDate.toISOString().split('T')[0];\r",
+													"\r",
+													"    pm.environment.set(`flight${index}_departureDatePlus5`, futureDate);\r",
+													"\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": \"{{pnr}}\",\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight1_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight2_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight2_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight2_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight2_departureTime}}\",\n                \"endTime\": \"{{flight2_departureTime}}\"\n            }\n        }\n    ],\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber2}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber3}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber4}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											"pm.environment.set('airline_code', 'AA');\r",
+											"pm.environment.set(\"from_airport_code\", \"LHR\");\r",
+											"pm.environment.set(\"to_airport_code\", \"EWR\");\r",
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Retain with connecting flight",
+							"item": [
+								{
+									"name": "Bargain Finder Max",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                }\n            },\n                        {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"{{airline_code}}\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 10\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Disable\",\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": false\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 2\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v3/offers/shop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v3",
+												"offers",
+												"shop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreaterBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"agency\": {\n        \"address\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n        },\n        \"agencyCustomerNumber\": \"1234567\",\n        \"ticketingPolicy\": \"TODAY\"\n    },\n    \"travelers\": [\n        {\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1970-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"0123456789\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"John\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1970-01-23\",\n                    \"gender\": \"FEMALE\"\n                },\n                {\n                    \"documentNumber\": \"0123456781\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"All\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"{{infantBirthDate}}\",\n                    \"gender\": \"INFANT_FEMALE\"\n                }\n            ],\n            \"specialServices\": [\n                {\n                    \"code\": \"INFT\",\n                    \"message\": \"Smith/All/{{infantSsrBirthDate}}\",\n                    \"flightIndices\": [\n                        1\n                    ]\n                }\n            ]\n        },\n        {\n            \"givenName\": \"Marry\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1980-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"{{$randomBankAccount}}\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"Marry\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1980-01-23\",\n                    \"gender\": \"FEMALE\"\n                }\n            ]\n        },\n        {\n            \"givenName\": \"Jerry\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"{{childBirthDate}}\",\n            \"passengerCode\": \"CNN\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"{{$randomBankAccount}}\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"Jerry\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"{{childBirthDate}}\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        },\n        {\n            \"givenName\": \"All\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"{{infantBirthDate}}\",\n            \"passengerCode\": \"INF\"\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\",\n            \"travel2@sabre.com\"\n        ],\n        \"phones\": [\n            \"+123456\"\n        ]\n    },\n    \"flightDetails\": {\n        \"flights\": [\n            {\n                \"flightNumber\": {{journey1_flight1_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey1_flight1_marketing}}\",\n                \"fromAirportCode\": \"{{journey1_flight1_departureAirport}}\",\n                \"toAirportCode\": \"{{journey1_flight1_arrivalAirport}}\",\n                \"departureDate\": \"{{journey1_departureDate}}\",\n                \"departureTime\": \"{{journey1_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": {{journey1_flight2_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey1_flight2_marketing}}\",\n                \"fromAirportCode\": \"{{journey1_flight2_departureAirport}}\",\n                \"toAirportCode\": \"{{journey1_flight2_arrivalAirport}}\",\n                \"departureDate\": \"{{journey1_departureDate}}\",\n                \"departureTime\": \"{{journey1_flight2_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": {{journey2_flight1_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey2_flight1_marketing}}\",\n                \"fromAirportCode\": \"{{journey2_flight1_departureAirport}}\",\n                \"toAirportCode\": \"{{journey2_flight1_arrivalAirport}}\",\n                \"departureDate\": \"{{journey2_departureDate}}\",\n                \"departureTime\": \"{{journey2_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": {{journey2_flight2_marketingFlightNumber}},\n                \"airlineCode\": \"{{journey2_flight2_marketing}}\",\n                \"fromAirportCode\": \"{{journey2_flight2_departureAirport}}\",\n                \"toAirportCode\": \"{{journey2_flight2_arrivalAirport}}\",\n                \"departureDate\": \"{{journey2_departureDate}}\",\n                \"departureTime\": \"{{journey2_flight2_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            }\n        ],\n        \"flightPricing\": [\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        1,\n                        2\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"ADT\",\n                            \"numberOfpassengers\": 2\n                        }\n                    ]\n                }\n            },\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        3\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"CNN\",\n                            \"numberOfpassengers\": 1\n                        }\n                    ]\n                }\n            },\n            {\n                \"qualifiers\": {\n                    \"travelerIndices\": [\n                        4\n                    ],\n                    \"passengersPricing\": [\n                        {\n                            \"passengerCode\": \"INF\",\n                            \"numberOfpassengers\": 1\n                        }\n                    ]\n                }\n            }\n        ]\n    },\n    \"payment\": {\n        \"billingAddress\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\"\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"createBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "FulfillFlightTickets",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"fulfillments\": [\n        {\n            \"payment\": {\n                \"primaryFormOfPayment\": 1\n            },\n            \"ticketingQualifiers\": {\n                \"priceQuoteRecordIds\": [\n                    \"1\",\n                    \"2\",\n                    \"3\"\n                ]\n            }\n        }\n    ],\n    \"designatePrinters\": [\n        {\n            \"hardcopy\": {\n                \"address\": \"498BF1\"\n            }\n        },\n        {\n            \"ticket\": {\n                \"countryCode\": \"AT\"\n            }\n        }\n    ],\n    \"formsOfPayment\": [\n        {\n            \"type\": \"CASH\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/fulfillFlightTickets",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"fulfillFlightTickets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();\r",
+													"const flights = response.flights;\r",
+													"\r",
+													"pm.environment.set(\"bookingId\", response.bookingId);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Validate reservation flight count\", function () {\r",
+													"    if (flights.length !== 4) {\r",
+													"        console.error(\"Reservation must contain 4 flights (round trip with connecting flights)\");\r",
+													"        throw new Error(\"Reservation must contain 4 flights (round trip with connecting flights)\");\r",
+													"    }\r",
+													"});\r",
+													"\r",
+													"pm.environment.set(\"creationDate\", response.creationDetails.creationDate);\r",
+													"pm.environment.set(\"creationTime\", response.creationDetails.creationTime);\r",
+													"\r",
+													"for (let i = 0; i < flights.length; i++) {\r",
+													"    const flight = flights[i];\r",
+													"    const index = i + 1;\r",
+													"    pm.environment.set(`flight${index}_fromAirportCode`, flight.fromAirportCode);\r",
+													"    pm.environment.set(`flight${index}_toAirportCode`, flight.toAirportCode);\r",
+													"    pm.environment.set(`flight${index}_flightNumber`, flight.flightNumber);\r",
+													"    pm.environment.set(`flight${index}_airlineCode`, flight.airlineCode);\r",
+													"    pm.environment.set(`flight${index}_operatingFlightNumber`, flight.operatingFlightNumber);\r",
+													"    pm.environment.set(`flight${index}_operatingAirlineCode`, flight.operatingAirlineCode);\r",
+													"    pm.environment.set(`flight${index}_departureDate`, flight.departureDate);\r",
+													"    pm.environment.set(`flight${index}_departureTime`, flight.departureTime.slice(0, -3));\r",
+													"    pm.environment.set(`flight${index}_arrivalDate`, flight.arrivalDate);\r",
+													"    pm.environment.set(`flight${index}_arrivalTime`, flight.arrivalTime.slice(0, -3));\r",
+													"    pm.environment.set(`flight${index}_bookingClass`, flight.bookingClass);\r",
+													"    pm.environment.set(`flight${index}_flightStatusCode`, flight.flightStatusCode);\r",
+													"    pm.environment.set(`flight${index}_itemId`, flight.itemId);\r",
+													"\r",
+													"    const departureDate = new Date(flight.departureDate);\r",
+													"    departureDate.setDate(departureDate.getDate() + 5);\r",
+													"    const futureDate = departureDate.toISOString().split('T')[0];\r",
+													"\r",
+													"    pm.environment.set(`flight${index}_departureDatePlus5`, futureDate);\r",
+													"\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop - retain flightItemId",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": \"{{pnr}}\",\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight2_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight3_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight4_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight3_departureDate}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight3_departureTime}}\",\n                \"endTime\": \"{{flight3_departureTime}}\"\n            },\n            \"retainFlights\": [\n                {\n                    \"flightItemId\": \"{{flight3_itemId}}\"\n                },\n                {\n                    \"flightItemId\": \"{{flight4_itemId}}\"\n                }\n            ]\n        }\n    ],\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber2}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber3}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber4}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop - retain fightDetails",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": \"{{pnr}}\",\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight2_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"{{flight3_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"{{flight4_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight3_departureDate}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight3_departureTime}}\",\n                \"endTime\": \"{{flight3_departureTime}}\"\n            },\n            \"retainFlights\": [\n                {\n                    \"flightDetails\": {\n                        \"marketingFlightNumber\": {{flight3_flightNumber}},\n                        \"marketingAirlineCode\": \"{{flight3_airlineCode}}\",\n                        \"operatingAirlineCode\": \"{{flight3_operatingAirlineCode}}\",\n                        \"departureAirportCode\": \"{{flight3_fromAirportCode}}\",\n                        \"arrivalAirportCode\": \"{{flight3_toAirportCode}}\",\n                        \"departureDate\": \"{{flight3_departureDate}}\",\n                        \"departureTime\": \"{{flight3_departureTime}}\",\n                        \"arrivalDate\": \"{{flight3_arrivalDate}}\",\n                        \"arrivalTime\": \"{{flight3_arrivalTime}}\",\n                        \"bookingClassCode\": \"{{flight3_bookingClass}}\",\n                        \"flightStatusCode\": \"{{flight3_flightStatusCode}}\",\n                        \"creationDate\": \"{{creationDate}}\",\n                        \"creationTime\": \"{{creationTime}}\"\n                    }\n                },\n                {\n                    \"flightDetails\": {\n                        \"marketingFlightNumber\": {{flight4_flightNumber}},\n                        \"marketingAirlineCode\": \"{{flight4_airlineCode}}\",\n                        \"operatingAirlineCode\": \"{{flight4_operatingAirlineCode}}\",\n                        \"departureAirportCode\": \"{{flight4_fromAirportCode}}\",\n                        \"arrivalAirportCode\": \"{{flight4_toAirportCode}}\",\n                        \"departureDate\": \"{{flight4_departureDate}}\",\n                        \"departureTime\": \"{{flight4_departureTime}}\",\n                        \"arrivalDate\": \"{{flight4_arrivalDate}}\",\n                        \"arrivalTime\": \"{{flight4_arrivalTime}}\",\n                        \"bookingClassCode\": \"{{flight4_bookingClass}}\",\n                        \"flightStatusCode\": \"{{flight4_flightStatusCode}}\",\n                        \"creationDate\": \"{{creationDate}}\",\n                        \"creationTime\": \"{{creationTime}}\"\n                    }\n                }\n            ]\n        }\n    ],\n    \"retailing\": {\n        \"retainOriginalBrand\": true\n    },\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber2}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber3}}\"\n        },\n        {\n            \"number\": \"{{ticketNumber4}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											"pm.environment.set('airline_code', 'AA');\r",
+											"pm.environment.set(\"from_airport_code\", \"DFW\");\r",
+											"pm.environment.set(\"to_airport_code\", \"EUG\");\r",
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Reshop with locationVariant",
+							"item": [
+								{
+									"name": "Bargain Finder Max",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"",
+													"const response = pm.response.json().groupedItineraryResponse;",
+													"const itinerary = response.itineraryGroups[0].itineraries[0];",
+													"const legDescriptions = response.itineraryGroups[0].groupDescription.legDescriptions;",
+													"",
+													"itinerary.legs.forEach((leg, legIndex) => {",
+													"    const legType = legIndex === 0 ? \"outbound\" : \"inbound\";",
+													"    const legId = leg.ref - 1;",
+													"    const legDetail = response.legDescs[legId];",
+													"    const legDesc = legDescriptions[legIndex];",
+													"",
+													"    legDetail.schedules.forEach((schedule, flightIndex) => {",
+													"        const flightId = schedule.ref - 1;",
+													"        const flight = response.scheduleDescs[flightId];",
+													"",
+													"        const prefix = `${legType}_flight${flightIndex + 1}`;",
+													"",
+													"        pm.environment.set(`${prefix}_flightNumber`, flight.carrier.marketingFlightNumber);",
+													"        pm.environment.set(`${prefix}_airlineCode`, flight.carrier.marketing);",
+													"        pm.environment.set(`${prefix}_departureLocation`, flight.departure.airport);",
+													"        pm.environment.set(`${prefix}_arrivalLocation`, flight.arrival.airport);",
+													"        pm.environment.set(`${prefix}_departureDate`, legDesc.departureDate);",
+													"        pm.environment.set(`${prefix}_departureTime`, flight.departure.time.substring(0, 5));",
+													"    });",
+													"});",
+													"",
+													"",
+													"",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"if (!pm.environment.get(\"collection_tries\")) {\r",
+													"    pm.environment.set(\"collection_tries\", 0);\r",
+													"}\r",
+													"\r",
+													"var tries = parseInt(pm.environment.get(\"collection_tries\"), 10);\r",
+													"\r",
+													"let moment = require('moment')\r",
+													"var temp_first_flight_date = moment(pm.environment.get(\"start_date\"),\"YYYY-MM-DD\").add(tries, 'day').format(\"YYYY-MM-DD\");\r",
+													"console.log(\"Set temp_first_flight_date to: \" + temp_first_flight_date);\r",
+													"pm.environment.set(\"temp_first_flight_date\", temp_first_flight_date);"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"1\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"RPH\": \"0\",\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                }\n            },\n            {\n                \"RPH\": \"1\",\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"{{to_airport_code}}\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"{{from_airport_code}}\"\n                }\n            }\n        ],\n        \"TravelPreferences\": {\n            \"CabinPref\": [\n                {\n                    \"PreferLevel\": \"Preferred\",\n                    \"Cabin\": \"Economy\"\n                }\n            ],\n            \"VendorPref\": [\n                {\n                    \"Code\": \"{{airline_code}}\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 10\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Disable\",\n                    \"ATPCO\": \"Enable\",\n                    \"LCC\": \"Disable\"\n                },\n                \"PreferNDCSourceOnTie\": {\n                    \"Value\": false\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 2\n                        }\n                    ]\n                }\n            ]\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"100ITINS\"\n                }\n            }\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v3/offers/shop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v3",
+												"offers",
+												"shop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreaterBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"agency\": {\n        \"address\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\",\n            \"freeText\": \"John Smith\\n1230 Ellen Ave, apt 10\\nDallas, TX 75063\\nUS\"\n        },\n        \"agencyCustomerNumber\": \"1234567\",\n        \"ticketingPolicy\": \"TODAY\"\n    },\n    \"travelers\": [\n        {\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1970-01-23\",\n            \"passengerCode\": \"ADT\",\n            \"identityDocuments\": [\n                {\n                    \"documentNumber\": \"0123456789\",\n                    \"documentType\": \"PASSPORT\",\n                    \"expiryDate\": \"{{identityDocumentExpiryDate}}\",\n                    \"issuingCountryCode\": \"US\",\n                    \"residenceCountryCode\": \"US\",\n                    \"givenName\": \"John\",\n                    \"surname\": \"Smith\",\n                    \"birthDate\": \"1970-01-23\",\n                    \"gender\": \"FEMALE\"\n                }\n            ]\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\",\n            \"travel2@sabre.com\"\n        ],\n        \"phones\": [\n            \"+123456\"\n        ]\n    },\n    \"flightDetails\": {\n        \"flights\": [\n            {\n                \"flightNumber\": \"{{outbound_flight1_flightNumber}}\",\n                \"airlineCode\": \"{{outbound_flight1_airlineCode}}\",\n                \"fromAirportCode\": \"{{outbound_flight1_departureLocation}}\",\n                \"toAirportCode\": \"{{outbound_flight1_arrivalLocation}}\",\n                \"departureDate\": \"{{outbound_flight1_departureDate}}\",\n                \"departureTime\": \"{{outbound_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            },\n            {\n                \"flightNumber\": \"{{inbound_flight1_flightNumber}}\",\n                \"airlineCode\": \"{{inbound_flight1_airlineCode}}\",\n                \"fromAirportCode\": \"{{inbound_flight1_departureLocation}}\",\n                \"toAirportCode\": \"{{inbound_flight1_arrivalLocation}}\",\n                \"departureDate\": \"{{inbound_flight1_departureDate}}\",\n                \"departureTime\": \"{{inbound_flight1_departureTime}}\",\n                \"bookingClass\": \"Y\",\n                \"flightStatusCode\": \"NN\"\n            }\n        ],\n        \"flightPricing\": []\n    },\n    \"payment\": {\n        \"billingAddress\": {\n            \"name\": \"John Smith\",\n            \"street\": \"1230 Ellen Ave, apt 10\",\n            \"city\": \"Dallas\",\n            \"stateProvince\": \"TX\",\n            \"postalCode\": \"75063\",\n            \"countryCode\": \"US\"\n        }\n    }\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"createBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "FulfillFlightTickets",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\",\n    \"targetPcc\": \"G7HE\",\n    \"fulfillments\": [\n        {\n            \"payment\": {\n                \"primaryFormOfPayment\": 1\n            }\n        }\n    ],\n    \"designatePrinters\": [\n        {\n            \"hardcopy\": {\n                \"address\": \"498BF1\"\n            }\n        },\n        {\n            \"ticket\": {\n                \"countryCode\": \"AT\"\n            }\n        }\n    ],\n    \"formsOfPayment\": [\n        {\n            \"type\": \"CASH\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/fulfillFlightTickets",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"fulfillFlightTickets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetBooking",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();\r",
+													"const flights = response.flights;\r",
+													"\r",
+													"pm.environment.set(\"bookingId\", response.bookingId);\r",
+													"\r",
+													"for (let i = 0; i < flights.length; i++) {\r",
+													"    const flight = flights[i];\r",
+													"    const index = i + 1;\r",
+													"    pm.environment.set(`flight${index}_fromAirportCode`, flight.fromAirportCode);\r",
+													"    pm.environment.set(`flight${index}_toAirportCode`, flight.toAirportCode);\r",
+													"    pm.environment.set(`flight${index}_departureDate`, flight.departureDate);\r",
+													"    pm.environment.set(`flight${index}_departureTime`, flight.departureTime.slice(0, -3));\r",
+													"    pm.environment.set(`flight${index}_itemId`, flight.itemId);\r",
+													"\r",
+													"    const departureDate = new Date(flight.departureDate);\r",
+													"    departureDate.setDate(departureDate.getDate() + 5);\r",
+													"    const futureDate = departureDate.toISOString().split('T')[0]; // yyyy-mm-dd\r",
+													"\r",
+													"    pm.environment.set(`flight${index}_departureDatePlus5`, futureDate);\r",
+													"\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"confirmationId\": \"{{pnr}}\"\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"trip",
+												"orders",
+												"getBooking"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop - alternateLocations",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": \"{{pnr}}\",\n    \"targetPcc\": \"G7HE\",\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"locationVariant\": {\n                    \"alternateLocations\": [\n                        {\n                            \"airportCode\": \"SAN\"\n                        },\n                        {\n                            \"cityCode\": \"GDL\"\n                        },\n                        {\n                            \"cityCode\": \"NLU\"\n                        },\n                        {\n                            \"cityCode\": \"BJX\"\n                        }\n                    ]\n                },\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"locationVariant\": {\n                    \"alternateLocations\": [\n                        {\n                            \"airportCode\": \"MTY\"\n                        },\n                        {\n                            \"cityCode\": \"CUN\"\n                        },\n                        {\n                            \"airportCode\": \"PVR\"\n                        }\n                    ]\n                },\n                \"cityCode\": \"{{flight1_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"locationVariant\": {\n                    \"alternateLocations\": [\n                        {\n                            \"airportCode\": \"MTY\"\n                        },\n                        {\n                            \"cityCode\": \"CUN\"\n                        },\n                        {\n                            \"airportCode\": \"PVR\"\n                        }\n                    ]\n                },\n                \"cityCode\": \"{{flight2_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"locationVariant\": {\n                    \"alternateLocations\": [\n                        {\n                            \"airportCode\": \"SAN\"\n                        },\n                        {\n                            \"cityCode\": \"GDL\"\n                        },\n                        {\n                            \"cityCode\": \"NLU\"\n                        },\n                        {\n                            \"cityCode\": \"BJX\"\n                        }\n                    ]\n                },\n                \"cityCode\": \"{{flight2_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight2_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight2_departureTime}}\",\n                \"endTime\": \"{{flight2_departureTime}}\"\n            }\n        }\n    ],\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SabreFlightReshop - radius",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": \"{{pnr}}\",\n    \"targetPcc\": \"G7HE\",\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"locationVariant\": {\n                    \"radius\": {\n                        \"inMiles\": 100,\n                        \"returnOnlyWithinSameCountry\": false\n                    }\n                },\n                \"cityCode\": \"{{flight1_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"locationVariant\": {\n                    \"radius\": {\n                        \"inMiles\": 100,\n                        \"returnOnlyWithinSameCountry\": true\n                    }\n                },\n                \"cityCode\": \"{{flight1_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight1_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight1_departureTime}}\",\n                \"endTime\": \"{{flight1_departureTime}}\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"locationVariant\": {\n                    \"radius\": {\n                        \"inMiles\": 40,\n                        \"returnOnlyWithinSameCountry\": true\n                    }\n                },\n                \"cityCode\": \"{{flight2_fromAirportCode}}\"\n            },\n            \"arrivalLocation\": {\n                \"locationVariant\": {\n                    \"radius\": {\n                        \"inMiles\": 100,\n                        \"returnOnlyWithinSameCountry\": false\n                    }\n                },\n                \"cityCode\": \"{{flight2_toAirportCode}}\"\n            },\n            \"departureDate\": \"{{flight2_departureDatePlus5}}\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"{{flight2_departureTime}}\",\n                \"endTime\": \"{{flight2_departureTime}}\"\n            }\n        }\n    ],\n    \"tickets\": [\n        {\n            \"number\": \"{{ticketNumber}}\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+											"host": [
+												"{{rest_endpoint}}"
+											],
+											"path": [
+												"v1",
+												"offers",
+												"flightReshop"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											"pm.environment.set('airline_code', 'AM');\r",
+											"pm.environment.set(\"from_airport_code\", \"TIJ\");\r",
+											"pm.environment.set(\"to_airport_code\", \"MEX\");\r",
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Example requests",
+					"item": [
+						{
+							"name": "SabreFlightReshop - useOriginalPricing",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "at-diagnostics",
+										"value": "false",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"journeys\": [\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"JFK\"\r\n            },\r\n            \"departureDate\": \"2026-01-29\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"16:36\",\r\n                \"endTime\": \"16:36\"\r\n            }\r\n        },\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"JFK\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"departureDate\": \"2026-02-07\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"06:36\",\r\n                \"endTime\": \"06:36\"\r\n            }\r\n        }\r\n    ],\r\n    \"fare\": {\r\n        \"useOriginalPricing\": true\r\n    },\r\n    \"tickets\": [\r\n        {\r\n            \"number\": \"0012972101195\"\r\n        }\r\n    ]\r\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - returnAdditionalOffers",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "at-diagnostics",
+										"value": "false",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"journeys\": [\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"LAX\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"departureDate\": \"2026-10-01\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"09:45\",\r\n                \"endTime\": \"13:45\"\r\n            }\r\n        },\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"LAX\"\r\n            },\r\n            \"departureDate\": \"2026-10-15\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"15:45\",\r\n                \"endTime\": \"21:45\"\r\n            }\r\n        }\r\n    ],\r\n    \"retailing\": {\r\n        \"returnAdditionalOffers\": {\r\n            \"numberOfAdditionalOffers\": 2\r\n        }\r\n    },\r\n    \"tickets\": [\r\n        {\r\n            \"number\": \"0012972101195\"\r\n        },\r\n        {\r\n            \"number\": \"0012972101196\"\r\n        }\r\n    ],\r\n    \"source\": {\r\n        \"distributionModel\": \"ATPCO\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - DateFlexibility plusMinusDays",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"departureDateFlexibility\": {\n        \"returnMultipleOffers\": true,\n        \"plusMinusDays\": 3\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - DateFlexibility plusDays and minusDays",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"departureDateFlexibility\": {\n        \"returnMultipleOffers\": false,\n        \"plusDays\": 2,\n        \"minusDays\": 3\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - DateFlexibility journeyRanges",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"departureDateFlexibility\": {\n        \"journeyRanges\": [\n            {\n                \"plusDays\": 2,\n                \"minusDays\": 3,\n                \"journeyIndices\": [\n                    1\n                ]\n            },\n            {\n                \"plusMinusDays\": 3,\n                \"journeyIndices\": [\n                    2\n                ]\n            }\n        ]\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - BrandedFareFilters",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"fare\": {\n        \"brandedFareFilters\": [\n            {\n                \"brandCodes\": [\n                    \"MAIN\",\n                    \"MAINPL\",\n                    \"MAINSL\",\n                    \"MAINFL\"\n                ],\n                \"journeyIndices\": [\n                    1\n                ]\n            },\n            {\n                \"brandCodes\": [\n                    \"FIRFL\",\n                    \"MAINPL\"\n                ],\n                \"journeyIndices\": [\n                    2\n                ]\n            },\n            {\n                \"excludeBrandCodes\": [\n                    \"BASIC\"\n                ]\n            }\n        ]\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - Non-guaranteed options with AutoComplete - Auto-Redirect With Fee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"fare\": {\n        \"priceGuarantee\": \"Auto-Redirect With Fee\"\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - Non-guaranteed options with AutoComplete - Never With Fee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"journeys\": [\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"departureDate\": \"2026-02-22\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"21:10\",\n                \"endTime\": \"21:10\"\n            }\n        },\n        {\n            \"departureLocation\": {\n                \"cityCode\": \"LAX\"\n            },\n            \"arrivalLocation\": {\n                \"cityCode\": \"DFW\"\n            },\n            \"departureDate\": \"2026-03-08\",\n            \"departureTimeWindow\": {\n                \"startTime\": \"18:44\",\n                \"endTime\": \"18:44\"\n            }\n        }\n    ],\n    \"fare\": {\n        \"priceGuarantee\": \"Never With Fee\"\n    },\n    \"source\": {\n        \"distributionModel\": \"ATPCO\"\n    },\n    \"tickets\": [\n        {\n            \"number\": \"0012972101440\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SabreFlightReshop - avoidBrandDowngrade with AdditionalOffers",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "at-diagnostics",
+										"value": "false",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"journeys\": [\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"LAX\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"departureDate\": \"2026-10-01\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"09:45\",\r\n                \"endTime\": \"13:45\"\r\n            }\r\n        },\r\n        {\r\n            \"departureLocation\": {\r\n                \"cityCode\": \"DFW\"\r\n            },\r\n            \"arrivalLocation\": {\r\n                \"cityCode\": \"LAX\"\r\n            },\r\n            \"departureDate\": \"2026-10-15\",\r\n            \"departureTimeWindow\": {\r\n                \"startTime\": \"15:45\",\r\n                \"endTime\": \"21:45\"\r\n            }\r\n        }\r\n    ],\r\n    \"retailing\": {\r\n        \"avoidBrandDowngrade\": true,\r\n        \"returnAdditionalOffers\": {\r\n            \"numberOfAdditionalOffers\": 3\r\n        }\r\n    },\r\n    \"tickets\": [\r\n        {\r\n            \"number\": \"0012972101195\"\r\n        },\r\n        {\r\n            \"number\": \"0012972101196\"\r\n        }\r\n    ],\r\n    \"source\": {\r\n        \"distributionModel\": \"ATPCO\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "{{rest_endpoint}}/v1/offers/flightReshop",
+									"host": [
+										"{{rest_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"offers",
+										"flightReshop"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.environment.set('airline_code', 'AA');\r",
+							"pm.environment.set('from_airport_code', 'DFW');\r",
+							"pm.environment.set('to_airport_code', 'LAX');"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.info(\"=============== Incoming request: \" + pm.info.requestName + \" ===============\");",
+					"// Get service action name from request name and ignore leading underscore if present",
+					"const action = pm.info.requestName.split(' ')[0].replace(/^_/, '');",
+					"",
+					"// Add the token value into the token variable",
+					"const token = pm.variables.get('token');",
+					"// Add CustomerAppId value in to CustomerAppId variable",
+					"const CustomerAppId = pm.variables.get('CustomerAppId');",
+					"",
+					"// Check if the 'at-diagnostics' variable is set",
+					"if (pm.environment.get(\"at-diagnostics\") === null || typeof pm.environment.get(\"at-diagnostics\") === \"undefined\") {",
+					"",
+					"    pm.environment.set(\"at-diagnostics\", \"true\");",
+					"",
+					"}",
+					"",
+					"// Check if the 'x_sabre_group' variable is set",
+					"if (pm.environment.get(\"x_sabre_group\") === null || typeof pm.environment.get(\"x_sabre_group\") === \"undefined\") {",
+					"    pm.environment.set(\"x_sabre_group\", \"U9PK\");",
+					"}",
+					"",
+					"// Check if the 'x_sabre_current_city' variable is set",
+					"if (pm.environment.get(\"x_sabre_current_city\") === null || typeof pm.environment.get(\"x_sabre_current_city\") === \"undefined\") {",
+					"    pm.environment.set(\"x_sabre_current_city\", \"U9PK\");",
+					"}",
+					"",
+					"if (isBmApiService(pm.request.url)) {",
+					"    //set headers",
+					"    pm.request.headers.add({",
+					"        key: \"X-Sabre-Group\",",
+					"        value: pm.environment.get(\"x_sabre_group\")",
+					"    });",
+					"",
+					"    pm.request.headers.add({",
+					"        key: \"X-Sabre-Current-City\",",
+					"        value: pm.environment.get(\"x_sabre_current_city\")",
+					"    });",
+					"}",
+					"",
+					"if (isFullFill(pm.request.url)) {",
+					"    //set headers",
+					"    pm.request.headers.add({",
+					"        key: \"at-diagnostics\",",
+					"        value: pm.environment.get(\"at-diagnostics\")",
+					"    });",
+					"",
+					"}",
+					"",
+					"",
+					"// All SOAP API calls require a header section, we have created this variable to remove it from the \"working\" message and ensure the user can focus on the payload section ",
+					"",
+					"const header = `<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"><SOAP-ENV:Header><MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\"><From><PartyId>Agency</PartyId></From><To><PartyId>SWS</PartyId></To><ConversationId>STX_2019_Postman</ConversationId><Action>${action}</Action></MessageHeader><Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\"><BinarySecurityToken EncodingType=\"Base64Binary\" valueType=\"String\">${token}</BinarySecurityToken></Security></SOAP-ENV:Header><SOAP-ENV:Body>`;",
+					"",
+					"// Same as previous item, this footer variable is used to close the entire SOAP envelope",
+					"const footer = '</SOAP-ENV:Body></SOAP-ENV:Envelope>';",
+					"",
+					"// Add header & footer variables into the specific variables",
+					"pm.variables.set('header', header);",
+					"pm.variables.set('footer', footer);",
+					"",
+					"// Capture today's date",
+					"var moment = require('moment');",
+					"",
+					"// Add 60 days to today's date and use this date in start_date",
+					"const start_date = moment().add(60, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('start_date', start_date);",
+					"",
+					"// Add 67 days to today's date and use this date in in_between_date",
+					"const in_between_date = moment().add(67, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('in_between_date', in_between_date);",
+					"",
+					"// Add 74 days to today's date and use this date in end_date",
+					"const end_date = moment().add(74, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('end_date', end_date);",
+					"",
+					"",
+					"const futureDateShort = moment().add(3, 'days').format('DDMMM').toUpperCase();",
+					"pm.environment.set(\"futureDateShort\", futureDateShort);",
+					"",
+					"",
+					"pm.environment.set('creditCardNumber', '4487971000000006');",
+					"pm.environment.set('creditCardExpiryDate', moment().add(10, 'year').format(\"YYYY-MM\"));",
+					"pm.environment.set('identityDocumentExpiryDate', moment().add(5, 'year').format(\"YYYY-MM-DD\"));",
+					"",
+					"//retention date",
+					"const retentionDate1 = moment().add(30, 'day').format(\"YYYY-MM-DD\");",
+					"const retentionDate2 = moment().add(35, 'day').format(\"YYYY-MM-DD\");",
+					"const retentionDate3 = moment().add(40, 'day').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('retentionDate1', retentionDate1);",
+					"pm.environment.set('retentionDate2', retentionDate2);",
+					"pm.environment.set('retentionDate3', retentionDate3);",
+					"",
+					"const infantBirthDate = moment().subtract(6, 'months').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('infantBirthDate', infantBirthDate);",
+					"",
+					"const infantSsrBirthDate = moment().subtract(6, 'months').format(\"DDMMMYY\");",
+					"pm.environment.set('infantSsrBirthDate', infantSsrBirthDate);",
+					"",
+					"const childBirthDate = moment().subtract(5, 'years').format(\"YYYY-MM-DD\");",
+					"pm.environment.set('childBirthDate', childBirthDate);",
+					"",
+					"//global assertions functions",
+					"assertions = {",
+					"    assertThatSessionAuthenticationIsUsed: function () {",
+					"        var authorization = pm.environment.get(\"token\");",
+					"        if (!authorization.startsWith(\"Shared/IDL:IceSess\")) {",
+					"            console.log(\"Authorization used: : \" + authorization);",
+					"            throw new Error(\"You should use Session instead of Token to call this service. Please execute SessionCreateRQ\");",
+					"        }",
+					"    },",
+					"",
+					"    assertThatArrayLengthIsAsExpected: function (array, expectedLength, arrayName) {",
+					"        let actualLength = array.length;",
+					"        pm.test(\"Should contain \" + expectedLength + \" \" + arrayName, function () {",
+					"            pm.expect(actualLength).to.equal(expectedLength);",
+					"        });",
+					"    }",
+					"};",
+					"",
+					"utlis = {",
+					"    removeItemIdPropertyFromArrayOfObjects: function (arrayWithObjects) {",
+					"        arrayWithObjects.forEach(function (object) {",
+					"            delete object.itemId;",
+					"        })",
+					"        return arrayWithObjects;",
+					"    }",
+					"};",
+					"",
+					"const shuffleFlight = false;",
+					"",
+					"const flightsCombinations = [",
+					"    {",
+					"        airlineCode: 'AA',",
+					"        fromAirportCode: 'DFW',",
+					"        toAirportCode: 'LAX'",
+					"    },",
+					"    {",
+					"        airlineCode: 'B6',",
+					"        fromAirportCode: 'MIA',",
+					"        toAirportCode: 'EWR'",
+					"    },",
+					"    {",
+					"        airlineCode: 'BA',",
+					"        fromAirportCode: 'MAD',",
+					"        toAirportCode: 'LHR'",
+					"    },",
+					"    {",
+					"        airlineCode: 'AS',",
+					"        fromAirportCode: 'SEA',",
+					"        toAirportCode: 'ANC'",
+					"    },",
+					"    {",
+					"        airlineCode: 'QF',",
+					"        fromAirportCode: 'SYD',",
+					"        toAirportCode: 'ADL'",
+					"    },",
+					"    {",
+					"        airlineCode: 'AF',",
+					"        fromAirportCode: 'ORY',",
+					"        toAirportCode: 'NCE'",
+					"    },",
+					"    {",
+					"        airlineCode: 'UA',",
+					"        fromAirportCode: 'IAH',",
+					"        toAirportCode: 'DFW'",
+					"    },",
+					"    {",
+					"        airlineCode: 'OZ',",
+					"        fromAirportCode: 'CJU',",
+					"        toAirportCode: 'GMP'",
+					"    },",
+					"    {",
+					"        airlineCode: 'LH',",
+					"        fromAirportCode: 'FRA',",
+					"        toAirportCode: 'LHR'",
+					"    },",
+					"    {",
+					"        airlineCode: 'ET',",
+					"        fromAirportCode: 'MRS',",
+					"        toAirportCode: 'ADD'",
+					"    },",
+					"    {",
+					"        airlineCode: 'AZ',",
+					"        fromAirportCode: 'FCO',",
+					"        toAirportCode: 'LHR'",
+					"    },",
+					"    {",
+					"        airlineCode: 'VN',",
+					"        fromAirportCode: 'SGN',",
+					"        toAirportCode: 'HAN'",
+					"    }",
+					"];",
+					"",
+					"",
+					"const flightsCombinationsNdcSupported = [",
+					"    {",
+					"        airlineCode: 'AA',",
+					"        fromAirportCode: 'DFW',",
+					"        toAirportCode: 'LAX'",
+					"    },",
+					"",
+					"    {",
+					"        airlineCode: 'QF',",
+					"        fromAirportCode: 'SYD',",
+					"        toAirportCode: 'ADL'",
+					"    },",
+					"    {",
+					"        airlineCode: 'UA',",
+					"        fromAirportCode: 'IAH',",
+					"        toAirportCode: 'DFW'",
+					"    },",
+					"    {",
+					"        airlineCode: 'QR',",
+					"        fromAirportCode: 'DIA',",
+					"        toAirportCode: 'MLE'",
+					"    },",
+					"    {",
+					"        airlineCode: 'SQ',",
+					"        fromAirportCode: 'HKG',",
+					"        toAirportCode: 'CGK'",
+					"    },",
+					"    {",
+					"        airlineCode: 'TA',",
+					"        fromAirportCode: 'MGA',",
+					"        toAirportCode: 'MIA'",
+					"    },",
+					"    {",
+					"        airlineCode: 'AV',",
+					"        fromAirportCode: 'MDE',",
+					"        toAirportCode: 'BOG'",
+					"    }",
+					"",
+					"];",
+					"",
+					"function getRandomInt(max) {",
+					"    return Math.floor(Math.random() * max);",
+					"}",
+					"",
+					"function getRandomFlight(flightsCombinations) {",
+					"    return flightsCombinations[getRandomInt(flightsCombinations.length)];",
+					"}",
+					"",
+					"switch (action) {",
+					"    case 'OTA_AirAvailLLSRQ':",
+					"        if (shuffleFlight) {",
+					"            flight = getRandomFlight(flightsCombinations);",
+					"",
+					"            pm.environment.set('airline_code', flight.airlineCode);",
+					"            pm.environment.set('from_airport_code', flight.fromAirportCode);",
+					"            pm.environment.set('to_airport_code', flight.toAirportCode);",
+					"        } else {",
+					"            pm.environment.set('airline_code', 'AA');",
+					"            pm.environment.set('from_airport_code', 'DFW');",
+					"            pm.environment.set('to_airport_code', 'LAX');",
+					"        }",
+					"        break;",
+					"",
+					"    case 'SessionCreateRQ':",
+					"        // Generate a unique ID for profile services",
+					"        var uuid = require('uuid');",
+					"        var myUUID = uuid();",
+					"        console.log(myUUID);",
+					"",
+					"        //cleanup",
+					"        pm.environment.unset('filterName')",
+					"        pm.environment.unset('profileName')",
+					"",
+					"        pm.environment.set('filterName', 'CreateBookingFilter ' + myUUID);",
+					"        pm.environment.set('profileName', 'CreateBookingProfile ' + myUUID);",
+					"",
+					"        console.log(pm.environment.get('filterName'))",
+					"        console.log(pm.environment.get('profileName'))",
+					"        break;",
+					"",
+					"}",
+					"pm.environment.set('HOTEL_CODE', 'SFO');",
+					"",
+					"function isBmApiService(serviceUrl) {",
+					"    const servicePattern = /createBooking|modifyBooking|getBooking|cancelBooking|checkFlightTickets|voidFlightTickets|refundFlightTickets|fulfillFlightTickets|flightReshop/;",
+					"",
+					"    return servicePattern.test(serviceUrl);",
+					"}",
+					"",
+					"function isFullFill(serviceUrl) {",
+					"    const servicePattern = /fulfillFlightTickets/;",
+					"",
+					"    return servicePattern.test(serviceUrl);",
+					"}",
+					"",
+					"function isFlightReshop(serviceUrl) {",
+					"    const servicePattern = /flightReshop|FlightReshop/;",
+					"",
+					"    return servicePattern.test(serviceUrl);",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Only execute the following code for SOAP APIs (based on the endpoint being used)",
+					"if (pm.request.url.toString().startsWith(pm.environment.get(\"soap_endpoint\")) || pm.request.url.toString().startsWith(pm.environment.get(\"soap_cancel_endpoint\"))) {",
+					"    console.log(\"soapRequest\");",
+					"    //***SOAP Path***//",
+					"",
+					"    const xml2js = require('xml2js');",
+					"",
+					"    // Get service action name from request name and ignore leading underscore if present",
+					"    const action = pm.info.requestName.split(' ')[0].replace(/^_/, '');",
+					"",
+					"    // Parse response and remove namespaces (prefixes)",
+					"    // Solves problem when specific APIs return different namespaces randombly ie. ns8, ns9: TP APIs",
+					"    const parseString = xml2js.parseString;",
+					"    const parseOptions = { tagNameProcessors: [xml2js.processors.stripPrefix] };",
+					"",
+					"    switch (action) {",
+					"        case 'SessionCreateRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set('token', token);",
+					"            });",
+					"            break;",
+					"        case 'TokenCreateRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const token = result.Envelope.Header[0].Security[0].BinarySecurityToken[0]._;",
+					"                pm.environment.set(\"token\", token);",
+					"            });",
+					"            break;",
+					"        case 'CreatePassengerNameRecordRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const pnr = result.Envelope.Body[0].CreatePassengerNameRecordRS[0].ItineraryRef[0].$.ID;",
+					"                pm.environment.set('pnr', pnr);",
+					"            });",
+					"            break;",
+					"        case 'AirTicketRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const summary = result.Envelope.Body[0].AirTicketRS[0].Summary;",
+					"                summary.forEach((tktDoc, i) => {",
+					"                    const tktNum = 'tkt' + (i === 0 ? '' : i + 1);",
+					"                    const tktDateTime = tktDoc.LocalIssueDateTime[0];",
+					"                    const tktDate = tktDateTime.substring(tktDateTime, tktDateTime.indexOf('T'));",
+					"                    pm.environment.set(tktNum, tktDoc.DocumentNumber[0]);",
+					"                    pm.environment.set(tktNum + '_date', tktDate);",
+					"                });",
+					"            });",
+					"            break;",
+					"        case 'TP_CreateRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const proposalID = result.Envelope.Body[0].TP_CreateRS[0].$.proposalID;",
+					"                pm.environment.set('proposal_id', proposalID);",
+					"            });",
+					"            break;",
+					"        case 'TP_ReadRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const proposalVersion = result.Envelope.Body[0].TP_ReadRS[0].TripProposal[0].$.proposalVersion;",
+					"                pm.environment.set('proposal_version', proposalVersion);",
+					"            });",
+					"            break;",
+					"        case 'TP_RefreshRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const proposalVersion = result.Envelope.Body[0].TP_RefreshRS[0].TripProposal[0].$.proposalVersion;",
+					"                pm.environment.set('proposal_version', proposalVersion);",
+					"            });",
+					"            break;",
+					"        case 'GetHotelDetailsRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const rateKey = result.Envelope.Body[0].GetHotelDetailsRS[0].HotelDetailsInfo[0].HotelRateInfos[0].HotelRateInfo[0].RateInfos[0].RateInfo[0].$.RateKey;",
+					"                pm.environment.set('rate_key', rateKey);",
+					"            });",
+					"            break;",
+					"        case 'GetHotelAvailRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const rateKey = result.Envelope.Body[0].GetHotelAvailRS[0].HotelAvailInfos[0].HotelAvailInfo[0].HotelRateInfo[0].RateInfos[0].RateInfo[0].$.RateKey;",
+					"                pm.environment.set('rateKey', rateKey);",
+					"                pm.environment.set('rate_key', rateKey);",
+					"            });",
+					"",
+					"            console.log(\"Rate Key : \" + pm.environment.get('rateKey'))",
+					"            break;",
+					"        case 'HotelPriceCheckRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const bookingKey = result.Envelope.Body[0].HotelPriceCheckRS[0].PriceCheckInfo[0].$.BookingKey;",
+					"                const guaranteeType = result.Envelope.Body[0].HotelPriceCheckRS[0].PriceCheckInfo[0].HotelRateInfo[0].Rooms[0].Room[0].RatePlans[0].RatePlan[0].RateInfo[0].Guarantee[0].$.GuaranteeType",
+					"                pm.environment.set('booking_key', bookingKey);",
+					"                pm.environment.set('bookingKey', bookingKey);",
+					"",
+					"                if (guaranteeType === \"GUAR\") {",
+					"                    pm.environment.set(\"hotelPaymentPolicy\", \"GUARANTEE\");",
+					"                } else if (guaranteeType === \"DEP\") {",
+					"                    pm.environment.set(\"hotelPaymentPolicy\", \"DEPOSIT\");",
+					"                } else {",
+					"                    console.error(\"Unknown GuaranteeType:\", guaranteeType);",
+					"                }",
+					"            });",
+					"            break;",
+					"        case 'OTA_AirAvailLLSRQ':",
+					"",
+					"            if (!pm.info.requestName.toLowerCase().includes(\"get return flight number\")) {",
+					"                parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"",
+					"                    const flightNode = result.Envelope.Body[0].OTA_AirAvailRS[0].OriginDestinationOptions[0].OriginDestinationOption;",
+					"                    let destinationLocation;",
+					"                    let originLocation;",
+					"                    let flightSaved = false;",
+					"                    flightNode.every((flight) => {",
+					"                        destinationLocation = flight.FlightSegment[0].DestinationLocation[0].$.LocationCode;",
+					"                        originLocation = flight.FlightSegment[0].OriginLocation[0].$.LocationCode;",
+					"",
+					"                        if (destinationLocation === pm.environment.get('to_airport_code') && originLocation === pm.environment.get('from_airport_code')) {",
+					"                            const flightNumber = flight.FlightSegment[0].$.FlightNumber;",
+					"                            pm.environment.set('flight_number', flightNumber);",
+					"                            flightSaved = true;",
+					"                            console.log(\"Flight data: saved!\")",
+					"                            console.log(\"airlineCode : \" + pm.environment.get('airline_code'));",
+					"                            console.log(\"from_airport_code : \" + pm.environment.get('from_airport_code'));",
+					"                            console.log(\"to_airport_code : \" + pm.environment.get('to_airport_code'));",
+					"                            console.log(\"flight_number: \" + flightNumber);",
+					"",
+					"                            return false;",
+					"                        } else return true",
+					"                    });",
+					"                    if (!flightSaved) {",
+					"                        console.error(\"No matching flight found.\");",
+					"                    }",
+					"                });",
+					"                break;",
+					"            } else {",
+					"                parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"",
+					"                    const flightNode = result.Envelope.Body[0].OTA_AirAvailRS[0].OriginDestinationOptions[0].OriginDestinationOption;",
+					"                    let destinationLocation;",
+					"                    let originLocation;",
+					"                    let flightSaved = false;",
+					"                    flightNode.every((flight) => {",
+					"                        destinationLocation = flight.FlightSegment[0].DestinationLocation[0].$.LocationCode;",
+					"                        originLocation = flight.FlightSegment[0].OriginLocation[0].$.LocationCode;",
+					"",
+					"                        if (destinationLocation === pm.environment.get('from_airport_code') && originLocation === pm.environment.get('to_airport_code')) {",
+					"                            const flightNumber = flight.FlightSegment[0].$.FlightNumber;",
+					"                            pm.environment.set('return_flight_number', flightNumber);",
+					"                            flightSaved = true;",
+					"                            console.log(\"Flight data: saved!\")",
+					"                            console.log(\"airlineCode : \" + pm.environment.get('airline_code'));",
+					"                            console.log(\"to_airport_code : \" + pm.environment.get('to_airport_code'));",
+					"                            console.log(\"from_airport_code : \" + pm.environment.get('from_airport_code'));",
+					"                            console.log(\"return_flight_number: \" + flightNumber);",
+					"",
+					"                            return false;",
+					"                        } else return true",
+					"                    });",
+					"                    if (!flightSaved) {",
+					"                        console.error(\"No matching flight found.\");",
+					"                    }",
+					"                });",
+					"                break;",
+					"            }",
+					"",
+					"        case 'GetAncillaryOffersRQ':",
+					"            if (pm.environment.get('lcc_tests') !== true) {",
+					"                parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                    const ancillarySeqNum = pm.environment.get('ancillarySeqNum');",
+					"",
+					"                    const BASE_ANCILLARY = result.Envelope.Body[0].GetAncillaryOffersRS[0].AncillaryDefinition[ancillarySeqNum];",
+					"                    const ancillaryId = BASE_ANCILLARY.$.id;",
+					"                    const ancillarySubCode = BASE_ANCILLARY.SubCode[0];",
+					"                    const ancillaryGroup = BASE_ANCILLARY.Group[0];",
+					"                    const ancillaryElectronicMiscDocType = BASE_ANCILLARY.ElectronicMiscDocType[0]._;",
+					"                    const ancillaryCommercialName = BASE_ANCILLARY.CommercialName[0];",
+					"                    const ancillaryReasonForIssuance = BASE_ANCILLARY.ReasonForIssuance[0]._;",
+					"                    const ancillaryBasePrice = result.Envelope.Body[0].GetAncillaryOffersRS[0].Offers[ancillarySeqNum].AncillaryFee[0].Base[0].TotalEquivalentAmount[0]._;",
+					"                    const ancillaryCurrencyCode = result.Envelope.Body[0].GetAncillaryOffersRS[0].Offers[ancillarySeqNum].AncillaryFee[0].Base[0].TotalEquivalentAmount[0].$.currency;",
+					"                    console.log(\"Ancillaries: ancillaryCommercialName: \" + ancillaryCommercialName + \" | ancillarySubCode: \" + ancillaryId + \" | ancillarySubCode: \" + ancillarySubCode + \" | ancillaryGroup: \" + ancillaryGroup + \" | ancillaryElectronicMiscDocType: \" + ancillaryElectronicMiscDocType + \" | ancillaryReasonForIssuance: \" + ancillaryReasonForIssuance + \" | ancillaryBasePrice: \" + ancillaryBasePrice + \" | ancillaryCurrencyCode: \" + ancillaryCurrencyCode);",
+					"",
+					"                    pm.environment.set('ancillaryId', ancillaryId);",
+					"                    pm.environment.set('ancillarySubCode', ancillarySubCode);",
+					"                    pm.environment.set('ancillaryGroup', ancillaryGroup);",
+					"                    pm.environment.set('ancillaryElectronicMiscDocType', ancillaryElectronicMiscDocType);",
+					"                    pm.environment.set('ancillaryBasePrice', ancillaryBasePrice);",
+					"                    pm.environment.set('ancillaryCurrencyCode', ancillaryCurrencyCode);",
+					"",
+					"                    switch (ancillaryReasonForIssuance) {",
+					"                        case 'GROUND_TRANSPORT_NON_AIR_SERVICES':",
+					"                            pm.environment.set('ancillaryReasonForIssuance', \"SURFACE_TRANSPORTATION_NON_AIR_SERVICES\");",
+					"                            break;",
+					"",
+					"                        case 'IN_FLIGHT_SERVICES':",
+					"                            pm.environment.set('ancillaryReasonForIssuance', \"INFLIGHT_SERVICES\");",
+					"                            break;",
+					"",
+					"                        default:",
+					"                            pm.environment.set('ancillaryReasonForIssuance', ancillaryReasonForIssuance);",
+					"                            break;",
+					"                    }",
+					"",
+					"                });",
+					"            }",
+					"            break;",
+					"",
+					"        case 'GetVehAvailRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const rateKey = result.Envelope.Body[0].GetVehAvailRS[0].VehAvailInfos[0].VehAvailInfo[0].VehRentalRate[0].$.RateKey;",
+					"                pm.environment.set('carRateKey', rateKey);",
+					"            });",
+					"",
+					"            console.log(\"Car Rate Key : \" + pm.environment.get('carRateKey'))",
+					"            break;",
+					"",
+					"        case 'VehPriceCheckRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const bookingKey = result.Envelope.Body[0].VehPriceCheckRS[0].PriceCheckInfo[0].$.BookingKey;",
+					"                pm.environment.set('carBookingKey', bookingKey);",
+					"            });",
+					"",
+					"            console.log(\"Car Booking Key : \" + pm.environment.get('carBookingKey'))",
+					"            break;",
+					"",
+					"        case 'SessionCloseRQ':",
+					"            console.info('Unsetting session data');",
+					"            pm.environment.unset('token')",
+					"            pm.environment.unset('filterName')",
+					"            pm.environment.unset('profileName')",
+					"            break;",
+					"",
+					"        case 'EnhancedEndTransactionRQ':",
+					"            parseString(pm.response.text(), parseOptions, (err, result) => {",
+					"                const pnr = result.Envelope.Body[0].EnhancedEndTransactionRS[0].ItineraryRef[0].$.ID;",
+					"                pm.environment.set('pnr', pnr);",
+					"            });",
+					"            console.log(\"PNR : \" + pm.environment.get('pnr'))",
+					"            break;",
+					"    }",
+					"",
+					"",
+					"} else {",
+					"    console.log(\"restRequest\");",
+					"    pm.test(\"response is ok\", function () {",
+					"        pm.response.to.be.ok;",
+					"        pm.response.to.have.status(200);",
+					"    });",
+					"",
+					"    pm.test(\"response must be valid and have a body\", function () {",
+					"        // this assertion also checks if a body  exists",
+					"        pm.response.to.be.json;",
+					"    });",
+					"    //***REST Path***//",
+					"",
+					"    // Get the Unique ID of the URI (token, shop, price, create, view, cancel, change) based on the \"5th\" string in order to identify the actual API",
+					"    URI = pm.request.url.toString().split(\"/\")[5];",
+					"",
+					"    //For Booking Management API 5th string is orders so we need to extract 6th string",
+					"    if (URI == \"orders\") {",
+					"        URI = pm.request.url.toString().split(\"/\")[6];",
+					"    }",
+					"    if (URI == \"trip\") {",
+					"        URI = pm.request.url.toString().split(\"/\")[7];",
+					"",
+					"    }",
+					"",
+					"    // Get the JSON response",
+					"    const jsonData = pm.response.json();",
+					"    const requestBody = JSON.parse(pm.request.body.raw);",
+					"",
+					"    switch (URI) {",
+					"",
+					"        case 'token':",
+					"            setEnvJson('token', 'jsonData.access_token');",
+					"            break;",
+					"        case 'shop':",
+					"            const dataSources = requestBody.OTA_AirLowFareSearchRQ?.TravelPreferences?.TPA_Extensions?.DataSources;",
+					"",
+					"            if (dataSources) {",
+					"                if (dataSources.NDC === \"Enable\") {",
+					"                    const pricingInformation = getSafe(() => jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0]);",
+					"                    const pricingInformationStr = 'jsonData.groupedItineraryResponse.itineraryGroups[0].itineraries[0].pricingInformation[0]';",
+					"",
+					"                    if (getSafe(() => pricingInformation.offer.offerId) == undefined) break;",
+					"",
+					"                    setEnvJson('shop_offer_id', pricingInformationStr + '.offer.offerId');",
+					"                    setEnvJson('shop_offer_item_id', pricingInformationStr + '.fare.offerItemId');",
+					"                    setEnvJson('shop_offer_passenger_item_id', pricingInformationStr + '.fare.passengerInfoList[0].passengerInfo.offerItemId');",
+					"",
+					"                }",
+					"",
+					"                if (dataSources.ATPCO === \"Enable\") {",
+					"                    const response = pm.response.json();",
+					"                    const groupedItineraryResponse = response.groupedItineraryResponse;",
+					"",
+					"                    const legDescriptions = groupedItineraryResponse.itineraryGroups[0].groupDescription.legDescriptions;",
+					"",
+					"                    legDescriptions.forEach((legDesc, index) => {",
+					"                        const prefix = `journey${index + 1}`;",
+					"                        pm.environment.set(`${prefix}_departureDate`, legDesc.departureDate);",
+					"                        pm.environment.set(`${prefix}_departureLocation`, legDesc.departureLocation);",
+					"                        pm.environment.set(`${prefix}_arrivalLocation`, legDesc.arrivalLocation);",
+					"",
+					"                        console.log(`Segment ${index + 1}: ${legDesc.departureLocation} -> ${legDesc.arrivalLocation} (${legDesc.departureDate})`);",
+					"                    });",
+					"",
+					"                    const firstItinerary = groupedItineraryResponse.itineraryGroups[0].itineraries[0];",
+					"                    const legs = firstItinerary.legs;",
+					"",
+					"                    const legDescs = groupedItineraryResponse.legDescs;",
+					"                    const scheduleDescs = groupedItineraryResponse.scheduleDescs;",
+					"",
+					"                    function findById(array, id) {",
+					"                        return array.find(item => item.id === id);",
+					"                    }",
+					"",
+					"                    let totalFlightIndex = 1;",
+					"",
+					"                    legs.forEach((leg, legIndex) => {",
+					"                        const legRef = leg.ref;",
+					"",
+					"                        const legDesc = findById(legDescs, legRef);",
+					"",
+					"                        if (legDesc && legDesc.schedules && legDesc.schedules.length > 0) {",
+					"                            const legPrefix = `journey${legIndex + 1}`;",
+					"                            const numberOfFlights = legDesc.schedules.length;",
+					"",
+					"                            pm.environment.set(`${legPrefix}_numberOfFlights`, numberOfFlights);",
+					"",
+					"                            legDesc.schedules.forEach((schedule, scheduleIndex) => {",
+					"                                const scheduleRef = schedule.ref;",
+					"",
+					"                                const scheduleDesc = findById(scheduleDescs, scheduleRef);",
+					"",
+					"                                if (scheduleDesc && scheduleDesc.carrier) {",
+					"                                    const carrier = scheduleDesc.carrier;",
+					"",
+					"                                    const segmentFlightPrefix = `${legPrefix}_flight${scheduleIndex + 1}`;",
+					"",
+					"                                    const globalFlightPrefix = `flight${totalFlightIndex}`;",
+					"",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_marketing`, carrier.marketing);",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_marketingFlightNumber`, carrier.marketingFlightNumber);",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_departureAirport`, scheduleDesc.departure.airport);",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_departureTime`, scheduleDesc.departure.time.substring(0, 5));",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_arrivalAirport`, scheduleDesc.arrival.airport);",
+					"                                    pm.environment.set(`${segmentFlightPrefix}_arrivalTime`, scheduleDesc.arrival.time.substring(0, 5));",
+					"",
+					"                                    pm.environment.set(`${globalFlightPrefix}_marketing`, carrier.marketing);",
+					"                                    pm.environment.set(`${globalFlightPrefix}_marketingFlightNumber`, carrier.marketingFlightNumber);",
+					"                                    pm.environment.set(`${globalFlightPrefix}_departureAirport`, scheduleDesc.departure.airport);",
+					"                                    pm.environment.set(`${globalFlightPrefix}_departureTime`, scheduleDesc.departure.time.substring(0, 5));",
+					"                                    pm.environment.set(`${globalFlightPrefix}_arrivalAirport`, scheduleDesc.arrival.airport);",
+					"                                    pm.environment.set(`${globalFlightPrefix}_arrivalTime`, scheduleDesc.arrival.time.substring(0, 5));",
+					"                                    pm.environment.set(`${globalFlightPrefix}_legNumber`, legIndex + 1);",
+					"",
+					"                                    console.log(`  Flight ${scheduleIndex + 1}: ${carrier.marketing}${carrier.marketingFlightNumber}`);",
+					"                                    console.log(`    ${scheduleDesc.departure.airport} (${scheduleDesc.departure.time}) -> ${scheduleDesc.arrival.airport} (${scheduleDesc.arrival.time})`);",
+					"",
+					"                                    totalFlightIndex++;",
+					"                                }",
+					"                            });",
+					"                        }",
+					"                    });",
+					"",
+					"                    for (let i = 1; i <= legs.length; i++) {",
+					"                        const numFlights = pm.environment.get(`leg${i}_numberOfFlights`);",
+					"                        console.log(`\\nSegment ${i}: ${pm.environment.get(`leg${i}_departureLocation`)} -> ${pm.environment.get(`leg${i}_arrivalLocation`)} (${pm.environment.get(`leg${i}_departureDate`)})`);",
+					"",
+					"                        for (let j = 1; j <= numFlights; j++) {",
+					"                            const prefix = `leg${i}_flight${j}`;",
+					"                            console.log(`  Flight ${j}: ${pm.environment.get(`${prefix}_marketing`)}${pm.environment.get(`${prefix}_marketingFlightNumber`)}`);",
+					"                            console.log(`    ${pm.environment.get(`${prefix}_departureAirport`)} (${pm.environment.get(`${prefix}_departureTime`)}) -> ${pm.environment.get(`${prefix}_arrivalAirport`)} (${pm.environment.get(`${prefix}_arrivalTime`)})`);",
+					"                        }",
+					"                    }",
+					"                }",
+					"",
+					"                if (dataSources.LCC === \"Enable\") {",
+					"                    //todo",
+					"                }",
+					"            }",
+					"            break;",
+					"        case 'price':",
+					"            const passengers = jsonData.response.offers[0].offerItems[0].passengers;",
+					"            setEnvJson('price_offer_id', 'jsonData.response.offers[0].id');",
+					"            setEnvJson('price_offer_item_id', 'jsonData.response.offers[0].offerItems[0].id');",
+					"            setEnvJson('price_passenger_id', 'jsonData.response.offers[0].offerItems[0].passengers[0].id');",
+					"",
+					"            if (passengers.length > 0) {",
+					"                passengers.forEach((passenger, index) => {",
+					"                    const pricePassengerId = 'price_passenger_id' + (index + 1);",
+					"                    const passengerIdValueStr = 'jsonData.response.offers[0].offerItems[0].passengers[' + index + '].id';",
+					"                    setEnvJson(pricePassengerId, passengerIdValueStr);",
+					"                    console.log(pm.environment.get(pricePassengerId) + \" <- price_passenger_id ItemId\");",
+					"                });",
+					"            }",
+					"            break;",
+					"        case 'create':",
+					"            setEnvJson('sabre_order_id', 'jsonData.order.id');",
+					"            setEnvJson('pnr', 'jsonData.order.pnrLocator');",
+					"            break;",
+					"        case 'view':",
+					"            setEnvJson('sabreOrderItem', 'jsonData.order.id');",
+					"            setEnvJson('pnr', 'jsonData.order.pnrLocator');",
+					"            setEnvJson('priceTotalAmount', 'jsonData.order.orderItems[0].price.totalAmount.amount');",
+					"            setEnvJson('orderItemId', 'jsonData.order.orderItems[0].id');",
+					"            break;",
+					"        case 'createBooking':",
+					"            setEnvJson('pnr', 'jsonData.confirmationId');",
+					"",
+					"            pm.test(\"confirmationId exists and is not null or empty\", function () {",
+					"                var jsonData = pm.response.json();",
+					"",
+					"                pm.expect(jsonData).to.have.property(\"confirmationId\");",
+					"                pm.expect(jsonData.confirmationId).to.not.be.null;",
+					"                pm.expect(jsonData.confirmationId).to.not.equal(\"\");",
+					"            });",
+					"",
+					"            console.log(pm.environment.get('pnr') + \" <- pnr\");",
+					"            break;",
+					"        case 'getBooking':",
+					"            setEnvJson('bookingSignature', 'jsonData.bookingSignature');",
+					"            console.log(pm.environment.get('bookingSignature') + \" <- bookingSignature\");",
+					"            if (jsonData.bookingId !== undefined) {",
+					"                pm.environment.set('bookingId', jsonData.bookingId);",
+					"                console.log(pm.environment.get('bookingId') + \" <- bookingId\");",
+					"            }",
+					"            if (jsonData.hotels !== undefined && jsonData.hotels.length > 0) {",
+					"                jsonData.hotels.forEach((hotel, i) => {",
+					"                    const hotelItemId = 'itemId' + (i === 0 ? '' : i + 1);",
+					"                    const valueStr = 'jsonData.hotels[' + i + '].itemId';",
+					"                    setEnvJson(hotelItemId, valueStr);",
+					"                    console.log(pm.environment.get(hotelItemId) + \" <- Hotel ItemId\");",
+					"                });",
+					"            }",
+					"            break;",
+					"        case 'modifyBooking':",
+					"            pm.test(\"Response does not contain errors\", function () {",
+					"                const noErrors = !jsonData.errors || jsonData.errors.length === 0;",
+					"                pm.expect(noErrors).to.be.true;",
+					"",
+					"            });",
+					"            break;",
+					"        case 'fulfillFlightTickets':",
+					"            const tickets = jsonData.tickets;",
+					"",
+					"            tickets.forEach((ticket, index) => {",
+					"                const tktNum = 'ticketNumber' + (index === 0 ? '' : index + 1);",
+					"                const tktDate = tktNum + '_date';",
+					"                const tktNumValueStr = 'jsonData.tickets[' + index + '].number';",
+					"                const tktDateValueStr = 'jsonData.tickets[' + index + '].date';",
+					"",
+					"                setEnvJson(tktNum, tktNumValueStr);",
+					"                setEnvJson(tktDate, tktDateValueStr);",
+					"",
+					"                console.log(\"Ticket number: \" + tktNum, pm.environment.get(tktNum));",
+					"                console.log(\"Ticket date: \" + tktDate, pm.environment.get(tktDate));",
+					"            });",
+					"            break;",
+					"    }",
+					"}",
+					"",
+					"pm.environment.unset('lcc_tests');",
+					"",
+					"function getDiff(oldResponse, newResponse, reversedDiff) {",
+					"    function changes(newResponse, oldResponse) {",
+					"        let counter = 0;",
+					"        const _ = require('lodash');",
+					"        return _.transform(newResponse, function (result, value, key) {",
+					"            if (value === pm.response.json().bookingSignature) {",
+					"                console.debug('skip comparing bookingSignature');",
+					"            }",
+					"            else if (!_.isEqual(value, oldResponse[key])) {",
+					"                let resultKey = _.isArray(oldResponse) ? counter++ : key;",
+					"                if (_.isObject(value) && _.isObject(oldResponse[key])) {",
+					"                    result[resultKey] = changes(value, oldResponse[key])",
+					"                }",
+					"                else {",
+					"                    result[resultKey] = value;",
+					"                    if (!reversedDiff) {",
+					"                        console.log('Before: ' + oldResponse[key] + ' || ' + 'After: ' + value);",
+					"                    }",
+					"                }",
+					"            }",
+					"        })",
+					"    }",
+					"    return changes(newResponse, oldResponse);",
+					"}",
+					"",
+					"function getSafe(fn, defaultVal) {",
+					"    try {",
+					"        return fn();",
+					"    } catch (e) {",
+					"        return defaultVal;",
+					"    }",
+					"}",
+					"",
+					"if (pm.info.requestName.includes(':printDiff') === true) {",
+					"    const { inspect } = require('util');",
+					"",
+					"    if (pm.environment.get('responseBeforeModify') === undefined) {",
+					"        console.warn('To print diff save response body from getBook before modification');",
+					"        return;",
+					"    }",
+					"",
+					"    let oldResponse = pm.environment.get('responseBeforeModify');",
+					"    let newResponse = pm.response.json();",
+					"    let diff;",
+					"",
+					"    console.log('--------- Printing difference ---------');",
+					"    console.log('--------- Before  After ---------');",
+					"    diff = getDiff(oldResponse, newResponse, false);",
+					"",
+					"    console.log('--------- All new changes with paths below ---------');",
+					"    console.info(inspect(diff, { showHidden: false, depth: null, colorize: true }));",
+					"",
+					"    console.log('--------- All changes that have been deleted ---------');",
+					"    diff = getDiff(newResponse, oldResponse, true);",
+					"    console.info(inspect(diff, { showHidden: false, depth: null, colorize: true }));",
+					"}",
+					"",
+					"",
+					"// String key - key in environments when value will be stored",
+					"// String jsonLocator: only JSON locator - starts with jsonData object",
+					"// Example: jsonData.order.id",
+					"function setEnvJson(key, jsonLocator) {",
+					"    console.debug(`set ENV key=${key}, jsonLocator=${jsonLocator}`);",
+					"    const jsonData = pm.response.json();",
+					"    const defaultError = \"Cannot read properties of undefined\";",
+					"    try {",
+					"        let value = eval(jsonLocator);",
+					"        pm.environment.set(key, value);",
+					"",
+					"        if (typeof value === \"undefined\") {",
+					"            console.warn(`set ENV ${key}=${value}  FROM ${jsonLocator}`);",
+					"        } else {",
+					"            console.log(`set ENV ${key}=${value}  FROM ${jsonLocator}`);",
+					"        }",
+					"    } catch (err) {",
+					"        if (err.message.includes(defaultError)) {",
+					"            console.error(`set ENV  ${key}  ${err.name}: Cannot read properties of undefined (reading '${jsonLocator}')`);",
+					"        } else {",
+					"            console.error(`set ENV  ${key}  ${err.name}: ${err.message} Locator: ${jsonLocator}`);",
+					"        }",
+					"    }",
+					"}",
+					"",
+					"console.info(\"=============== End of request: \" + pm.info.requestName + \" ===============\");"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "paymentTypeCode",
+			"value": ""
+		}
+	]
+}
