@@ -1,27 +1,170 @@
 {
 	"info": {
-		"_postman_id": "f6a2a49a-28cc-4207-9de7-9ac3ccd36702",
+		"_postman_id": "65f79a76-a426-4e18-8c3b-dc19bdc19b44",
 		"name": "Flight Policy Display - CERT DEMOS",
 		"description": "Sabre Flight Policy Display API Collection - Certification Demo Use Cases",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "get ATK token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{client}}"
+							},
+							{
+								"key": "grant_type",
+								"value": "client_credentials"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type: client_credentials",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{TOKEN_SERVICE}}/v2/auth/token",
+							"host": [
+								"{{TOKEN_SERVICE}}"
+							],
+							"path": [
+								"v2",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ATH token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{client}}"
+							},
+							{
+								"key": "grant_type",
+								"value": "client_credentials"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type: client_credentials",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{TOKEN_SERVICE}}/v1/auth/token",
+							"host": [
+								"{{TOKEN_SERVICE}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const username = pm.collectionVariables.get('username');",
+							"const pcc = pm.collectionVariables.get('pcc');",
+							"const passwordRaw = pm.collectionVariables.get('password');",
+							"",
+							"const clientidRaw = `V1:${username}:${pcc}:AA`;",
+							"const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);",
+							"const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);",
+							"const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);",
+							"const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);",
+							"const secretRaw = `${clientidBase64}:${passwordBase64}`;",
+							"const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);",
+							"const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);",
+							"",
+							"pm.collectionVariables.set('client', secretBase64);",
+							"pm.collectionVariables.set('token', \"\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set('token', jsonData.access_token);"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Itinerary",
 			"item": [
 				{
 					"name": "Minimal data request",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -50,16 +193,6 @@
 				{
 					"name": "2 seg - 1 fare component- 1xADT_1xCNN",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -88,16 +221,6 @@
 				{
 					"name": "2 seg - 2 fare components (RT)",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -126,16 +249,6 @@
 				{
 					"name": "1 seg - 1 fare component -Text based penalties and breakdown (date ranges)",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -164,16 +277,6 @@
 				{
 					"name": "Text Based Penalties",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -202,16 +305,6 @@
 				{
 					"name": "2 segs - fare components - buying date",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -240,16 +333,6 @@
 				{
 					"name": "ARUNK - embeded in FC1",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -283,16 +366,6 @@
 				{
 					"name": "2xTICKET_different price options",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -321,16 +394,6 @@
 				{
 					"name": "1XTICKET",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{ATH}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -364,7 +427,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{ATH}}",
+				"value": "{{token}}",
 				"type": "string"
 			}
 		]
@@ -375,8 +438,7 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"const athToken = pm.collectionVariables.get('ATH').replace(/^ATH:/, '').replace(/‡/g, '!').replace(/\\s+/g, '');",
-					"pm.collectionVariables.set('ATH', athToken);"
+					""
 				]
 			}
 		},
@@ -402,14 +464,39 @@
 			"type": "string"
 		},
 		{
-			"key": "ATH",
-			"value": "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTC!ICESMSLB\\/CRT.LB!1769165319086!3157!553!2!E2E-1",
-			"type": "string"
-		},
-		{
 			"key": "WEBSERVICE",
 			"value": "https://webservices.global.apps.certpci.sabre-gcp.com/utils/mom/SWSMOM",
 			"type": "string"
+		},
+		{
+			"key": "TOKEN_SERVICE",
+			"value": "https://api.cert.platform.sabre.com",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "client",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "pcc",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "default"
 		}
 	]
 }

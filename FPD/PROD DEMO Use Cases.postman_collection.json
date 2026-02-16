@@ -1,424 +1,604 @@
 {
-  "info": {
-    "name": "Flight Policy Display - PROD DEMOS",
-    "description": "Sabre Flight Policy Display API Collection - Production Demo Use Cases",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "flight-policy-display-prod-demos",
-    "version": "1.0.0"
-  },
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{ATH}}",
-        "type": "string"
-      }
-    ]
-  },
-  "variable": [
-    {
-      "key": "URL_ITINERARY",
-      "value": "https://api.platform.sabre.com/v1/itinerary/getFlightPolicy",
-      "type": "string"
-    },
-    {
-      "key": "URL_TICKET",
-      "value": "https://api.platform.sabre.com/v1/ticket/getFlightPolicy",
-      "type": "string"
-    },
-    {
-      "key": "ATH",
-      "value": "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESE!ICESMSLB\\/RES.LB!1764850760805!641!537!2!E2E-1",
-      "type": "string"
-    },
-    {
-      "key": "WEBSERVICE",
-      "value": "https://webservices.global.apps.certpci.sabre-gcp.com/utils/mom/SWSMOM",
-      "type": "string"
-    }
-  ],
-  "item": [
-    {
-      "name": "1 fare component, 2 segs",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1 FC, 2 segs, Return Fare Component Penalites and Breakdown",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true,\n    \"returnPenaltyBreakdown\": true\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT_RETURN_PENALTY_BREAKDOWN",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT_with Breakdown and BuyDate OW",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESD!ICESMSLB\\/RES.LB!1764956335418!4457!521!2!E2E-1",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"arrivalDate\": \"2025-10-01\",\n              \"arrivalTime\": \"15:00\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"arrivalDate\": \"2025-10-02\",\n              \"arrivalTime\": \"15:00\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"buyingDateTime\": \"2025-06-02T17:00:00\"\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT_RETURN_FARE_COMPONENT_PENALTIES",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT_1xCHD",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"CHD\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT_RETURN_FARE_COMPONENT_PENALTIES_AND_BREAKDOWN",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true,\n    \"returnPenaltyBreakdown\": true\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "3xADT_1xCHD_1xINF",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 3\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"CHD\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"INF\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "ARUNK",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESF!ICESMSLB\\/RES.LB!1767731198037!5378!521!2!E2E-1",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2026-05-20\",\n              \"departureTime\": \"15:05\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"arrivalDate\": \"2026-05-20\",\n              \"arrivalTime\": \"16:15\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 3333,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"E\"\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2026-05-20\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"arrivalDate\": \"2026-05-21\",\n              \"arrivalTime\": \"10:35\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 655,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"E\"\n            },\n            {\n              \"segmentType\": \"K\",\n              \"departureAirportCode\": \"MNL\",\n              \"arrivalAirportCode\": \"DPL\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2026-02-06T16:12:00\"\n            }\n          ]\n        },\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DPL\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"07:20\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"08:40\",\n              \"operatingAirlineCode\": \"2P\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 2558,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            },\n            {\n              \"departureAirportCode\": \"MNL\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"12:05\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"17:10\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 654,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            },\n             {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"21:05\",\n              \"arrivalAirportCode\": \"DMM\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"22:10\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 3330,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"buyingDateTime\": \"2026-02-02T17:00:00\"\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xTICKET_RETURN_PENALTY_BREAKDOWN with Cat16",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESF!ICESMSLB\\/RES.LB!1767731198037!5378!521!2!E2E-1",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"passengerTickets\": [\n      {\n        \"ticketNumber\": \"1277335867510\",\n        \"priceOptions\": {\n          \"returnPenaltyBreakdown\": true,\n          \"returnFareComponentPenalties\": true,\n            \"returnTextBasedPenalties\": {\n        \"itemTypes\": [\n          \"All\"\n        ]\n        }\n      }\n      }\n      ]\n  }",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_TICKET}}",
-          "host": [
-            "{{URL_TICKET}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "2 OWs",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"B00QP5ZI\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"IQQ\",\n              \"departureDate\": \"2025-11-14\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"SCL\",\n              \"operatingAirlineCode\": \"LA\",\n              \"marketingAirlineCode\": \"LA\",\n              \"bookingDateTime\": \"2025-10-25T12:25:07\",\n              \"bookingClassCode\": \"B\"\n            }\n          ]\n        },\n          {\n            \"fareBasisCode\": \"B00QP5ZI\",\n              \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"SCL\",\n              \"departureDate\": \"2025-11-14\",\n              \"departureTime\": \"19:45\",\n              \"arrivalAirportCode\": \"LSC\",\n              \"operatingAirlineCode\": \"LA\",\n              \"marketingAirlineCode\": \"LA\",\n              \"bookingDateTime\": \"2025-10-25T12:25:07\",\n              \"bookingClassCode\": \"B\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"returnFareComponentPenalties\": true\n  }\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT with Dates RT",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"GMP\",\n              \"departureDate\": \"2025-10-16\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"KIX\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n            ]\n        },\n           {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"KIX\",\n              \"departureDate\": \"2025-10-20\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"GMP\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n   \"priceOptions\": {\n    \"returnPenaltyBreakdown\": false,\n      \"returnFareComponentPenalties\": false\n}\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    },
-    {
-      "name": "1xADT with Min Max stay RT",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"GMP\",\n              \"departureDate\": \"2025-10-16\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"KIX\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n            ]\n        },\n           {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"KIX\",\n              \"departureDate\": \"2025-10-20\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"GMP\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n   \"priceOptions\": {\n    \"returnPenaltyBreakdown\": false,\n      \"returnFareComponentPenalties\": false\n}\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{URL_ITINERARY}}",
-          "host": [
-            "{{URL_ITINERARY}}"
-          ]
-        }
-      }
-    }
-  ]
+	"info": {
+		"_postman_id": "9ba60ef9-9aaf-499c-ba27-f6cffc23e888",
+		"name": "Flight Policy Display - PROD DEMOS",
+		"description": "Sabre Flight Policy Display API Collection - Production Demo Use Cases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "get ATK token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{client}}"
+							},
+							{
+								"key": "grant_type",
+								"value": "client_credentials"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type: client_credentials",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{TOKEN_SERVICE}}/v2/auth/token",
+							"host": [
+								"{{TOKEN_SERVICE}}"
+							],
+							"path": [
+								"v2",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ATH token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{client}}"
+							},
+							{
+								"key": "grant_type",
+								"value": "client_credentials"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type: client_credentials",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{TOKEN_SERVICE}}/v1/auth/token",
+							"host": [
+								"{{TOKEN_SERVICE}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const username = pm.collectionVariables.get('username');",
+							"const pcc = pm.collectionVariables.get('pcc');",
+							"const passwordRaw = pm.collectionVariables.get('password');",
+							"",
+							"const clientidRaw = `V1:${username}:${pcc}:AA`;",
+							"const clientidArray = CryptoJS.enc.Utf8.parse(clientidRaw);",
+							"const clientidBase64 = CryptoJS.enc.Base64.stringify(clientidArray);",
+							"const passwordArray = CryptoJS.enc.Utf8.parse(passwordRaw);",
+							"const passwordBase64 = CryptoJS.enc.Base64.stringify(passwordArray);",
+							"const secretRaw = `${clientidBase64}:${passwordBase64}`;",
+							"const secretArray = CryptoJS.enc.Utf8.parse(secretRaw);",
+							"const secretBase64 = CryptoJS.enc.Base64.stringify(secretArray);",
+							"",
+							"pm.collectionVariables.set('client', secretBase64);",
+							"pm.collectionVariables.set('token', \"\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set('token', jsonData.access_token);"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "1 fare component, 2 segs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1 FC, 2 segs, Return Fare Component Penalites and Breakdown",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true,\n    \"returnPenaltyBreakdown\": true\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT_RETURN_PENALTY_BREAKDOWN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT_with Breakdown and BuyDate OW",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"arrivalDate\": \"2025-10-01\",\n              \"arrivalTime\": \"15:00\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"arrivalDate\": \"2025-10-02\",\n              \"arrivalTime\": \"15:00\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"buyingDateTime\": \"2025-06-02T17:00:00\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT_RETURN_FARE_COMPONENT_PENALTIES",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT_1xCHD",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"CHD\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT_RETURN_FARE_COMPONENT_PENALTIES_AND_BREAKDOWN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnFareComponentPenalties\": true,\n    \"returnPenaltyBreakdown\": true\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3xADT_1xCHD_1xINF",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 3\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"CHD\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"INF\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"ticketDesignator\": \"MOB\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2025-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            },\n            {\n              \"departureAirportCode\": \"ADD\",\n              \"departureDate\": \"2025-10-02\",\n              \"departureTime\": \"00:25\",\n              \"arrivalAirportCode\": \"DAR\",\n              \"operatingAirlineCode\": \"ET\",\n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\",\n              \"bookingClassCode\": \"S\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ARUNK",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2026-05-20\",\n              \"departureTime\": \"15:05\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"arrivalDate\": \"2026-05-20\",\n              \"arrivalTime\": \"16:15\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 3333,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"E\"\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2026-05-20\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"arrivalDate\": \"2026-05-21\",\n              \"arrivalTime\": \"10:35\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 655,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"E\"\n            },\n            {\n              \"segmentType\": \"K\",\n              \"departureAirportCode\": \"MNL\",\n              \"arrivalAirportCode\": \"DPL\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2026-02-06T16:12:00\"\n            }\n          ]\n        },\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DPL\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"07:20\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"08:40\",\n              \"operatingAirlineCode\": \"2P\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 2558,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            },\n            {\n              \"departureAirportCode\": \"MNL\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"12:05\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"17:10\",\n              \"operatingAirlineCode\": \"PR\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 654,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            },\n             {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2026-05-25\",\n              \"departureTime\": \"21:05\",\n              \"arrivalAirportCode\": \"DMM\",\n              \"arrivalDate\": \"2026-05-25\",\n              \"arrivalTime\": \"22:10\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"flightNumber\": 3330,\n              \"bookingDateTime\": \"2026-02-06T16:12:00\",\n              \"bookingClassCode\": \"T\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"buyingDateTime\": \"2026-02-02T17:00:00\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xTICKET_RETURN_PENALTY_BREAKDOWN with Cat16",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"passengerTickets\": [\n      {\n        \"ticketNumber\": \"1277335867510\",\n        \"priceOptions\": {\n          \"returnPenaltyBreakdown\": true,\n          \"returnFareComponentPenalties\": true,\n            \"returnTextBasedPenalties\": {\n        \"itemTypes\": [\n          \"All\"\n        ]\n        }\n      }\n      }\n      ]\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_TICKET}}",
+					"host": [
+						"{{URL_TICKET}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 OWs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"B00QP5ZI\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"IQQ\",\n              \"departureDate\": \"2025-11-14\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"SCL\",\n              \"operatingAirlineCode\": \"LA\",\n              \"marketingAirlineCode\": \"LA\",\n              \"bookingDateTime\": \"2025-10-25T12:25:07\",\n              \"bookingClassCode\": \"B\"\n            }\n          ]\n        },\n          {\n            \"fareBasisCode\": \"B00QP5ZI\",\n              \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"SCL\",\n              \"departureDate\": \"2025-11-14\",\n              \"departureTime\": \"19:45\",\n              \"arrivalAirportCode\": \"LSC\",\n              \"operatingAirlineCode\": \"LA\",\n              \"marketingAirlineCode\": \"LA\",\n              \"bookingDateTime\": \"2025-10-25T12:25:07\",\n              \"bookingClassCode\": \"B\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"priceOptions\": {\n    \"returnPenaltyBreakdown\": true,\n    \"returnFareComponentPenalties\": true\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT with Dates RT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"GMP\",\n              \"departureDate\": \"2025-10-16\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"KIX\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n            ]\n        },\n           {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"KIX\",\n              \"departureDate\": \"2025-10-20\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"GMP\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n   \"priceOptions\": {\n    \"returnPenaltyBreakdown\": false,\n      \"returnFareComponentPenalties\": false\n}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1xADT with Min Max stay RT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"GMP\",\n              \"departureDate\": \"2025-10-16\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"KIX\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n            ]\n        },\n           {\n          \"fareBasisCode\": \"QLKJ\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"KIX\",\n              \"departureDate\": \"2025-10-20\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"GMP\",\n              \"operatingAirlineCode\": \"OZ\",\n              \"marketingAirlineCode\": \"OZ\",\n              \"bookingDateTime\": \"2025-09-08T12:25:07\",\n              \"bookingClassCode\": \"Q\"\n            }\n          ]\n        }\n      ]\n    }\n  ],\n   \"priceOptions\": {\n    \"returnPenaltyBreakdown\": false,\n      \"returnFareComponentPenalties\": false\n}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_ITINERARY}}",
+					"host": [
+						"{{URL_ITINERARY}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_ITINERARY",
+			"value": "https://api.platform.sabre.com/v1/itinerary/getFlightPolicy",
+			"type": "string"
+		},
+		{
+			"key": "URL_TICKET",
+			"value": "https://api.platform.sabre.com/v1/ticket/getFlightPolicy",
+			"type": "string"
+		},
+		{
+			"key": "WEBSERVICE",
+			"value": "https://webservices.global.apps.certpci.sabre-gcp.com/utils/mom/SWSMOM",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN_SERVICE",
+			"value": "https://api.platform.sabre.com",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "client",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "pcc",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "default"
+		}
+	]
 }
