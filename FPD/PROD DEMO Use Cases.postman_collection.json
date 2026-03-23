@@ -440,7 +440,7 @@
       "response": []
     },
     {
-      "name": "1xTICKET_RETURN_PENALTY_BREAKDOWN with Cat16 with diagnostic",
+      "name": "1xTICKET_RETURN_PENALTY_BREAKDOWN with Cat16 with diagnostics",
       "request": {
         "method": "POST",
         "header": [
@@ -459,9 +459,9 @@
           }
         },
         "url": {
-          "raw": "{{URL_TICKET_WITH_DIAGNOSTIC}}",
+          "raw": "{{URL_TICKET_WITH_DIAGNOSTICS}}",
           "host": [
-            "{{URL_TICKET_WITH_DIAGNOSTIC}}"
+            "{{URL_TICKET_WITH_DIAGNOSTICS}}"
           ]
         }
       },
@@ -563,7 +563,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"diagnostics\": [\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ESSM\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"TICKETING\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ATSEV2\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"FI\"\n    }\n  ]\n}",
+          "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n        \"passengerTypeCode\": \"ADT\",\n        \"quantity\": 1\n      },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"TSVFMEC\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"DMM\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"13:00\",\n              \"arrivalAirportCode\": \"RUH\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 3331\n            },\n            {\n              \"departureAirportCode\": \"RUH\",\n              \"departureDate\": \"2025-10-25\",\n              \"departureTime\": \"18:55\",\n              \"arrivalAirportCode\": \"MNL\",\n              \"operatingAirlineCode\": \"SV\",\n              \"marketingAirlineCode\": \"PR\",\n              \"bookingDateTime\": \"2025-07-06T16:12:00\",\n              \"bookingClassCode\": \"T\",\n              \"flightNumber\": 655\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"diagnostics\": [\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ESSM\"\n    },\n       {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ATSEV2\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"FI\"\n    }\n  ]\n}",
           "options": {
             "raw": {
               "language": "json"

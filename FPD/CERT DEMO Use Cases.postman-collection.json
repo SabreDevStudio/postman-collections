@@ -359,7 +359,7 @@
           "response": []
         },
         {
-          "name": "Minimal Itinerary with diagnotics",
+          "name": "Minimal Itinerary with diagnostics",
           "request": {
             "method": "POST",
             "header": [
@@ -370,7 +370,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2026-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n          \n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\"\n             \n            }\n            \n          ]\n        }\n      ]\n    }\n  ],\n    \"diagnostics\": [\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ESSM\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"TICKETING\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ATSEV2\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"FI\"\n    }\n  ]\n}",
+              "raw": "{\n  \"fares\": [\n    {\n      \"passenger\": {\n          \"passengerTypeCode\": \"ADT\",\n          \"quantity\": 1\n        },\n      \"fareComponents\": [\n        {\n          \"fareBasisCode\": \"SRTZM\",\n          \"segmentDetails\": [\n            {\n              \"departureAirportCode\": \"NLA\",\n              \"departureDate\": \"2026-10-01\",\n              \"departureTime\": \"12:45\",\n              \"arrivalAirportCode\": \"ADD\",\n          \n              \"marketingAirlineCode\": \"ET\",\n              \"bookingDateTime\": \"2025-04-16T12:25:07\"\n             \n            }\n            \n          ]\n        }\n      ]\n    }\n  ],\n    \"diagnostics\": [\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ESSM\"\n    },\n     {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"ATSEV2\"\n    },\n    {\n      \"name\": \"REQUESTRESPONSE\",\n      \"target\": \"FI\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -448,7 +448,7 @@
           "response": []
         },
         {
-          "name": "1XTICKET",
+          "name": "1XTICKET with diagnostics",
           "request": {
             "method": "POST",
             "header": [
@@ -467,9 +467,9 @@
               }
             },
             "url": {
-              "raw": "{{URL_TICKET}}",
+              "raw": "{{URL_TICKET_WITH_DIAGNOSTICS}}",
               "host": [
-                "{{URL_TICKET}}"
+                "{{URL_TICKET_WITH_DIAGNOSTICS}}"
               ]
             }
           },
