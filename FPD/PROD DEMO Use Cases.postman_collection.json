@@ -618,7 +618,7 @@
     },
     {
       "key": "URL_ITINERARY_WITH_DIAGNOSTICS",
-      "value": "https://air-policy-display-air-policy-display-prod.apps.prod-01.us-central1.prod.sabre-gpc.com/v1/diagnostics/itinerary/getFlightPolicy",
+      "value": "https://air-policy-display-air-policy-display-prod.apps.prod-01.us-central1.prod.sabre-gcp.com/v1/diagnostics/itinerary/getFlightPolicy",
       "type": "string"
     },
     {
@@ -628,7 +628,7 @@
     },
     {
       "key": "URL_TICKET_WITH_DIAGNOSTICS",
-      "value": "https://air-policy-display-air-policy-display-prod.apps.prod-01.us-central1.prod.sabre-gpc.com/v1/diagnostics/ticket/getFlightPolicy",
+      "value": "https://air-policy-display-air-policy-display-prod.apps.prod-01.us-central1.prod.sabre-gcp.com/v1/diagnostics/ticket/getFlightPolicy",
       "type": "string"
     },
     {
