@@ -28595,6 +28595,90 @@
 											"response": []
 										},
 										{
+											"name": "GetBooking - retrieve bookingSignature",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"response is ok\", function () {\r",
+															"    pm.response.to.be.ok;\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"response must be valid and have a body\", function () {\r",
+															"    // this assertion also checks if a body  exists\r",
+															"     pm.response.to.be.json; \r",
+															"});\r",
+															"\r",
+															"var jsonData = JSON.parse(responseBody);\r",
+															"postman.setEnvironmentVariable(\"bookingSignature\", jsonData.bookingSignature);\r",
+															"\r",
+															"let getBookingResponseBody = JSON.stringify(jsonData);\r",
+															"postman.setEnvironmentVariable(\"getBookingResponseBody\", getBookingResponseBody);\r",
+															"\r",
+															"console.log(pm.environment.get('bookingSignature') + \" <- bookingSignature\");"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Group",
+														"value": "U9PK",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Current-City",
+														"value": "U9PK",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												},
+												"description": "### <br>"
+											},
+											"response": []
+										},
+										{
 											"name": "ModifyBooking - Add",
 											"event": [
 												{
@@ -28638,6 +28722,118 @@
 														"modifyBooking"
 													]
 												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking - retrieve bookingSignature get ancillary info",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"response is ok\", function () {\r",
+															"    pm.response.to.be.ok;\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"response must be valid and have a body\", function () {\r",
+															"    // this assertion also checks if a body  exists\r",
+															"     pm.response.to.be.json; \r",
+															"});\r",
+															"\r",
+															"var jsonData = JSON.parse(responseBody);\r",
+															"postman.setEnvironmentVariable(\"bookingSignature\", jsonData.bookingSignature);\r",
+															"\r",
+															"let getBookingResponseBody = JSON.stringify(jsonData);\r",
+															"postman.setEnvironmentVariable(\"getBookingResponseBody\", getBookingResponseBody);\r",
+															"\r",
+															"console.log(pm.environment.get('bookingSignature') + \" <- bookingSignature\");\r",
+															"\r",
+															"let responseData = pm.response.json();\r",
+															"\r",
+															"let itemId = responseData.flights?.[0]?.itemId;\r",
+															"pm.environment.set(\"itemId\", itemId);\r",
+															"console.log(\"ItemId:\", itemId);\r",
+															"\r",
+															"const ancillaries = responseData?.travelers?.[0]?.ancillaries;\r",
+															"\r",
+															"if (ancillaries && ancillaries.length > 0) {\r",
+															"\r",
+															"    const ancillary = ancillaries[0];\r",
+															"\r",
+															"    pm.environment.set(\"ancillaryItemId\", ancillary.itemId);\r",
+															"    pm.environment.set(\"ancillaryCommercialName\", ancillary.commercialName);\r",
+															"    pm.environment.set(\"ancillaryNumberOfItems\", ancillary.numberOfItems);\r",
+															"    pm.environment.set(\"ancillaryReasonForIssuanceCode\", ancillary.reasonForIssuanceCode);\r",
+															"    pm.environment.set(\"ancillarySource\", ancillary.source);\r",
+															"    pm.environment.set(\"ancillaryIsRefundable\", ancillary.isRefundable);\r",
+															"    pm.environment.set(\"ancillaryIsCommissionable\", ancillary.isCommissionable);\r",
+															"    pm.environment.set(\"ancillaryFlightApplicabilityType\", ancillary.flightApplicabilityType);\r",
+															"    pm.environment.set(\"ancillaryStatusCode\", ancillary.statusCode);\r",
+															"    pm.environment.set(\"ancillaryStatusName\", ancillary.statusName);\r",
+															"\r",
+															"    console.log(\"Ancillary variables saved to environment.\");\r",
+															"} else {\r",
+															"    console.log(\"No ancillaries found.\");\r",
+															"}"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Group",
+														"value": "U9PK",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Current-City",
+														"value": "U9PK",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												},
+												"description": "### <br>"
 											},
 											"response": []
 										},
@@ -44541,6 +44737,1587 @@
 													]
 												},
 												"description": "Used to close stateful sessions on Sabre's Passenger Sales System"
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Modify ancillaries",
+							"item": [
+								{
+									"name": "Add ancillaries",
+									"item": [
+										{
+											"name": "SessionCreateRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "text/xml"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2019.09.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n    \t\n<SessionCreateRQ returnContextID=\"true\">\n\t<POS>\n\t\t<Source PseudoCityCode=\"{{pcc}}\"/>\n\t</POS>\n</SessionCreateRQ>\n\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+												},
+												"url": {
+													"raw": "{{soap_endpoint}}",
+													"host": [
+														"{{soap_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Bargain Finder Max /v3 (Stateless ATK) SIN, SYD",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "{{conv_id}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"4\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"RPH\": \"0\"\n            },\n            {\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"RPH\": \"1\"\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"QF\"\n                }\n            ],\n            \"MaxStopsQuantity\": 0,\n            \"CabinPref\": [\n                {\n                    \"PreferLevel\": \"Preferred\",\n                    \"Cabin\": \"Y\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 2\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Enable\",\n                    \"ATPCO\": \"Disable\",\n                    \"LCC\": \"Disable\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v4/offers/shop",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v4",
+														"offers",
+														"shop"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Offers Price /v1 (Stateless ATK)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "conversation-id-value",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"query\": [\n        {\n            \"offerItemId\": [\n                \"{{shop_offer_item_id}}\"\n            ]\n        }\n    ],\n    \"params\": {\n        \"formOfPayment\": [\n            {\n                \"binNumber\": \"545251\",\n                \"subCode\": \"FDA\",\n                \"cardType\" : \"MC\"\n            }\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/offers/price",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"offers",
+														"price"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "CreateBooking NDC",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"flightOffer\": {\n        \"offerId\": \"{{price_offer_id}}\",\n        \"selectedOfferItems\": [\n            \"{{price_offer_item_id}}\"\n        ]\n    },\n    \"travelers\": [\n        {\n            \"id\": \"{{price_passenger_id}}\",\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1975-09-01\",\n            \"gender\": \"MALE\",\n            \"type\": \"ADULT\",\n            \"passengerCode\": \"ADT\",\n            \"emails\": [\n                \"Smith@SABRE.COM\"\n            ],\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ],\n            \"identityDocuments\": [\n                {\n                    \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                    \"birthDate\": \"1975-09-01\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\"\n        ],\n        \"phones\": [\n            \"123456\"\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"createBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking - retrieve bookingSignature",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"response is ok\", function () {\r",
+															"    pm.response.to.be.ok;\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"response must be valid and have a body\", function () {\r",
+															"    // this assertion also checks if a body  exists\r",
+															"     pm.response.to.be.json; \r",
+															"});\r",
+															"\r",
+															"var jsonData = JSON.parse(responseBody);\r",
+															"postman.setEnvironmentVariable(\"bookingSignature\", jsonData.bookingSignature);\r",
+															"\r",
+															"let getBookingResponseBody = JSON.stringify(jsonData);\r",
+															"postman.setEnvironmentVariable(\"getBookingResponseBody\", getBookingResponseBody);\r",
+															"\r",
+															"console.log(pm.environment.get('bookingSignature') + \" <- bookingSignature\");\r",
+															"\r",
+															"pm.environment.set(\"bookingId\", jsonData.bookingId);"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Group",
+														"value": "U9PK",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Current-City",
+														"value": "U9PK",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												},
+												"description": "### <br>"
+											},
+											"response": []
+										},
+										{
+											"name": "GetAncillaryOffersRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const body = pm.response.json();\r",
+															"\r",
+															"function findFirstOfferItemId(node) {\r",
+															"    if (!node || typeof node !== 'object') return null;\r",
+															"\r",
+															"    if (Object.prototype.hasOwnProperty.call(node, 'offerItemId')) {\r",
+															"        return node.offerItemId;\r",
+															"    }\r",
+															"\r",
+															"    if (Array.isArray(node)) {\r",
+															"        for (const item of node) {\r",
+															"            const found = findFirstOfferItemId(item);\r",
+															"            if (found) return found;\r",
+															"        }\r",
+															"    } else {\r",
+															"        for (const key of Object.keys(node)) {\r",
+															"            const found = findFirstOfferItemId(node[key]);\r",
+															"            if (found) return found;\r",
+															"        }\r",
+															"    }\r",
+															"    return null;\r",
+															"}\r",
+															"\r",
+															"const offerItemId = findFirstOfferItemId(body);\r",
+															"pm.environment.set('ancillaryOfferItemId', offerItemId);\r",
+															"console.log('ancillaryOfferItemId:', offerItemId);\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"request\": {\n        \"orderId\": \"{{bookingId}}\"\n    },\n    \"requestType\": \"orderId\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v2/offers/getAncillaries",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v2",
+														"offers",
+														"getAncillaries"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ModifyBooking",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"const expectedErrors = [\r",
+															"        {\r",
+															"            \"category\": \"BAD_REQUEST\",\r",
+															"            \"type\": \"UNABLE_TO_MODIFY_BOOKING_EXTRA_TRAVELER\",\r",
+															"            \"description\": \"The number of travelers does not equal the number of booked space. Operation is not supported.\",\r",
+															"            \"fieldPath\": \"ModifyBookingRequest.after\",\r",
+															"            \"fieldName\": \"travelers[]\"\r",
+															"        }\r",
+															"    ];\r",
+															"\r",
+															"    pm.test(\"Assert expected errors are occured\", function () {\r",
+															"    pm.expect(jsonData.errors).to.eql(expectedErrors);\r",
+															"\r",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bookingSignature\": \"{{bookingSignature}}\",\n    \"confirmationId\": \"{{pnr}}\",\n    \"before\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ]\n            }\n        ],\n        \"contactInfo\": {\n            \"emails\": [\n                \"travel@sabre.com\"\n            ],\n            \"phones\": [\n                \"123456\"\n            ]\n        }\n    },\n    \"after\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ],\n                \"ancillaries\": [\n                    {\n                        \"offerId\": \"{{ancillaryOfferItemId}}\"\n                    }\n                ]\n            }\n        ],\n        \"contactInfo\": {\n            \"emails\": [\n                \"travel@sabre.com\"\n            ],\n            \"phones\": [\n                \"123456\"\n            ]\n        }\n    },\n    \"retrieveBooking\": true,\n    \"receivedFrom\": \"Booking Management API testing\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/modifyBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"modifyBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Remove ancillaries",
+									"item": [
+										{
+											"name": "SessionCreateRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "text/xml"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2019.09.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n    \t\n<SessionCreateRQ returnContextID=\"true\">\n\t<POS>\n\t\t<Source PseudoCityCode=\"{{pcc}}\"/>\n\t</POS>\n</SessionCreateRQ>\n\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+												},
+												"url": {
+													"raw": "{{soap_endpoint}}",
+													"host": [
+														"{{soap_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Bargain Finder Max /v3 (Stateless ATK) SIN, SYD",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "{{conv_id}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"4\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"RPH\": \"0\"\n            },\n            {\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"RPH\": \"1\"\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"QF\"\n                }\n            ],\n            \"MaxStopsQuantity\": 0,\n            \"CabinPref\": [\n                {\n                    \"PreferLevel\": \"Preferred\",\n                    \"Cabin\": \"Y\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 2\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Enable\",\n                    \"ATPCO\": \"Disable\",\n                    \"LCC\": \"Disable\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 1\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v4/offers/shop",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v4",
+														"offers",
+														"shop"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Offers Price /v1 (Stateless ATK)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "conversation-id-value",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"query\": [\n        {\n            \"offerItemId\": [\n                \"{{shop_offer_item_id}}\"\n            ]\n        }\n    ],\n    \"params\": {\n        \"formOfPayment\": [\n            {\n                \"binNumber\": \"545251\",\n                \"subCode\": \"FDA\",\n                \"cardType\" : \"MC\"\n            }\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/offers/price",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"offers",
+														"price"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "CreateBooking NDC",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"flightOffer\": {\n        \"offerId\": \"{{price_offer_id}}\",\n        \"selectedOfferItems\": [\n            \"{{price_offer_item_id}}\"\n        ]\n    },\n    \"travelers\": [\n        {\n            \"id\": \"{{price_passenger_id}}\",\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1975-09-01\",\n            \"gender\": \"MALE\",\n            \"type\": \"ADULT\",\n            \"passengerCode\": \"ADT\",\n            \"emails\": [\n                \"Smith@SABRE.COM\"\n            ],\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ],\n            \"identityDocuments\": [\n                {\n                    \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                    \"birthDate\": \"1975-09-01\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\"\n        ],\n        \"phones\": [\n            \"123456\"\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/createBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"createBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking - retrieve bookingSignature",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"response is ok\", function () {\r",
+															"    pm.response.to.be.ok;\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"response must be valid and have a body\", function () {\r",
+															"    // this assertion also checks if a body  exists\r",
+															"     pm.response.to.be.json; \r",
+															"});\r",
+															"\r",
+															"var jsonData = JSON.parse(responseBody);\r",
+															"postman.setEnvironmentVariable(\"bookingSignature\", jsonData.bookingSignature);\r",
+															"\r",
+															"let getBookingResponseBody = JSON.stringify(jsonData);\r",
+															"postman.setEnvironmentVariable(\"getBookingResponseBody\", getBookingResponseBody);\r",
+															"\r",
+															"console.log(pm.environment.get('bookingSignature') + \" <- bookingSignature\");\r",
+															"\r",
+															"pm.environment.set(\"bookingId\", jsonData.bookingId);"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Group",
+														"value": "U9PK",
+														"type": "text"
+													},
+													{
+														"key": "X-Sabre-Current-City",
+														"value": "U9PK",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												},
+												"description": "### <br>"
+											},
+											"response": []
+										},
+										{
+											"name": "GetAncillaryOffersRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const body = pm.response.json();\r",
+															"\r",
+															"function findFirstOfferItemId(node) {\r",
+															"    if (!node || typeof node !== 'object') return null;\r",
+															"\r",
+															"    if (Object.prototype.hasOwnProperty.call(node, 'offerItemId')) {\r",
+															"        return node.offerItemId;\r",
+															"    }\r",
+															"\r",
+															"    if (Array.isArray(node)) {\r",
+															"        for (const item of node) {\r",
+															"            const found = findFirstOfferItemId(item);\r",
+															"            if (found) return found;\r",
+															"        }\r",
+															"    } else {\r",
+															"        for (const key of Object.keys(node)) {\r",
+															"            const found = findFirstOfferItemId(node[key]);\r",
+															"            if (found) return found;\r",
+															"        }\r",
+															"    }\r",
+															"    return null;\r",
+															"}\r",
+															"\r",
+															"const offerItemId = findFirstOfferItemId(body);\r",
+															"pm.environment.set('ancillaryOfferItemId', offerItemId);\r",
+															"console.log('ancillaryOfferItemId:', offerItemId);\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"request\": {\n        \"orderId\": \"{{bookingId}}\"\n    },\n    \"requestType\": \"orderId\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v2/offers/getAncillaries",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v2",
+														"offers",
+														"getAncillaries"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ModifyBooking - Add",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"const expectedErrors = [\r",
+															"        {\r",
+															"            \"category\": \"BAD_REQUEST\",\r",
+															"            \"type\": \"UNABLE_TO_MODIFY_BOOKING_EXTRA_TRAVELER\",\r",
+															"            \"description\": \"The number of travelers does not equal the number of booked space. Operation is not supported.\",\r",
+															"            \"fieldPath\": \"ModifyBookingRequest.after\",\r",
+															"            \"fieldName\": \"travelers[]\"\r",
+															"        }\r",
+															"    ];\r",
+															"\r",
+															"    pm.test(\"Assert expected errors are occured\", function () {\r",
+															"    pm.expect(jsonData.errors).to.eql(expectedErrors);\r",
+															"\r",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bookingSignature\": \"{{bookingSignature}}\",\n    \"confirmationId\": \"{{pnr}}\",\n    \"before\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ]\n            }\n        ],\n        \"contactInfo\": {\n            \"emails\": [\n                \"travel@sabre.com\"\n            ],\n            \"phones\": [\n                \"123456\"\n            ]\n        }\n    },\n    \"after\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ],\n                \"ancillaries\": [\n                    {\n                        \"offerId\": \"{{ancillaryOfferItemId}}\"\n                    }\n                ]\n            }\n        ],\n        \"contactInfo\": {\n            \"emails\": [\n                \"travel@sabre.com\"\n            ],\n            \"phones\": [\n                \"123456\"\n            ]\n        }\n    },\n    \"retrieveBooking\": true,\n    \"receivedFrom\": \"Booking Management API testing\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/modifyBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"modifyBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const response = pm.response.json();\r",
+															"\r",
+															"response.travelers?.forEach(traveler => {\r",
+															"    traveler.ancillaries?.forEach(anc => {\r",
+															"        if (anc.statusCode === \"PN\") {\r",
+															"            throw new Error(`Ancillary has status PN. Please wait until it changes to HK before removing it.`);\r",
+															"        } else {\r",
+															"            pm.environment.set(\"anc_itemId\", anc.itemId);\r",
+															"            pm.environment.set(\"anc_commercialName\", anc.commercialName);\r",
+															"            pm.environment.set(\"anc_airlineCode\", anc.airlineCode);\r",
+															"            pm.environment.set(\"anc_statusCode\", anc.statusCode);\r",
+															"            if (anc.flights && anc.flights.length > 0) {\r",
+															"                pm.environment.set(\"anc_flightItemId\", anc.flights[0].itemId);\r",
+															"            }\r",
+															"        }\r",
+															"    });\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ModifyBooking - Remove",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"const expectedErrors = [\r",
+															"        {\r",
+															"            \"category\": \"BAD_REQUEST\",\r",
+															"            \"type\": \"UNABLE_TO_MODIFY_BOOKING_EXTRA_TRAVELER\",\r",
+															"            \"description\": \"The number of travelers does not equal the number of booked space. Operation is not supported.\",\r",
+															"            \"fieldPath\": \"ModifyBookingRequest.after\",\r",
+															"            \"fieldName\": \"travelers[]\"\r",
+															"        }\r",
+															"    ];\r",
+															"\r",
+															"    pm.test(\"Assert expected errors are occured\", function () {\r",
+															"    pm.expect(jsonData.errors).to.eql(expectedErrors);\r",
+															"\r",
+															"});"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bookingSignature\": \"{{bookingSignature}}\",\n    \"confirmationId\": \"{{pnr}}\",\n    \"before\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ],\n                \"ancillaries\": [\n                    {\n                        \"itemId\": \"{{anc_itemId}}\",\n                        \"commercialName\": \"{{anc_commercialName}}\",\n                        \"airlineCode\": \"{{anc_airlineCode}}\",\n                        \"flights\": [\n                            {\n                                \"itemId\": \"{{anc_flightItemId}}\"\n                            }\n                        ],\n                        \"statusCode\": \"{{anc_statusCode}}\"\n                    }\n                ]\n            }\n        ]\n    },\n    \"after\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ]\n            }\n        ]\n    },\n    \"retrieveBooking\": true,\n    \"receivedFrom\": \"Booking Management API testing\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/modifyBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"modifyBooking"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/trip/orders/getBooking",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"trip",
+														"orders",
+														"getBooking"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Add then delete - multi pax",
+									"item": [
+										{
+											"name": "SessionCreateRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "text/xml"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <SOAP-ENV:Header>\n        <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\n            <From>\n                <PartyId>Agency</PartyId>\n            </From>\n            <To>\n                <PartyId>Sabre_API</PartyId>\n            </To>\n            <ConversationId>2019.09.DevStudio</ConversationId>\n            <Action>SessionCreateRQ</Action>\n        </MessageHeader>\n        <Security xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">\n            <UsernameToken>\n                <Username>{{username}}</Username>\n                <Password>{{password}}</Password>\n                <Organization>{{pcc}}</Organization>\n                <Domain>DEFAULT</Domain>\n            </UsernameToken>\n        </Security>\n    </SOAP-ENV:Header>\n    <SOAP-ENV:Body>\n    \t\n<SessionCreateRQ returnContextID=\"true\">\n\t<POS>\n\t\t<Source PseudoCityCode=\"{{pcc}}\"/>\n\t</POS>\n</SessionCreateRQ>\n\n    </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>"
+												},
+												"url": {
+													"raw": "{{soap_endpoint}}",
+													"host": [
+														"{{soap_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Bargain Finder Max /v3 (Stateless ATK) SIN, SYD",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "{{conv_id}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"OTA_AirLowFareSearchRQ\": {\n        \"Version\": \"4\",\n        \"POS\": {\n            \"Source\": [\n                {\n                    \"PseudoCityCode\": \"{{pcc}}\",\n                    \"RequestorID\": {\n                        \"Type\": \"1\",\n                        \"ID\": \"1\",\n                        \"CompanyName\": {\n                            \"Code\": \"TN\"\n                        }\n                    }\n                }\n            ]\n        },\n        \"OriginDestinationInformation\": [\n            {\n                \"DepartureDateTime\": \"{{start_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"RPH\": \"0\"\n            },\n            {\n                \"DepartureDateTime\": \"{{end_date}}T00:00:00\",\n                \"OriginLocation\": {\n                    \"LocationCode\": \"SYD\"\n                },\n                \"DestinationLocation\": {\n                    \"LocationCode\": \"SIN\"\n                },\n                \"RPH\": \"1\"\n            }\n        ],\n        \"TravelPreferences\": {\n            \"VendorPref\": [\n                {\n                    \"Code\": \"QF\"\n                }\n            ],\n            \"MaxStopsQuantity\": 0,\n            \"CabinPref\": [\n                {\n                    \"PreferLevel\": \"Preferred\",\n                    \"Cabin\": \"Y\"\n                }\n            ],\n            \"TPA_Extensions\": {\n                \"NumTrips\": {\n                    \"Number\": 2\n                },\n                \"DataSources\": {\n                    \"NDC\": \"Enable\",\n                    \"ATPCO\": \"Disable\",\n                    \"LCC\": \"Disable\"\n                }\n            }\n        },\n        \"TravelerInfoSummary\": {\n            \"AirTravelerAvail\": [\n                {\n                    \"PassengerTypeQuantity\": [\n                        {\n                            \"Code\": \"ADT\",\n                            \"Quantity\": 2\n                        }\n                    ]\n                }\n            ],\n            \"PriceRequestInformation\": {\n                \"TPA_Extensions\": {\n                    \"BrandedFareIndicators\": {\n                        \"SingleBrandedFare\": true\n                    }\n                }\n            }\n        },\n        \"TPA_Extensions\": {\n            \"IntelliSellTransaction\": {\n                \"RequestType\": {\n                    \"Name\": \"200ITINS\"\n                }\n            }\n        }\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v4/offers/shop",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v4",
+														"offers",
+														"shop"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Offers Price /v1 (Stateless ATK)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Conversation-ID",
+														"value": "conversation-id-value",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"query\": [\n        {\n            \"offerItemId\": [\n                \"{{shop_offer_passenger_item_id}}\"\n            ]\n        }\n    ],\n    \"params\": {\n        \"formOfPayment\": [\n            {\n                \"binNumber\": \"545251\",\n                \"subCode\": \"FDA\",\n                \"cardType\" : \"MC\"\n            }\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v1/offers/price",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v1",
+														"offers",
+														"price"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "CreateBooking NDC",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"flightOffer\": {\n        \"offerId\": \"{{price_offer_id}}\",\n        \"selectedOfferItems\": [\n            \"{{price_offer_item_id}}\"\n        ]\n    },\n    \"travelers\": [\n        {\n            \"id\": \"{{price_passenger_id}}\",\n            \"givenName\": \"John\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1975-09-01\",\n            \"gender\": \"MALE\",\n            \"type\": \"ADULT\",\n            \"passengerCode\": \"ADT\",\n            \"emails\": [\n                \"Smith@SABRE.COM\"\n            ],\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ],\n            \"identityDocuments\": [\n                {\n                    \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                    \"birthDate\": \"1975-09-01\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        },\n        {\n            \"id\": \"{{price_passenger_id2}}\",\n            \"givenName\": \"Marry\",\n            \"surname\": \"Smith\",\n            \"birthDate\": \"1975-09-01\",\n            \"gender\": \"MALE\",\n            \"type\": \"ADULT\",\n            \"passengerCode\": \"ADT\",\n            \"emails\": [\n                \"Smith@SABRE.COM\"\n            ],\n            \"phones\": [\n                {\n                    \"number\": \"1231231\"\n                }\n            ],\n            \"identityDocuments\": [\n                {\n                    \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                    \"birthDate\": \"1975-09-01\",\n                    \"gender\": \"MALE\"\n                }\n            ]\n        }\n    ],\n    \"contactInfo\": {\n        \"emails\": [\n            \"travel@sabre.com\"\n        ],\n        \"phones\": [\n            \"123456\"\n        ]\n    }\n}"
+												},
+												"url": {
+													"raw": "{{createBooking_endpoint}}",
+													"host": [
+														"{{createBooking_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking - retrieve bookingSignature",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const travelers = pm.response.json().travelers;\r",
+															"pm.environment.set(\"travelers\", `\"travelers\":` + JSON.stringify(travelers));"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{getBooking_endpoint}}",
+													"host": [
+														"{{getBooking_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetAncillaryOffersRQ",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"request\": {\n        \"orderId\": \"{{bookingId}}\"\n    },\n    \"requestType\": \"orderId\"\n}"
+												},
+												"url": {
+													"raw": "{{rest_endpoint}}/v2/offers/getAncillaries",
+													"host": [
+														"{{rest_endpoint}}"
+													],
+													"path": [
+														"v2",
+														"offers",
+														"getAncillaries"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ModifyBooking - add",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bookingSignature\": \"{{bookingSignature}}\",\n    \"confirmationId\": \"{{pnr}}\",\n    \"before\": {\n        {{travelers}}\n    },\n    \"after\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ],\n                \"ancillaries\": [\n                    {\n                        \"offerId\": \"{{passenger1_ancillary_3_OfferItemId}}\"\n                    },\n                    {\n                        \"offerId\": \"{{passenger1_ancillary_4_OfferItemId}}\"\n                    }\n                ]\n            },\n            {\n                \"givenName\": \"Marry\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ],\n                \"ancillaries\": [\n                    {\n                        \"offerId\": \"{{passenger2_ancillary_3_OfferItemId}}\"\n                    },\n                    {\n                        \"offerId\": \"{{passenger2_ancillary_4_OfferItemId}}\"\n                    }\n                ]\n            }\n        ]\n    },\n    \"retrieveBooking\": true,\n    \"receivedFrom\": \"Booking Management API testing\"\n}"
+												},
+												"url": {
+													"raw": "{{modifyBooking_endpoint}}",
+													"host": [
+														"{{modifyBooking_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "GetBooking",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const travelers = pm.response.json().travelers;\r",
+															"pm.environment.set(\"travelers\", `\"travelers\":` + JSON.stringify(travelers));"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"confirmationId\": \"{{pnr}}\"\n}"
+												},
+												"url": {
+													"raw": "{{getBooking_endpoint}}",
+													"host": [
+														"{{getBooking_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ModifyBooking - delete",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "accept",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"bookingSignature\": \"{{bookingSignature}}\",\n    \"confirmationId\": \"{{pnr}}\",\n    \"before\": {\n        {{travelers}}\n    },\n    \"after\": {\n        \"travelers\": [\n            {\n                \"givenName\": \"John\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ]\n            },\n            {\n                \"givenName\": \"Marry\",\n                \"surname\": \"Smith\",\n                \"birthDate\": \"1975-09-01\",\n                \"gender\": \"MALE\",\n                \"type\": \"ADULT\",\n                \"passengerCode\": \"ADT\",\n                \"emails\": [\n                    \"Smith@SABRE.COM\"\n                ],\n                \"phones\": [\n                    {\n                        \"number\": \"1231231\"\n                    }\n                ],\n                \"identityDocuments\": [\n                    {\n                        \"documentType\": \"SECURE_FLIGHT_PASSENGER_DATA\",\n                        \"birthDate\": \"1975-09-01\",\n                        \"gender\": \"MALE\"\n                    }\n                ]\n            }\n        ]\n    },\n    \"retrieveBooking\": true,\n    \"receivedFrom\": \"Booking Management API testing\"\n}"
+												},
+												"url": {
+													"raw": "{{modifyBooking_endpoint}}",
+													"host": [
+														"{{modifyBooking_endpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "SessionCloseRQ 1.0.0",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "text/xml",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{header}}\n\n<SessionCloseRQ Version=\"1.0.0\" xmlns=\"http://www.opentravel.org/OTA/2002/11\"/>\n\n{{footer}}",
+													"options": {
+														"raw": {
+															"language": "xml"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{soap_endpoint}}",
+													"host": [
+														"{{soap_endpoint}}"
+													]
+												}
 											},
 											"response": []
 										}
