@@ -1,6 +1,6 @@
 # Content Services for Lodging API Postman files
 
-The [Content Services for Lodging (CSL)](https://developer.sabre.com/content-services-for-lodging) product collection houses APIs to help you find properties, get information about properties, check prices, and much more.
+The [Content Services for Lodging (CSL)](https://developer.sabre.com/product-collection/content-services-for-lodging-csl/v1/index.html) product collection houses APIs to help you find properties, get information about properties, check prices, and much more.
 
 Two types of APIs are currently available through CSL to match the needs of your solution:
 
@@ -44,24 +44,24 @@ The services available in this API product collection are listed below:
 | Service | Description | Endpoint | Type |  
 |---------|-------------|----------|------|
 |**ORCHESTRATED**|
-|[Get Hotel Avail](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_avail)| Search hotels by different criteria | `POST /v5/get/hotelavail` |REST/JSON|
-|[Get Hotel Details](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_details)| Select a hotel, get all rates and choose a room | `POST /v5/get/hoteldetails` |REST/JSON|
-|[Hotel Price Check](https://developer.sabre.com/docs/rest_apis/hotel/search/hotel_price_check)| Verify selected rate and return up-to-date pricing and the BookingKey for booking. | `POST /v5/get/hotel/pricecheck` |REST/JSON|
-|[Get Hotel Content](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_content)|  Delivers complete hotel descriptive and media content for a specified property ID, including location details, property information, and visual assets, with customizable description fields. | `POST /v4/get/hotelcontent` |REST/JSON|
+|[Get Hotel Avail](https://developer.sabre.com/rest-api/get-hotel-avail/v5.0/index.html)| Search hotels by different criteria | `POST /v5/get/hotelavail` |REST/JSON|
+|[Get Hotel Details](https://developer.sabre.com/rest-api/get-hotel-details/v5.1/index.html)| Select a hotel, get all rates and choose a room | `POST /v5/get/hoteldetails` |REST/JSON|
+|[Hotel Price Check](https://developer.sabre.com/rest-api/hotel-price-check/v5/index.html)| Verify selected rate and return up-to-date pricing and the BookingKey for booking. | `POST /v5/get/hotel/pricecheck` |REST/JSON|
+|[Get Hotel Content](https://developer.sabre.com/rest-api/get-hotel-content/v4/index.html)|  Delivers complete hotel descriptive and media content for a specified property ID, including location details, property information, and visual assets, with customizable description fields. | `POST /v4/get/hotelcontent` |REST/JSON|
 |**GRANULAR**|
-|[Geo Search](https://developer.sabre.com/rest-api/geo-search)| Performs radius-based searches to locate airports, hotels, rail stations, and car rental points within a specified geographic area. | `POST /v4/geo/search` |REST/JSON|
-|[Get Hotel Lead Rate](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_lead_rate)| Lookup the lowest available rate based on search criteria | `POST /v5/get/hotelleadrate` |REST/JSON|
-|[Get Hotel Rate Info](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_rate_info)| Retrieves all available property rates from multiple sources, including GDS and aggregators, based on specified stay criteria. | `POST /v5/get/hotelrateinfo` |REST/JSON|
-|[Get Hotel List](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_list_v410)| Fetch up to a maximum limit of 5,000 hotels based on search parameters| `POST /v4.1.0/get/hotellist`|REST/JSON|
-|[Get Hotel Media](https://developer.sabre.com/rest-api/get-hotel-media/)| Returns hotel media content by Hotel Codes, including image URLs in multiple sizes, metadata (type, caption, last updated, ordering), and multilingual support for flexible integration.| `POST /v2.0.0/get/hotelmedia`|REST/JSON|
-|[Get Hotel Image](https://developer.sabre.com/rest-api/get-hotel-image)| Provides hotel image URLs for up-to 300 hotels URLs with metadata from our visual platform, offering 5 sizes, 23 OpenTravel categories in up to 8 languages, captions, sequencing, and last-updated timestamps..| `POST /v1.0.0/shop/hotels/image`|REST/JSON|
-|[Get Hotel Descriptive Info](https://developer.sabre.com/docs/rest_apis/hotel/search/get_hotel_descriptive_info)| Retrieves location and detailed property information for specified Sabre or global hotel IDs.| `POST /v4.0.0/get/hoteldescriptiveinfo`|REST/JSON|
-|[Get Polygon Info](https://developer.sabre.com/rest-api/get-polygon-info/)| Returns polygon details from the Geo database based on criteria like ID, area, city, state, or country code, with optional date-range filters for created or updated polygons.| `POST /v1/get/polygoninfo`|REST/JSON|
-|[Geo Auto Complete](https://developer.sabre.com/rest-api/geo-autocomplete/)| Provides up to five real-time location predictions—airports, cities, or rail stations—by matching full words or substrings in a geographic search query. | `POST /v2/geo/autocomplete` |REST/JSON|
-|[Hotel Search](https://developer.sabre.com/rest-api/hotel-search/)| Enables hotel property searches using multiple location resolution methods, including polygon search, to retrieve matching content without availability data. | `POST /v2.0.0/hotel/search` |REST/JSON|
-|[Get Hotel Chain Info](https://developer.sabre.com/rest-api/get-hotel-chain-info/)| Returns the complete list of hotel marketers with their names, marketer chain codes, and corresponding chain code names. | `POST /v1.0.0/shop/hotels/chain` |REST/JSON|
-|[Get Hotel Content Change](https://developer.sabre.com/docs/rest_apis/hotel/utility/get_hotel_content_change)| Provides a list of new and updated hotel content within a specified date range (up to 10 days). | `POST /v1.0.0/shop/hotels/content/change` |REST/JSON|
-|[Property Name Autocomplete](https://developer.sabre.com/rest-api/property-name-autocomplete/)| Returns up to five real-time property name predictions for text-based hotel searches, powered by the CSL platform. | `POST /v1/hotels/utilities/autocomplete/hotelname` |REST/JSON|
+|[Geo Search](https://developer.sabre.com/rest-api/geo-search/v4/index.html)| Performs radius-based searches to locate airports, hotels, rail stations, and car rental points within a specified geographic area. | `POST /v4/geo/search` |REST/JSON|
+|[Get Hotel Lead Rate](https://developer.sabre.com/rest-api/get-hotel-lead-rate/v5/index.html)| Lookup the lowest available rate based on search criteria | `POST /v5/get/hotelleadrate` |REST/JSON|
+|[Get Hotel Rate Info](https://developer.sabre.com/rest-api/get-hotel-rate-info/v5/index.html)| Retrieves all available property rates from multiple sources, including GDS and aggregators, based on specified stay criteria. | `POST /v5/get/hotelrateinfo` |REST/JSON|
+|[Get Hotel List](https://developer.sabre.com/rest-api/get-hotel-list/v4.1/index.html)| Fetch up to a maximum limit of 5,000 hotels based on search parameters| `POST /v4.1.0/get/hotellist`|REST/JSON|
+|[Get Hotel Media](https://developer.sabre.com/rest-api/get-hotel-media/2.0.0/index.html)| Returns hotel media content by Hotel Codes, including image URLs in multiple sizes, metadata (type, caption, last updated, ordering), and multilingual support for flexible integration.| `POST /v2.0.0/get/hotelmedia`|REST/JSON|
+|[Get Hotel Image](https://developer.sabre.com/rest-api/get-hotel-image/v1/index.html)| Provides hotel image URLs for up-to 300 hotels URLs with metadata from our visual platform, offering 5 sizes, 23 OpenTravel categories in up to 8 languages, captions, sequencing, and last-updated timestamps..| `POST /v1.0.0/shop/hotels/image`|REST/JSON|
+|[Get Hotel Descriptive Info](https://developer.sabre.com/rest-api/get-hotel-descriptive-info/v4/index.html)| Retrieves location and detailed property information for specified Sabre or global hotel IDs.| `POST /v4.0.0/get/hoteldescriptiveinfo`|REST/JSON|
+|[Get Polygon Info](https://developer.sabre.com/rest-api/get-polygon-info/v1/index.html)| Returns polygon details from the Geo database based on criteria like ID, area, city, state, or country code, with optional date-range filters for created or updated polygons.| `POST /v1/get/polygoninfo`|REST/JSON|
+|[Geo Auto Complete](https://developer.sabre.com/rest-api/geo-autocomplete/v2/index.html)| Provides up to five real-time location predictions—airports, cities, or rail stations—by matching full words or substrings in a geographic search query. | `POST /v2/geo/autocomplete` |REST/JSON|
+|[Hotel Search](https://developer.sabre.com/rest-api/hotel-search/v2/index.html)| Enables hotel property searches using multiple location resolution methods, including polygon search, to retrieve matching content without availability data. | `POST /v2.0.0/hotel/search` |REST/JSON|
+|[Get Hotel Chain Info](https://developer.sabre.com/rest-api/get-hotel-chain-info/v1/index.html)| Returns the complete list of hotel marketers with their names, marketer chain codes, and corresponding chain code names. | `POST /v1.0.0/shop/hotels/chain` |REST/JSON|
+|[Get Hotel Content Change](https://developer.sabre.com/rest-api/get-hotel-content-change/1.0.0/index.html)| Provides a list of new and updated hotel content within a specified date range (up to 10 days). | `POST /v1.0.0/shop/hotels/content/change` |REST/JSON|
+|[Property Name Autocomplete](https://developer.sabre.com/rest-api/property-name-autocomplete/v1/index.html)| Returns up to five real-time property name predictions for text-based hotel searches, powered by the CSL platform. | `POST /v1/hotels/utilities/autocomplete/hotelname` |REST/JSON|
 
 
 ## Getting Started
@@ -74,7 +74,7 @@ Things you need to install:
 
 * [Postman](https://www.postman.com/) app
 
-You'll also need your [Sabre APIs CERT-environment credentials](https://developer.sabre.com/resources/getting_started_with_sabre_apis/)
+You'll also need your [Sabre APIs CERT-environment credentials](https://developer.sabre.com/guide/get-token/get-token.html)
 
 ### Installing
 
