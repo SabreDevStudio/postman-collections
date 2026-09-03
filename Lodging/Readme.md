@@ -33,6 +33,7 @@ CSL offers a modern set of SOAP/XML and REST/JSON APIs that leverage improved da
 
 | Collection version | Comments |
 | - | - | 
+| [2026.08](./Lodging%20v2026.08.postman_collection.json)| Version incorporates: updated links to Developer Hub documentation  </br>
 | [2025.09](./Lodging%20v2025.09.postman_collection.json)| Version incorporates: new refreshed view with more API and examples plus </br> - Shopping Folder </br> - Booking Folder </br> - Post-Booking folder </br> - Content Folder </br> - Workflow Folder (with samples and scenarios) </br> - Granular API Folder </br> - Sabre Travel AI™ - Lodging AI Folders with Hotel Alternative Finder and Hotel Cross Sell examples </br> - Polygon Search Folder </br>
 | [2025.04](./Lodging%20v2025.04.postman_collection.json)| Version incorporates: a new 2025 collection including  </br> - Authentication folder with several examples, </br> - Lodging Retailer Preferencing folder with examples
 
